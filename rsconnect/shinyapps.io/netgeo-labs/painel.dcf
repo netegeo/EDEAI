@@ -1,0 +1,10 @@
+name: painel
+title:
+username: netgeo-labs
+account: netgeo-labs
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17396794
+bundleId: 12020980
+url: https://netgeo-labs.shinyapps.io/painel/
+version: 1
