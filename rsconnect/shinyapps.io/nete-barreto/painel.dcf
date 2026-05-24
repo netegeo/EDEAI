@@ -1,0 +1,10 @@
+name: painel
+title:
+username: nete-barreto
+account: nete-barreto
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17034997
+bundleId: 11989927
+url: https://nete-barreto.shinyapps.io/painel/
+version: 1

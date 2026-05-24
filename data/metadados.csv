@@ -1,0 +1,25 @@
+﻿N;CODE;NOME;UNIDADE;CLASSE;Período;NIVEL;TEMA;Descrição
+1;geocodigo;Codico Identificador do Municipio;N/A;DESCRITIVO;;0;DESCRITIVO;
+2;nome_mun;Nome do Município;N/A;DESCRITIVO;;0;DESCRITIVO;
+3;sigla_uf;Sigla da UF;N/A;DESCRITIVO;;0;DESCRITIVO;
+4;nm_regiao;Nome da Região;N/A;DESCRITIVO;;0;DESCRITIVO;
+5;populacao;População;Número;DESCRITIVO;;0;CLASSIFICADOR;
+7;E_1.1;Concentração de material particulado 2,5 acima do limite (*);Gramas por habitante;INDICE;2010-2020;1;T_01;Taxa da emissão anual de material particulado 2,5 (MP 2,5) gerado na queima de combustíveis no transporte rodoviário por habitante (g/hab) entre 2010-2020
+8;E_1.2;Poluição do transporte rodoviário (**);Focos de calor por km2;INDICE;2021-2025;1;T_01;Número de focos de calor registrados no município, entre 2010-2021, em relação à área do município
+9;E_2.1;Densidade de focos de calor;Percentual;INDICE;2024;1;T_01;"Massa de resíduos sólidos total coletada (lixões ou vazadouros e aterros controlados) em relação à massa total anual de resíduos sólidos urbanos
+coletados no município"
+11;E_4.1;Eventos extremos de inundação (*);Número;INDICE;2021-2025;1;T_02;Número médio de eventos anuais de ondas de calor ocorridos entre 2010-2021
+12;E_4.2;Ocorrência de ondas de calor (*);A definir;INDICE;2021-2025;1;T_02;A definir
+13;E_4.3;Eventos extremos de secas (*);Percentual da população abastecida;INDICE;2025;1;T_02;Percentual da população abastecida no ano de referência, por sistema de abastecimento de água (SAA) e solução alternativa coletiva (SAC), para mananciais superficiais e subterrâneos, em relacao à população residente no ano anterior
+6;C_7.1;Áreas verdes nas escolas;Percentual de dias;INDICE;2021-2025;1;T_03;Percentual de dias anualmente em que houve infrações dos níveis de material particulado 2,5 (MP 2,5) de acordo com o padrão OMS, considerando 15 μg/m3, entre 2010-2021
+15;E_5.2;Percentual de matrículas de crianças e adolescentes em escolas com saneamento básico ;Percentual de crianças e adolescentes;INDICE;2022;1;T_03;Percentual de criancas e adolescentes morando em casas com saneamento inadequado - por tipo de ligação à rede geral
+10;E_3.2;Disposição final inadequada de resíduos sólidos urbanos;A definir;INDICE;2021-2025;1;T_04;A definir
+14;E_5.1;Percentual da População abastecidade por agua tratada;Percentual de matrículas em escolas;INDICE;2024;1;T_04;Percentual de matrículas de crianças e adolescentes em escolas com saneamento básico (com água encanada, esgotamento sanitário e coleta de lixo) em relação ao total de matrículas na mesma etapa de ensino
+16;E_5.3.1;Percentual Geral da população infantojuvenil sem acesso a rede geral de esgotO;Percentual de crianças e adolescentes;INDICE;2022;1;T_04;Percentual de criancas e adolescentes morando em casas com saneamento inadequado - por tipo de esgotamento sanitário
+17;E_5.3.2;Percentual Geral da população infantojuvenil sem acesso a esgoto;Percentual de crianças e adolescentes;INDICE;2022;1;T_04;Percentual de criancas e adolescentes morando em casas com saneamento inadequado - por tipo de destino lixo
+18;E_5.3.3;Percentual Geral da população infantojuvenil sem acesso a coleta de lixo;Percentual de crianças e adolescentes;INDICE;2022;1;T_04;Percentual de moradores, com até 19 anos completos, em domicílios permanentes cujo material das paredes externas é do tipo taipa sem revestimento, maderia aproveitada ou outro material
+19;E_6.2;Percentual Geral da população infantojuvenil em habitações inadequadas;Percentual de matrículas em escolas;INDICE;2024;1;T_04;Percentual de matrículas em escolas com área verde no município
+20;T_01;Poluição Atmosférica;-;tematico;-;2;-;
+21;T_02;Eventos Extremos;-;tematico;-;2;-;
+22;T_03;Ambiente Escolar;-;tematico;-;2;-;
+23;T_04;Infraestrutura Ambiental e Urbana;-;tematico;-;2;-;
