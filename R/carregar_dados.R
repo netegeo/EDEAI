@@ -55,6 +55,9 @@ info_raw <- readRDS("data/informacoes_20260510.rds")
 # Objeto responsavel por trazer as informações de ações públicas recomendadas
 acao_objetos <- readRDS("data/objeto_acao_rds_20260430.rds")
 
+# Objeto responsavel por carregar as informações dos cards de apresentação da pagina inicial 
+card_inicio <- readRDS("data/cards_inicio_20260524.rds")
+info_card <- card_inicio$info_card_inicio
 
 dados_app <- list(
 

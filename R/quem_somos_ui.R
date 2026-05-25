@@ -17,9 +17,7 @@ instituicao_bloco <- function(
     texto,
     link = NULL,
     invertido = FALSE,
-    max_width = "320px",
-    max_height = "180px",
-    width_p = "100%") 
+    width_p = "20%") 
     {
 
   logo_img <- tags$img(
@@ -27,9 +25,7 @@ instituicao_bloco <- function(
     alt = logo_alt,
     class = "quem-logo-img",
     style = paste0(
-      "max-width:", max_width, ";",
-      "max-height:", max_height, ";",
-      "width:", width_p, ";"
+      "max-width:", width_p, ";"
     )
   )
 
@@ -100,21 +96,19 @@ texto_box <- tags$div(
         instituicao_bloco(
           logo_src = "icons/ReguaDeLogos-MMA2.svg",
           logo_alt = "Ministério do Meio Ambiente e Mudança do Clima",
-          texto = "O Ministério do Meio Ambiente e Mudança do Clima (MMA) é o órgão federal brasileiro responsável por formular, implementar e coordenar políticas públicas ambientais e climáticas. Sua missão é proteger o meio ambiente, promover o desenvolvimento socioeconômico sustentável, o uso racional dos recursos naturais, a biodiversidade e a transição para uma economia de baixas emissões./n",
+          texto = "O Ministério do Meio Ambiente e Mudança do Clima (MMA) é o órgão federal brasileiro responsável por formular, implementar e coordenar políticas públicas ambientais e climáticas. Sua missão é proteger o meio ambiente, promover o desenvolvimento socioeconômico sustentável, o uso racional dos recursos naturais, a biodiversidade e a transição para uma economia de baixas emissões.",
           link = "https://www.gov.br/mma/pt-br",
           invertido = FALSE,
-          width_p = "120%"
+          width_p = "100%"
         ),
 
         instituicao_bloco(
-          logo_src = "icons/Logo-Brazil-Unicef.svg",
+          logo_src = "icons/Logo-Brazil-Unicef_orginal.svg",
           logo_alt = "UNICEF",
           texto = "O UNICEF, Fundo das Nações Unidas para a Infância, trabalha para proteger os direitos de cada criança e adolescente, em todos os lugares, especialmente os mais vulneráveis, nos locais mais remotos. Em mais de 190 países e territórios, fazemos o que for preciso para ajudar crianças e adolescentes a sobreviver, prosperar e alcançar seu pleno potencial. Em 2025, o UNICEF comemorou 75 anos no Brasil. O trabalho do UNICEF é financiado inteiramente por contribuições voluntárias.\n",
           link = "https://www.unicef.org/brazil/",
           invertido = FALSE,
-          max_width = "200px",
-          max_height = "180px",
-          width_p = "1300%"
+          width_p = "100%"
         ),
 
         instituicao_bloco(
@@ -123,7 +117,7 @@ texto_box <- tags$div(
           texto = "A Vital Strategies é uma organização global de saúde presente em mais de 80 países. No Brasil desde 2017, trabalha em parceria com governos e sociedade civil para influenciar políticas, práticas e pessoas no enfrentamento dos maiores desafios de saúde pública do país. O trabalho foca em soluções de políticas públicas baseadas em evidências e capazes de gerar resultados duradouros, sustentáveis e de alto impacto.\n",
           link = "https://www.vitalstrategies.org/sao-paulo-brasil/",
           invertido = FALSE,
-          width_p = "110%"
+          width_p = "100%"
         ),
 
         tags$div(
@@ -131,7 +125,15 @@ texto_box <- tags$div(
           actionButton(
             "btn_equipe_projeto",
             "Conheça a equipe do projeto",
-            class = "btn-equipe-projeto"
+            class = "btn-equipe-projeto",
+            onclick = "
+      setTimeout(function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }, 50);
+    "
           )
         )
       )
@@ -180,7 +182,7 @@ div(
   class = "equipe-grid",
 
 div(
-  class = "equipe-card dupla",
+  class = "equipe-card",
 
   div(
     class = "equipe-instituicao mma",
@@ -194,8 +196,9 @@ div(
       membro("Analistas Ambientais", "Célia Regina Miranda Melo"),
       membro("Analistas Ambientais", "Leonardo Mendonça de Lima")
     )
-  ),
-
+  )),
+div(
+  class = "equipe-card",
   div(
     class = "equipe-instituicao unicef",
     tags$h2("FUNDO DAS NAÇÕES UNIDAS PARA A INFÂNCIA (UNICEF)"),
@@ -219,10 +222,10 @@ div(
   class = "equipe-grid",
 
 div(
-  class = "equipe-card dupla",
+  class = "equipe-card",
 
   div(
-    class = "equipe-instituicao mma",
+    class = "equipe-instituicao vital",
     tags$h2("VITAL STRATEGIES"),
     div(class = "equipe-lista",
             membro("Diretor-Executivo", "Pedro de Paula"),
@@ -235,26 +238,41 @@ div(
             membro("Design e Diagramação", "Beatriz Ferreira"),
             membro("Coleta de Dados", "Erik Santos")
     )
-  ),
-
+  )),
+div(
+  class = "equipe-card",
   div(
-    class = "equipe-instituicao unicef",
+    class = "equipe-instituicao indicadores",
     tags$h2("Equipe de indicadores e Políticas Públicas"),
     div(class = "equipe-lista",
 
             membro("Coordenação Geral", "Júlia Alves Menezes"),
-            membro("Coordenação de Pesquisa e Desenvolvimento de Indicadores", "Júlia Alves Menezes"),
             membro("Coordenação de pesquisa e desenvolvimento de políticas públicas", "Mariana Gutierres Arteiro da Paz"),
-            membro("Processamento de Dados, Análise Estatística, Desenvolvimento do Dashboard", "Naurinete de Jesus da Costa Barreto"),
-            membro("Processamento de Dados, Análise Estatística, Desenvolvimento do Dashboard", "George Ulguim Pedra"),
-            membro("Coleta e Processamento de Dados", "Jocilene Dantas Barros"),
-            membro("Consultoria técnica", "Cássia Maria Gama Lemos"),
-            membro("Consultoria técnica", "Mariana Gutierres Arteiro da Paz"),
-            membro("Consultoria técnica", "Júlia Alves Menezes")
+            membro( tagList("Processamento de dados, análise estatística,",
+                      tags$br(),"desenvolvimento do dashboard" ),
+                    tagList("Naurinete de Jesus da Costa Barreto,",
+                      tags$br(),"George Ulguim Pedra" )
+                  ),
+            membro("Coleta e processamento dedDados", "Jocilene Dantas Barros"),
+            membro("Consultoria técnica", "Cássia Maria Gama Lemos")
     )
   )
-))
+)
 
+),
+
+tags$div(
+  class = "equipe-btn-inic",
+    actionButton( "btn_equipe_inicio", "Início", class = "btn_equipe_inicio",
+        onclick = "
+          setTimeout(function() {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          }, 50);  "
     )
+  )
+)
   )
 }

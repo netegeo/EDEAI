@@ -199,6 +199,9 @@ server <- function(input, output, session) {
     pagina_ativa("equipe_projeto")
   })
 
+ observeEvent(input$btn_equipe_inicio, {
+    pagina_ativa("inicio")
+  })
 
   # -------------------------------------------------------
   # Navegação da página de indicadores
