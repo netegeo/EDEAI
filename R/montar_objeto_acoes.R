@@ -1,134 +1,575 @@
 # =========================================================
 # Arquivo: R/montar_objeto_acoes.R
 # Finalidade:
-#   Montar um objeto consolidado de acoes dado a selecao efetuada,
-#   reunindo:
-#     - informações básicas do município
-#     - indicadores em formato longo
-#     - valores brutos
-#     - valores classificados
-#     - cores de fundo e texto
+#   Montar e manipular o objeto de ações recomendadas,
+#   com foco inicial no bloco "destaque", utilizado na
+#   página "Ações Recomendadas".
 #
-# Entradas:
-#   - dados_app: lista global com as bases já carregadas
-#   - uf: sigla da unidade federativa
-#   - municipio: nome do município
+# Estrutura esperada do destaque:
+#   - id
+#   - nome_da_ficha
+#   - por_que_isso_e_importante
+#   - indicador_de_exposicao_relacionado
+#   - grupo_tematico
+#   - estrategia_de_atuacao_da_acao
+#   - tipologia_da_acao
+#   - local_da_acao
 #
-# Saída:
-#   Uma lista com:
-#     - basico: informações gerais do município
-#     - indicadores: tabela longa única com todos os indicadores
-#     - temas: lista de data.frames separados por tema
+# Saída principal:
+#   objeto_acoes <- list(
+#     destaque = destaque,
+#     filtros  = filtros
+#   )
 #
-# Observações:
-#   - A ordenação dos temas é fixa
-#   - A ordenação dos indicadores dentro do tema é feita da
-#     maior classificação para a menor (3, 2, 1)
-#   - O título exibido do indicador é sempre o campo
-#     'Novo.Título'
+# Observação:
+#   - A filtragem por seleção do usuário é feita em função
+#     separada: filtrar_acoes_recomendadas().
 # =========================================================
+
 print("montar_objeto_acoes.R carregado com sucesso")
 
 
-  # -----------------------------------------------------
-  # Função para formatar referencias das ações 
-  # -----------------------------------------------------
+# =========================================================
+# 1. Funções auxiliares gerais
+# =========================================================
 
- formatar_referencias <- function(texto_ref) {
+limpar_espacos_unicode <- function(x) {
 
-  if (is.null(texto_ref) || is.na(texto_ref) || texto_ref == "") {
-    return(list())
-  }
+  x <- as.character(x)
 
-  blocos <- unlist(strsplit(texto_ref, "\\n\\s*\\n"))
+  # Troca espaços não separáveis por espaço comum
+  x <- gsub("\u00A0", " ", x, fixed = TRUE)
 
-  lapply(blocos, function(bloco) {
+  # Troca outros espaços Unicode comuns por espaço comum
+  x <- gsub("[\u2000-\u200B\u202F\u205F\u3000]", " ", x)
 
-    linhas <- trimws(unlist(strsplit(bloco, "\\n")))
-    linhas <- linhas[linhas != ""]
+  # Reduz múltiplos espaços para um único espaço
+  x <- gsub("\\s+", " ", x)
 
-    titulo <- linhas[1]
+  # Remove espaços no começo e no fim
+  trimws(x)
+}
 
-    o_que_trata <- linhas[grepl("^O que trata:", linhas)]
-    relacao <- linhas[grepl("^Relação com a ação:", linhas)]
+normalizar_chave_filtro <- function(x) {
 
-    o_que_trata <- gsub("^O que trata:\\s*", "", o_que_trata)
-    relacao <- gsub("^Relação com a ação:\\s*", "", relacao)
+  x <- limpar_espacos_unicode(x)
+  x <- tolower(x)
 
-    list(
-      titulo = titulo,
-      o_que_trata = ifelse(length(o_que_trata) > 0, o_que_trata, ""),
-      relacao = ifelse(length(relacao) > 0, relacao, "")
-    )
-  })
- }
- 
-enriquecer_acoes_com_temas <- function(dados_acao, tabela_cores) {
-
-  cores_nivel3 <- tabela_cores[
-    c("tema", "Codigo", "Título", "cor_dark")
-  ]
-
-  obter_temas_acao <- function(indicadores_txt) {
-
-    if (is.null(indicadores_txt) || is.na(indicadores_txt) || trimws(indicadores_txt) == "") {
-      return(character(0))
-    }
-
-    indicadores <- trimws(unlist(strsplit(indicadores_txt, ",")))
-
-    temas <- unique(cores_nivel3$tema[
-      cores_nivel3$Codigo %in% indicadores |
-      cores_nivel3$Título %in% indicadores
-    ])
-
-    temas[!is.na(temas) & trimws(temas) != ""]
-  }
-
-  temas_lista <- lapply(dados_acao$Indicador_relacionado, obter_temas_acao)
-
-  dados_acao$temas_lista <- temas_lista
-
-  dados_acao$tema <- vapply(
-    temas_lista,
-    function(x) {
-      if (length(x) == 0) {
-        return(NA_character_)
-      }
-
-      paste(unique(x), collapse = "; ")
-    },
-    character(1)
+  x <- iconv(
+    x,
+    from = "",
+    to = "ASCII//TRANSLIT"
   )
 
-  dados_acao$cores_tema <- lapply(temas_lista, function(temas) {
-    unique(cores_nivel3[
-      cores_nivel3$tema %in% temas,
-      c("tema", "cor_dark")
-    ])
+  x <- gsub("'", "", x)
+  x <- limpar_espacos_unicode(x)
+
+  x
+}
+
+limpar_opcoes_filtro_acoes <- function(x, separador = ",") {
+
+  if (is.null(x) || length(x) == 0) {
+    return(character(0))
+  }
+
+  x <- as.character(x)
+  x <- x[!is.na(x)]
+
+  if (length(x) == 0) {
+    return(character(0))
+  }
+
+  marcador_pm25 <- "__PM25_DECIMAL__"
+
+  x <- gsub(
+    pattern = "PM\\s*2\\s*,\\s*5",
+    replacement = marcador_pm25,
+    x = x,
+    ignore.case = TRUE
+  )
+
+  x <- unlist(strsplit(x, separador, fixed = TRUE))
+
+  x <- gsub(
+    pattern = marcador_pm25,
+    replacement = "PM 2,5",
+    x = x,
+    fixed = TRUE
+  )
+
+  x <- limpar_espacos_unicode(x)
+
+  x <- x[!is.na(x) & x != ""]
+
+  chave <- normalizar_chave_filtro(x)
+
+  x <- x[!duplicated(chave)]
+
+  sort(x)
+}
+
+texto_valido_acao <- function(x) {
+
+  if (is.null(x) || length(x) == 0) {
+    return(FALSE)
+  }
+
+  x <- as.character(x[1])
+
+  !is.na(x) && trimws(x) != ""
+}
+
+valor_texto_acao <- function(x, vazio = NA_character_) {
+
+  if (!texto_valido_acao(x)) {
+    return(vazio)
+  }
+
+  trimws(as.character(x[1]))
+}
+
+comparar_opcoes_filtro_acoes <- function(valores, selecao, separador = ",") {
+
+  valores <- limpar_opcoes_filtro_acoes(
+    valores,
+    separador = separador
+  )
+
+  selecao <- limpar_espacos_unicode(selecao)
+  selecao <- selecao[!is.na(selecao) & selecao != ""]
+
+  if (length(valores) == 0 || length(selecao) == 0) {
+    return(FALSE)
+  }
+
+  valores_norm <- normalizar_chave_filtro(valores)
+  selecao_norm <- normalizar_chave_filtro(selecao)
+
+  any(valores_norm %in% selecao_norm)
+}
+
+padronizar_colunas_acoes <- function(df) {
+
+  names(df) <- names(df) |>
+    tolower() |>
+    trimws() |>
+    gsub("\\s+", "_", x = _) |>
+    gsub("\\.", "_", x = _)
+
+  df
+}
+
+
+# =========================================================
+# 2. Cores dos temas
+# =========================================================
+
+montar_tabela_cores_tema <- function(tabela_cores) {
+
+  if (is.null(tabela_cores)) {
+    return(NULL)
+  }
+
+  tabela_cores <- padronizar_colunas_acoes(tabela_cores)
+
+  colunas_necessarias <- c("tema", "cor_box", "cor_dark")
+
+  if (!all(colunas_necessarias %in% names(tabela_cores))) {
+    return(NULL)
+  }
+
+  cores_tema <- unique(tabela_cores[, colunas_necessarias])
+
+  names(cores_tema) <- c(
+    "grupo_tematico",
+    "cor_tema",
+    "cor_tema_dark"
+  )
+
+  cores_tema$grupo_tematico <- trimws(as.character(cores_tema$grupo_tematico))
+  cores_tema$cor_tema <- trimws(as.character(cores_tema$cor_tema))
+  cores_tema$cor_tema_dark <- trimws(as.character(cores_tema$cor_tema_dark))
+
+  cores_tema
+}
+
+enriquecer_destaque_com_cores <- function(destaque, tabela_cores = NULL) {
+
+  cores_tema <- montar_tabela_cores_tema(tabela_cores)
+
+  if (!is.null(cores_tema)) {
+
+    destaque <- merge(
+      destaque,
+      cores_tema,
+      by = "grupo_tematico",
+      all.x = TRUE,
+      sort = FALSE
+    )
+
+  } else {
+
+    destaque$cor_tema <- NA_character_
+    destaque$cor_tema_dark <- NA_character_
+  }
+
+  destaque$cor_tema[
+    is.na(destaque$cor_tema) | destaque$cor_tema == ""
+  ] <- "#E2ECE8"
+
+  destaque$cor_tema_dark[
+    is.na(destaque$cor_tema_dark) | destaque$cor_tema_dark == ""
+  ] <- "#113131"
+
+  destaque
+}
+
+montar_cores_tema_acao <- function(grupo_tematico, tabela_cores) {
+
+  temas <- limpar_opcoes_filtro_acoes(
+    grupo_tematico,
+    separador = ","
+  )
+
+  if (length(temas) == 0 || is.null(tabela_cores)) {
+    return(
+      data.frame(
+        tema = "Sem tema",
+        cor_dark = "#113131",
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+
+  tabela_cores <- padronizar_colunas_acoes(tabela_cores)
+
+  if (!all(c("tema", "cor_dark") %in% names(tabela_cores))) {
+    return(
+      data.frame(
+        tema = temas,
+        cor_dark = "#113131",
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+
+  tabela_aux <- unique(tabela_cores[, c("tema", "cor_dark")])
+
+  tabela_aux$tema_norm <- normalizar_chave_filtro(tabela_aux$tema)
+  temas_norm <- normalizar_chave_filtro(temas)
+
+  cores <- tabela_aux[
+    tabela_aux$tema_norm %in% temas_norm,
+    c("tema", "cor_dark"),
+    drop = FALSE
+  ]
+
+  if (nrow(cores) == 0) {
+    cores <- data.frame(
+      tema = temas,
+      cor_dark = "#113131",
+      stringsAsFactors = FALSE
+    )
+  }
+
+  cores <- cores[!duplicated(normalizar_chave_filtro(cores$tema)), ]
+
+  rownames(cores) <- NULL
+
+  cores
+}
+
+inferir_grupo_tematico_por_indicador <- function(indicadores_txt, metadados) {
+
+  if (is.null(indicadores_txt) ||
+      length(indicadores_txt) == 0 ||
+      is.na(indicadores_txt) ||
+      trimws(as.character(indicadores_txt)) == "") {
+    return(NA_character_)
+  }
+
+  indicadores <- limpar_opcoes_filtro_acoes(indicadores_txt)
+
+  metadados_aux <- metadados
+  metadados_aux$Codigo_norm <- normalizar_chave_filtro(metadados_aux$Codigo)
+  metadados_aux$Titulo_norm <- normalizar_chave_filtro(metadados_aux$Título)
+
+  indicadores_norm <- normalizar_chave_filtro(indicadores)
+
+  temas <- unique(metadados_aux$tema[
+    metadados_aux$Codigo_norm %in% indicadores_norm |
+      metadados_aux$Titulo_norm %in% indicadores_norm
+  ])
+
+  temas <- limpar_espacos_unicode(temas)
+  temas <- temas[!is.na(temas) & temas != ""]
+
+  if (length(temas) == 0) {
+    return(NA_character_)
+  }
+
+  paste(unique(temas), collapse = "; ")
+}
+
+
+# =========================================================
+# 3. Montagem do destaque
+# =========================================================
+
+montar_destaque_acoes <- function(destaque_raw, tabela_cores = NULL) {
+
+  destaque_raw <- padronizar_colunas_acoes(destaque_raw)
+
+  # -------------------------------------------------------
+  # Compatibilização de nomes alternativos, caso existam
+  # -------------------------------------------------------
+
+  if ("campo_tematico" %in% names(destaque_raw) &&
+      !"grupo_tematico" %in% names(destaque_raw)) {
+    names(destaque_raw)[names(destaque_raw) == "campo_tematico"] <- "grupo_tematico"
+  }
+  
+  if ("indicador_relacionado" %in% names(destaque_raw) &&
+      !"indicador_de_exposicao_relacionado" %in% names(destaque_raw)) {
+    names(destaque_raw)[names(destaque_raw) == "indicador_relacionado"] <- "indicador_de_exposicao_relacionado"
+  }
+
+  if ("estrategia_de_atuacao" %in% names(destaque_raw) &&
+      !"estrategia_de_atuacao_da_acao" %in% names(destaque_raw)) {
+    names(destaque_raw)[names(destaque_raw) == "estrategia_de_atuacao"] <- "estrategia_de_atuacao_da_acao"
+  }
+
+  if ("tipologia" %in% names(destaque_raw) &&
+      !"tipologia_da_acao" %in% names(destaque_raw)) {
+    names(destaque_raw)[names(destaque_raw) == "tipologia"] <- "tipologia_da_acao"
+  }
+
+  if ("local" %in% names(destaque_raw) &&
+      !"local_da_acao" %in% names(destaque_raw)) {
+    names(destaque_raw)[names(destaque_raw) == "local"] <- "local_da_acao"
+  }
+
+  # -------------------------------------------------------
+  # Validação das colunas obrigatórias
+  # -------------------------------------------------------
+
+  colunas_obrigatorias <- c(
+    "id",
+    "nome_da_ficha",
+    "por_que_isso_e_importante",
+    "indicador_de_exposicao_relacionado",
+    "grupo_tematico",
+    "estrategia_de_atuacao_da_acao",
+    "tipologia_da_acao",
+    "local_da_acao"
+  )
+
+  colunas_faltantes <- setdiff(colunas_obrigatorias, names(destaque_raw))
+
+  if (length(colunas_faltantes) > 0) {
+    stop(
+      paste0(
+        "As seguintes colunas estão ausentes no destaque das ações: ",
+        paste(colunas_faltantes, collapse = ", ")
+      )
+    )
+  }
+
+  destaque <- destaque_raw[, colunas_obrigatorias]
+  
+  destaque[] <- lapply(destaque, function(x) {
+    trimws(as.character(x))
   })
 
-  dados_acao
-} 
+  # -------------------------------------------------------
+  # Remove ações sem ID ou sem nome
+  # -------------------------------------------------------
 
-montar_objeto_acoes <- function(dados_acao, selecao = list()) {
+  destaque <- destaque[
+    !is.na(destaque$id) &
+      destaque$id != "" &
+      !is.na(destaque$nome_da_ficha) &
+      destaque$nome_da_ficha != "",
+  ]
 
-  dados <- dados_acao
+  # -------------------------------------------------------
+  # Remove duplicidade por ID
+  # -------------------------------------------------------
 
-  # -----------------------------------------------------
-  # 1. Validação da seleção
-  # -----------------------------------------------------
+  destaque <- destaque[!duplicated(destaque$id), ]
+
+  # -------------------------------------------------------
+  # Adiciona campos úteis para a interface atual
+  # -------------------------------------------------------
+
+  destaque$nome_curto <- destaque$nome_da_ficha
+  destaque$nome_ficha <- destaque$nome_da_ficha
+  destaque$por_que_importante <- destaque$por_que_isso_e_importante
+
+  destaque$tags <- lapply(seq_len(nrow(destaque)), function(i) {
+
+    tags <- c(
+      limpar_opcoes_filtro_acoes(destaque$grupo_tematico[i], separador = ","),
+      limpar_opcoes_filtro_acoes(destaque$indicador_de_exposicao_relacionado[i]),
+      limpar_opcoes_filtro_acoes(destaque$estrategia_de_atuacao_da_acao[i]),
+      limpar_opcoes_filtro_acoes(destaque$local_da_acao[i]),
+      limpar_opcoes_filtro_acoes(destaque$tipologia_da_acao[i])
+    )
+
+    tags <- unique(trimws(as.character(tags)))
+    tags[!is.na(tags) & tags != ""]
+  })
+
+  destaque <- enriquecer_destaque_com_cores(
+    destaque = destaque,
+    tabela_cores = tabela_cores
+  )
+  
+  destaque$cores_tema <- lapply(
+     destaque$grupo_tematico,
+     montar_cores_tema_acao,
+     tabela_cores = tabela_cores
+  )
+
+  destaque <- destaque[order(destaque$id), ]
+
+  rownames(destaque) <- NULL
+  
+  idx_sem_tema <- is.na(destaque$grupo_tematico) | destaque$grupo_tematico == ""
+
+  if (any(idx_sem_tema) && !is.null(tabela_cores)) {
+
+    destaque$grupo_tematico[idx_sem_tema] <- vapply(
+      destaque$indicador_de_exposicao_relacionado[idx_sem_tema],
+      inferir_grupo_tematico_por_indicador,
+      metadados = tabela_cores,
+      FUN.VALUE = character(1)
+    )
+  }
+
+  destaque
+}
+
+
+# =========================================================
+# 4. Montagem dos filtros
+# =========================================================
+
+montar_filtros_acoes <- function(destaque) {
+
+  list(
+    grupo_tematico = limpar_opcoes_filtro_acoes(
+      destaque$grupo_tematico,
+      separador = ","
+    ),
+
+    indicador_de_exposicao_relacionado = limpar_opcoes_filtro_acoes(
+      destaque$indicador_de_exposicao_relacionado
+    ),
+
+    estrategia_de_atuacao_da_acao = limpar_opcoes_filtro_acoes(
+      destaque$estrategia_de_atuacao_da_acao
+    ),
+
+    local_da_acao = limpar_opcoes_filtro_acoes(
+      destaque$local_da_acao
+    ),
+
+    tipologia_da_acao = limpar_opcoes_filtro_acoes(
+      destaque$tipologia_da_acao
+    )
+  )
+}
+
+
+# =========================================================
+# 5. Montagem do objeto geral de ações
+# =========================================================
+
+montar_objeto_acoes <- function(acao_objetos, tabela_cores = NULL) {
+
+  destaque <- montar_destaque_acoes(
+    destaque_raw = acao_objetos$destaque,
+    tabela_cores = tabela_cores
+  )
+
+  filtros <- montar_filtros_acoes(destaque)
+
+  o_que_fazer <- montar_o_que_fazer_acoes(
+    o_que_fazer_raw = acao_objetos$o_que_fazer
+  )
+  
+  dicas_praticas <- montar_dicas_praticas_acoes(
+    dicas_praticas_raw = acao_objetos$dicas_praticas
+  )
+  
+  base_tecnica <- montar_base_tecnica_acoes(
+    base_tecnica_raw = acao_objetos$base_tecnica
+  )
+
+  list(
+    destaque = destaque,
+    filtros = filtros,
+    o_que_fazer = o_que_fazer,
+    dicas_praticas = dicas_praticas,
+    base_tecnica  = base_tecnica
+  )
+}
+
+montar_objeto_acao <- function(objeto_acoes, id_acao) {
+
+  if (is.null(objeto_acoes) || is.null(id_acao)) {
+    return(NULL)
+  }
+
+  destaque <- objeto_acoes$destaque[
+    objeto_acoes$destaque$id == id_acao,
+    ,
+    drop = FALSE
+  ]
+
+  if (nrow(destaque) == 0) {
+    return(NULL)
+  }
+
+  o_que_fazer <- objeto_acoes$o_que_fazer[
+    objeto_acoes$o_que_fazer$id == id_acao,
+    ,
+    drop = FALSE
+  ]
+
+  list(
+    id = id_acao,
+    destaque = destaque,
+    o_que_fazer = o_que_fazer
+  )
+}
+
+# =========================================================
+# 6. Filtragem das ações recomendadas
+# =========================================================
+
+filtrar_acoes_recomendadas <- function(destaque, selecao = list(), regra = "OR") {
+
+  dados <- destaque
 
   if (is.null(selecao)) {
     selecao <- list()
   }
 
+  regra <- toupper(regra)
+
+  if (!regra %in% c("OR", "AND")) {
+    stop("A regra de filtragem deve ser 'OR' ou 'AND'.")
+  }
+
   campos_validos <- c(
-    "tema",
-    "indicador_relacionado",
-    "acao",
-    "local",
-    "tipologia"
+    "grupo_tematico",
+    "indicador_de_exposicao_relacionado",
+    "estrategia_de_atuacao_da_acao",
+    "local_da_acao",
+    "tipologia_da_acao"
   )
 
   selecao <- selecao[names(selecao) %in% campos_validos]
@@ -140,197 +581,293 @@ montar_objeto_acoes <- function(dados_acao, selecao = list()) {
 
   selecao <- selecao[lengths(selecao) > 0]
 
-  # -----------------------------------------------------
-  # 2. Se não houver seleção, retorna todas as ações
-  # -----------------------------------------------------
-
   if (length(selecao) == 0) {
+
     dados_filtrados <- dados
+
   } else {
 
-    # ---------------------------------------------------
-    # 3. Regra OR global:
-    #    entra se atender a qualquer seleção feita
-    # ---------------------------------------------------
+    if (regra == "OR") {
+      manter <- rep(FALSE, nrow(dados))
+    } else {
+      manter <- rep(TRUE, nrow(dados))
+    }
 
-    manter <- rep(FALSE, length(dados$ID))
+    aplicar_regra <- function(vetor_logico, condicao) {
+      if (regra == "OR") {
+        vetor_logico | condicao
+      } else {
+        vetor_logico & condicao
+      }
+    }
 
-    # Tema
-    if ("tema" %in% names(selecao)) {
-      manter <- manter | vapply(
-        dados$temas_lista,
+    if ("grupo_tematico" %in% names(selecao)) {
+
+      condicao <- vapply(
+        dados$grupo_tematico,
+         function(x) {
+          comparar_opcoes_filtro_acoes(
+           valores = x,
+            selecao = selecao$grupo_tematico,
+            separador = ","
+        )
+      },
+      logical(1)
+     )
+
+     manter <- aplicar_regra(manter, condicao)
+    }
+
+    if ("indicador_de_exposicao_relacionado" %in% names(selecao)) {
+
+      condicao <- vapply(
+        dados$indicador_de_exposicao_relacionado,
         function(x) {
-          any(trimws(as.character(x)) %in% selecao$tema)
+          comparar_opcoes_filtro_acoes(
+             valores = x,
+             selecao = selecao$indicador_de_exposicao_relacionado
+          )
         },
         logical(1)
       )
+
+      manter <- aplicar_regra(manter, condicao)
     }
 
-    # Indicador relacionado
-    if ("indicador_relacionado" %in% names(selecao)) {
-  manter <- manter | vapply(
-    dados$Indicador_relacionado,
-    function(x) {
-      indicadores <- limpar_opcoes_filtro_acoes(x)
-      any(indicadores %in% selecao$indicador_relacionado)
-    },
-    logical(1)
-  )
-}
+    if ("estrategia_de_atuacao_da_acao" %in% names(selecao)) {
 
-    if ("acao" %in% names(selecao)) {
-  manter <- manter | vapply(
-    dados$acao,
-    function(x) {
-      valores <- limpar_opcoes_filtro_acoes(x)
-      any(valores %in% selecao$acao)
-    },
-    logical(1)
-  )
-}
+      condicao <- vapply(
+        dados$estrategia_de_atuacao_da_acao,
+        function(x) {
+          comparar_opcoes_filtro_acoes(
+               valores = x,
+              selecao = selecao$estrategia_de_atuacao_da_acao
+          )
+        },
+        logical(1)
+      )
 
-if ("local" %in% names(selecao)) {
-  manter <- manter | vapply(
-    dados$local,
-    function(x) {
-      valores <- limpar_opcoes_filtro_acoes(x)
-      any(valores %in% selecao$local)
-    },
-    logical(1)
-  )
-}
+      manter <- aplicar_regra(manter, condicao)
+    }
 
-if ("tipologia" %in% names(selecao)) {
-  manter <- manter | vapply(
-    dados$tipologia,
-    function(x) {
-      valores <- limpar_opcoes_filtro_acoes(x)
-      any(valores %in% selecao$tipologia)
-    },
-    logical(1)
-  )
-}
+    if ("local_da_acao" %in% names(selecao)) {
 
-    #dados_filtrados <- dados[manter, ]
-    dados_filtrados <- dados_acao_df[manter, ]
+      condicao <- vapply(
+        dados$local_da_acao,
+        function(x) {
+          comparar_opcoes_filtro_acoes(
+              valores = x,
+              selecao = selecao$local_da_acao
+          )
+        },
+        logical(1)
+      )
+
+      manter <- aplicar_regra(manter, condicao)
+    }
+
+    if ("tipologia_da_acao" %in% names(selecao)) {
+
+      condicao <- vapply(
+        dados$tipologia_da_acao,
+        function(x) {
+          comparar_opcoes_filtro_acoes(
+              valores = x,
+              selecao = selecao$tipologia_da_acao
+          )
+        },
+        logical(1)
+      )
+
+      manter <- aplicar_regra(manter, condicao)
+    }
+
+    dados_filtrados <- dados[manter, ]
   }
 
-  # -----------------------------------------------------
-  # 4. Remove duplicidades por ID
-  # -----------------------------------------------------
+  dados_filtrados <- dados_filtrados[!duplicated(dados_filtrados$id), ]
 
-  dados_filtrados <- dados_filtrados[!duplicated(dados_filtrados$ID), ]
-
-  # -----------------------------------------------------
-  # 5. Organiza campos para uso na interface
-  # -----------------------------------------------------
-
-  dados_filtrados$nome_curto 			<- dados_filtrados$acao
-  dados_filtrados$nome_ficha 			<- dados_filtrados$Nome_ficha
-  dados_filtrados$por_que_importante 	<- dados_filtrados$importancia
-  dados_filtrados$descricao_acao 		<- dados_filtrados$descricao
-  dados_filtrados$referencias 			<- dados_filtrados$referencia
-
-  dados_filtrados$tags 					<- lapply(seq_len(nrow(dados_filtrados)), function(i) {
-
-    tags <- c(
-      unlist(dados_filtrados$temas_lista[i]),
-      dados_filtrados$Indicador_relacionado[i],
-      dados_filtrados$local[i],
-      dados_filtrados$tipologia[i]
-    )
-
-    tags <- unique(trimws(as.character(tags)))
-    tags[!is.na(tags) & tags != ""]
-  })
-
-  # -----------------------------------------------------
-  # 6. Retorno final
-  # -----------------------------------------------------
+  rownames(dados_filtrados) <- NULL
 
   list(
     selecao = selecao,
+    regra = regra,
     total = nrow(dados_filtrados),
-    ids = dados_filtrados$ID,
+    ids = dados_filtrados$id,
     dados = dados_filtrados
-  )
-}                    
-
-
-preparar_acao_ui <- function(dados_acoes, id_acao) {
-
-  linha <- dados_acoes[dados_acoes$ID == id_acao, , drop = FALSE]
-
-  if (nrow(linha) == 0) {
-    return(NULL)
-  }
-
-  list(
-    id = linha$ID[1],
-    nome_curto = linha$acao[1],
-    nome_ficha = linha$Nome_ficha[1],
-    por_que_importante = linha$importancia[1],
-    descricao_acao = linha$descricao[1],
-    observacao = linha$observacao[1],
-    referencias = linha$referencia[[1]],
-    tags = linha$tags[[1]],
-    temas = linha$temas_lista[[1]],
-    cores_tema = linha$cores_tema[[1]]
   )
 }
 
+montar_o_que_fazer_acoes <- function(o_que_fazer_raw) {
 
-# -------------------------------------------------------------------- 
+  if (is.null(o_que_fazer_raw)) {
+    return(data.frame(
+      id = character(0),
+      o_que_fazer = character(0),
+      stringsAsFactors = FALSE
+    ))
+  }
 
-dados_acao <- list(ID 						= acao_objetos$dados$ID,
-                   Nome_ficha 				= acao_objetos$dados$Nome_ficha,
-                   Campo 					= acao_objetos$dados$Campo,
-                   Valor 					= acao_objetos$dados$Valor,
-                   tema 					= acao_objetos$dados$tema,
-                   Indicador_relacionado 	= acao_objetos$dados$Indicador_relacionado,
-                   importancia 				= acao_objetos$dados$importancia,
-                   acao 					= acao_objetos$dados$acao,
-                   tipologia 				= acao_objetos$dados$tipologia,
-                   local 					= acao_objetos$dados$local,
-                   descricao 				= acao_objetos$dados$descricao,
-                   observacao 				= acao_objetos$dados$observacao,
-                   referencia 				= lapply(acao_objetos$dados$referencia,formatar_referencias))
+  o_que_fazer_raw <- padronizar_colunas_acoes(o_que_fazer_raw)
 
-dados_acao <- enriquecer_acoes_com_temas(dados_acao,dados_app$info$metadado)
+  # Compatibilidade com nomes possíveis
+  if ("ID" %in% names(o_que_fazer_raw) &&
+      !"id" %in% names(o_que_fazer_raw)) {
+    names(o_que_fazer_raw)[names(o_que_fazer_raw) == "ID"] <- "id"
+  }
 
-dados_acao_df <- data.frame(
-  ID                    = dados_acao$ID,
-  Nome_ficha            = dados_acao$Nome_ficha,
-  Campo                 = dados_acao$Campo,
-  Valor                 = dados_acao$Valor,
-  tema                  = dados_acao$tema,
-  Indicador_relacionado = dados_acao$Indicador_relacionado,
-  importancia           = dados_acao$importancia,
-  acao                  = dados_acao$acao,
-  tipologia             = dados_acao$tipologia,
-  local                 = dados_acao$local,
-  descricao             = dados_acao$descricao,
-  observacao            = dados_acao$observacao,
-  stringsAsFactors      = FALSE
+  colunas_obrigatorias <- c(
+    "id",
+    "o_que_fazer"
+  )
+
+  colunas_faltantes <- setdiff(
+    colunas_obrigatorias,
+    names(o_que_fazer_raw)
+  )
+
+  if (length(colunas_faltantes) > 0) {
+    stop(
+      paste0(
+        "As seguintes colunas estão ausentes em o_que_fazer: ",
+        paste(colunas_faltantes, collapse = ", ")
+      )
+    )
+  }
+
+  o_que_fazer <- o_que_fazer_raw[, colunas_obrigatorias]
+
+  o_que_fazer[] <- lapply(o_que_fazer, function(x) {
+    limpar_espacos_unicode(as.character(x))
+  })
+
+  o_que_fazer <- o_que_fazer[
+    !is.na(o_que_fazer$id) &
+      o_que_fazer$id != "",
+  ]
+
+  o_que_fazer <- o_que_fazer[
+    !duplicated(o_que_fazer$id),
+  ]
+
+  rownames(o_que_fazer) <- NULL
+
+  o_que_fazer
+}
+
+montar_dicas_praticas_acoes <- function(dicas_praticas_raw) {
+
+  if (is.null(dicas_praticas_raw)) {
+    return(data.frame(
+      id = character(0),
+      dicas_praticas = character(0),
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  dicas_praticas_raw <- padronizar_colunas_acoes(dicas_praticas_raw)
+
+  colunas_obrigatorias <- c(
+    "id",
+    "dicas_praticas"
+  )
+
+  colunas_faltantes <- setdiff(
+    colunas_obrigatorias,
+    names(dicas_praticas_raw)
+  )
+
+  if (length(colunas_faltantes) > 0) {
+    stop(
+      paste0(
+        "As seguintes colunas estão ausentes em dicas_praticas: ",
+        paste(colunas_faltantes, collapse = ", ")
+      )
+    )
+  }
+
+  dicas_praticas <- dicas_praticas_raw[, colunas_obrigatorias]
+
+  dicas_praticas[] <- lapply(dicas_praticas, function(x) {
+    limpar_espacos_unicode(as.character(x))
+  })
+
+  dicas_praticas <- dicas_praticas[
+    !is.na(dicas_praticas$id) &
+      dicas_praticas$id != "",
+  ]
+
+  dicas_praticas <- dicas_praticas[
+    !duplicated(dicas_praticas$id),
+  ]
+
+  rownames(dicas_praticas) <- NULL
+
+  dicas_praticas
+}
+
+montar_base_tecnica_acoes <- function(base_tecnica_raw) {
+
+  if (is.null(base_tecnica_raw)) {
+    return(data.frame(
+      id = character(0),
+      id_referencia = character(0),
+      titulo = character(0),
+      o_que_trata = character(0),
+      relacao = character(0),
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  base_tecnica_raw <- padronizar_colunas_acoes(base_tecnica_raw)
+
+  colunas_obrigatorias <- c(
+    "id",
+    "id_referencia",
+    "titulo",
+    "o_que_trata",
+    "relacao"
+  )
+
+  colunas_faltantes <- setdiff(
+    colunas_obrigatorias,
+    names(base_tecnica_raw)
+  )
+
+  if (length(colunas_faltantes) > 0) {
+    stop(
+      paste0(
+        "As seguintes colunas estão ausentes em base_tecnica: ",
+        paste(colunas_faltantes, collapse = ", ")
+      )
+    )
+  }
+
+  base_tecnica <- base_tecnica_raw[, colunas_obrigatorias]
+
+  base_tecnica[] <- lapply(base_tecnica, function(x) {
+    limpar_espacos_unicode(as.character(x))
+  })
+
+  base_tecnica <- base_tecnica[
+    !is.na(base_tecnica$id) &
+      base_tecnica$id != "",
+  ]
+
+  base_tecnica <- base_tecnica[
+    order(base_tecnica$id, base_tecnica$id_referencia),
+  ]
+
+  rownames(base_tecnica) <- NULL
+
+  base_tecnica
+}
+
+# =========================================================
+# 7. Montagem do objeto de ações da aplicação
+# =========================================================
+
+objeto_acoes <- montar_objeto_acoes(
+  acao_objetos = acao_objetos,
+  tabela_cores = dados_app$info$metadado
 )
-
-dados_acao_df$referencia  <- dados_acao$referencia
-dados_acao_df$temas_lista <- dados_acao$temas_lista
-dados_acao_df$cores_tema  <- dados_acao$cores_tema
-
-# Para testes
-
-#obj_acoes <- montar_objeto_acoes(
-#  dados_acao,
-#  selecao = list(
-#    tema = c("Ambiente Escolar","Qualidade do Ar"),
-#    local = c("Cidade","Institucional"),
-#    tipologia = c("Física ou tecnológica","Baseada na natureza"),
-#    acao = c("Transformar"),
-#    indicador_relacionado =c("Secas")
-#  )
-#)
-
-#obj_acoes$total
-#dim(obj_acoes$dados)
-#names(obj_acoes$dados)

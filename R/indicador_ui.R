@@ -257,6 +257,7 @@ df_acoes <- tagList(
           div(class="indicador-temap",df$Unidade[1])
       ),
 
+
       div(
         class = "indicador-coluna",
           div(class="indicador-temah1","Periodicidade:"),

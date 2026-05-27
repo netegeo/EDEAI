@@ -53,7 +53,7 @@ limpar_base_municipal <- function(df) {
 info_raw <- readRDS("data/informacoes_20260526.rds")
 
 # Objeto responsavel por trazer as informações de ações públicas recomendadas
-acao_objetos <- readRDS("data/objeto_acao_rds_20260430.rds")
+acao_objetos <- readRDS("data/objeto_acao_20260526.rds")
 
 # Objeto responsavel por carregar as informações dos cards de apresentação da pagina inicial 
 card_inicio <- readRDS("data/cards_inicio_20260524.rds")
