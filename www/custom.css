@@ -262,7 +262,6 @@ body {
   margin-bottom: 10px;
 }
 
-
 /* ===========================================
           PROJETO  Atualizada 24/05/2026 
 ============================================== */
@@ -1317,7 +1316,6 @@ body {
   font-size: 16px;
 }
 
-
 /* =====================================================
    TEXTO INTRODUTÓRIO DA PÁGINA MUNICIPAL
 ===================================================== */
@@ -2094,11 +2092,64 @@ body {
 ===================================================== */
 
 /* =====================================================
-   NOVA BARRA HORIZONTAL DE SELEÇÃO - AÇÕES RECOMENDADAS
+   AJUSTE CONSOLIDADO - AÇÕES RECOMENDADAS
+   Mantém classes existentes
 ===================================================== */
 
+/* Página geral */
+.acoes-page {
+  background: #F8F4ED;
+  padding: 34px 24px 50px;
+  margin: 50px auto;
+}
+
+/* Hero da página */
+.acoes-hero {
+  max-width: 1200px;
+  margin: 0 auto 26px auto;
+  background: #FFFFFF;
+  border: 1px solid rgba(22, 50, 26, 0.10);
+  border-radius: 30px;
+  box-shadow: 0 6px 22px rgba(20, 40, 30, 0.06);
+  padding: 34px 38px;
+}
+
+/* Como a versão atual usa barra horizontal,
+   o layout não deve mais reservar coluna lateral de 500px */
+.acoes-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Conteúdo ocupa a largura padrão da página */
+.acoes-conteudo {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Barra horizontal de seleção */
+.acoes-selecao-barra {
+  max-width: 1200px;
+  margin: 0 auto 28px auto;
+  background: #123131;
+  border-radius: 30px;
+  padding: 0 150px 0 18px; /* reserva espaço para o botão limpar */
+  display: grid;
+  grid-template-columns: 0.9fr 1.55fr 1.55fr 0.9fr 0.9fr;
+  align-items: center;
+  gap: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  position: relative;
+  z-index: 1000;
+  min-height: 58px;
+  overflow: visible;
+}
+
+/* Mensagem inicial */
 .acoes-mensagem-inicial {
-  max-width: 1500px;
+  max-width: 1200px;
   margin: 18px auto 48px auto;
   background: #FFFFFF;
   border: 1px solid rgba(18, 49, 49, 0.12);
@@ -2110,147 +2161,16 @@ body {
   box-shadow: 0 4px 14px rgba(18, 49, 49, 0.06);
 }
 
-.acoes-selecao-barra {
-  max-width: 1500px;
-  margin: 0 auto 28px auto;
-  background: #123131;
-  border-radius: 30px;
-  padding: 0 18px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  gap: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  position: relative;
-  z-index: 1000;
-}
-
-/* Cada item da barra */
-.acoes-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Botão principal do dropdown */
-.acoes-dropdown-btn {
-  height: 58px;
-  min-width: 190px;
-  background: transparent;
-  color: #F8F4ED;
-  border: none;
-  border-radius: 50px;
-  padding: 0 22px;
-  font-size: 19px;
-  font-weight: 700;
-  cursor: pointer;
-  text-align: left;
-}
-
-.acoes-dropdown-btn::after {
-  content: " ▾";
-  font-size: 15px;
-  margin-left: 8px;
-}
-
-.acoes-dropdown-btn:hover,
-.acoes-dropdown-btn:focus {
-  background: rgb(17, 49, 49);
-  color: #F8F4ED;
-}
-
-/* Conteúdo suspenso */
-.acoes-dropdown-content {
-  display: none;
-  position: absolute;
-  top: 58px;
-  left: 0;
-  z-index: 9999;
-  min-width: 320px;
-  max-height: 380px;
-  overflow-y: auto;
-  background: #123131;
-  color: #F8F4ED;
-  border-radius: 0 0 15px 15px;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
-  padding: 12px 14px;
-}
-
-/* Exibe ao passar o mouse */
-.acoes-dropdown:hover .acoes-dropdown-content {
-  display: block;
-}
-
-/* Remove espaçamentos padrão do Shiny */
-.acoes-dropdown-content .form-group {
-  margin-bottom: 0;
-}
-
-.acoes-dropdown-content .checkbox {
-  margin: 0;
-}
-
-/* Estilo dos itens da lista */
-.acoes-dropdown-content .checkbox label {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  color: #F8F4ED;
-  font-size: 15px;
-  line-height: 1.25;
-  font-weight: 500;
-  padding: 8px 10px;
-  border-radius: 15px;
-  white-space: normal;
-}
-
-.acoes-dropdown-content .checkbox label:hover {
-  background: #F8F4ED;
-  color: #123131;
-}
-
-/* Checkbox */
-.acoes-dropdown-content input[type="checkbox"] {
-  margin-top: 2px;
-  flex: 0 0 auto;
-}
-
-/* Botão limpar */
-.acoes-limpar-btn {
-  margin-left: auto;
-  height: 58px;
-  background: transparent;
-  color: #F8F4ED;
-  border: none;
-  border-radius: 50px;
-  padding: 0 22px;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.acoes-limpar-btn:hover,
-.acoes-limpar-btn:focus {
-  background: rgb(17, 49, 49);
-  color: #F8F4ED;
-}
-
-/* Área de resultados abaixo da barra */
+/* Área de resultados */
 .acoes-resultados-wrap {
-  max-width: 1500px;
-  margin: 0 auto;
-}
-
-/* =====================================================
-   RESULTADOS - CARDS NOVOS DE AÇÕES RECOMENDADAS
-===================================================== */
-
-.acoes-resultados-wrap {
-  max-width: 1500px;
+  max-width: 1200px;
   margin: 0 auto 48px auto;
 }
 
+/* Resumo de resultados */
 .acoes-resultados-resumo {
-  margin: 18px 0 18px 0;
+  max-width: 1200px;
+  margin: 18px auto 18px auto;
   font-size: 18px;
   color: #123131;
 }
@@ -2259,13 +2179,17 @@ body {
   font-weight: 850;
 }
 
+/* Grid dos cards */
 .acoes-cards-grid {
+  max-width: 1200px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
   align-items: stretch;
 }
 
+/* Card de ação */
 .acao-card-novo {
   background: #FFFFFF;
   border: 1px solid rgba(18, 49, 49, 0.12);
@@ -2278,14 +2202,38 @@ body {
   gap: 16px;
 }
 
-.acao-card-novo-titulo {
-  margin: 0;
-  color: #123131;
+/* Título clicável do card.
+   Mantém a aparência de título mesmo sendo link. */
+.acao-card-novo-titulo,
+.acao-card-novo-titulo2 {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+
+  margin: 0 0 12px 0;
+  color: #123131 !important;
+  text-decoration: none !important;
+  cursor: pointer;
+
   font-size: 21px;
   line-height: 1.25;
   font-weight: 850;
+
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: auto;
 }
 
+.acao-card-novo-titulo:hover,
+.acao-card-novo-titulo:focus,
+.acao-card-novo-titulo2:hover,
+.acao-card-novo-titulo2:focus {
+  color: #123131 !important;
+  text-decoration: underline !important;
+}
+
+/* Linhas coloridas dos temas */
 .acao-card-temas-linhas {
   display: flex;
   flex-wrap: nowrap;
@@ -2303,49 +2251,6 @@ body {
 
 .acao-card-tema-linha.sem-cor {
   background: #D8D1C7;
-}
-
-.acao-card-campo {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-.acao-card-campo-titulo {
-  color: #123131;
-  font-size: 13px;
-  font-weight: 850;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  line-height: 1.2;
-}
-
-.acao-card-campo-valores {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.acao-card-chip {
-  display: inline-flex;
-  align-items: center;
-  background: #F8F4ED;
-  color: #26352D;
-  border: 1px solid #E5DED2;
-  padding: 6px 10px;
-  font-size: 13px;
-  line-height: 1.2;
-  font-weight: 600;
-}
-
-.acoes-sem-resultados {
-  background: #FFFFFF;
-  border: 1px solid rgba(18, 49, 49, 0.12);
-  border-radius: 30px;
-  padding: 24px;
-  color: #123131;
-  font-size: 18px;
-  font-weight: 700;
 }
 
 /* Responsividade */
@@ -2384,9 +2289,14 @@ body {
 
 .acoes-page {
   background: #F8F4ED;
-  min-height: calc(100vh - 70px);
-  margin: 50px auto;
-  color: #16321A;
+  padding: 34px 24px 50px;
+}
+
+.acoes-page > .acoes-hero,
+.acoes-page > .acoes-layout {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
 }
 /* ---------- HERO ---------- */
 
@@ -2445,7 +2355,151 @@ body {
 }
 
 .acoes-conteudo {
+  width: 100%;
+  max-width: 1180px;
+}
+
+/* =====================================================
+   CORREÇÃO DROPDOWN - BARRA DE SELEÇÃO AÇÕES
+===================================================== */
+
+.acoes-selecao-barra {
+  max-width: 1200px;
+  margin: 0 auto 28px auto;
+  background: #123131;
+  border-radius: 30px;
+  padding: 0 150px 0 18px; /* reserva espaço para o botão limpar */
+  display: grid;
+  grid-template-columns: 0.9fr 1.55fr 1.55fr 0.9fr 0.9fr;
+  align-items: center;
+  gap: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  position: relative;
+  z-index: 1000;
+  min-height: 58px;
+  overflow: visible;
+}
+
+/* Cada dropdown fica fechado por padrão */
+.acoes-dropdown {
+  position: relative;
+  /*display: inline-flex;*/
+  display: block;
+  align-items: center;
+  height: 58px;
+}
+
+/* Botão visível */
+.acoes-dropdown-btn {
+  width: 100%;
+  height: 58px;
   min-width: 0;
+  background: transparent;
+  color: #F8F4ED !important;
+  border: none;
+  border-radius: 50px;
+  padding: 0 10px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Conteúdo escondido por padrão */
+.acoes-dropdown .acoes-dropdown-content {
+  display: none !important;
+  position: absolute;
+  top: 58px;
+  left: 0;
+  z-index: 9999;
+  min-width: 320px;
+  max-width: 420px;
+  max-height: 380px;
+  overflow-y: auto;
+  background: #123131;
+  color: #F8F4ED;
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  padding: 12px 14px;
+}
+
+/* Abre apenas ao passar o mouse no item */
+.acoes-dropdown:hover > .acoes-dropdown-content {
+  display: block !important;
+}
+
+/* Impede que os grupos internos do Shiny quebrem o dropdown */
+.acoes-dropdown-content .form-group,
+.acoes-dropdown-content .shiny-input-container {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* Remove título interno do checkboxGroupInput, se aparecer */
+.acoes-dropdown-content .control-label {
+  display: none !important;
+}
+
+/* Itens internos */
+.acoes-dropdown-content .checkbox {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.acoes-dropdown-content .checkbox label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #F8F4ED !important;
+  font-size: 15px;
+  line-height: 1.25;
+  font-weight: 500;
+  padding: 8px 10px;
+  border-radius: 15px;
+  white-space: normal;
+}
+
+.acoes-dropdown-content .checkbox label:hover {
+  background: #F8F4ED;
+  color: #123131 !important;
+}
+
+.acoes-dropdown-content input[type="checkbox"] {
+  margin-top: 2px;
+  flex: 0 0 auto;
+}
+
+/* Botão limpar dentro da barra */
+.acoes-limpar-btn {
+  position: absolute;
+  right: 18px;
+  top: 0;
+  width: 130px;
+  height: 58px;
+  margin-left: 0;
+  background: transparent;
+  color: #F8F4ED !important;
+  border: none;
+  border-radius: 50px;
+  padding: 0 12px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.acoes-limpar-btn:hover,
+.acoes-limpar-btn:focus,
+.acoes-dropdown-btn:hover,
+.acoes-dropdown-btn:focus {
+  background: rgb(17, 49, 49);
+  color: #F8F4ED !important;
 }
 
 /* =====================================================
@@ -2574,6 +2628,31 @@ body {
   border-color: #8E877D;
 }
 
+.acao-card-regua {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 14px 14px 0 0;
+  margin-bottom: 14px;
+}
+
+.acao-card-regua-item {
+  flex: 1;
+  min-width: 24px;
+}
+
+@media (max-width: 900px) {
+  .acoes-selecao-barra {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .acoes-selecao-barra {
+    grid-template-columns: 1fr;
+  }
+}
 /* =====================================================
    TOPO DA LISTA
 ===================================================== */
@@ -2772,6 +2851,54 @@ body {
 }
 
 /* =====================================================
+   CARDS DE AÇÕES - CAMPOS E PÍLULAS
+===================================================== */
+
+.acao-card-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 10px;
+  border-top: 1px solid #E5DED2;
+}
+
+.acao-card-campo:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.acao-card-campo-titulo {
+  color: #123131;
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.acao-card-campo-valores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.acao-card-chip {
+  display: inline-flex;
+  align-items: center;
+  background: #F8F4ED;
+  color: #26352D;
+  border: 1px solid #E5DED2;
+  border-radius: 18px;
+  padding: 6px 10px;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 600;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* =====================================================
    DETALHE DA AÇÃO
    Mantém compatível com a ficha detalhada
 ===================================================== */
@@ -2834,9 +2961,14 @@ body {
 .acao-titulo {
   margin: 0 0 24px;
   font-size: 34px;
-  font-weight: 600;
+  font-weight: 850;
   line-height: 1.3;
   color: #14301E;
+
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: auto;
 }
 
 .acao-importancia-box {
@@ -2847,6 +2979,11 @@ body {
   line-height: 1.55;
   color: #454545;
   margin-top: 28px;
+}
+
+.acao-card-conteudo,
+.acao-topo {
+  min-width: 0;
 }
 
 .acao-importancia-box strong {
@@ -2928,6 +3065,154 @@ body {
   background: #FFFFFF;
   color: #111111 !important;
   border-color: #948D82;
+}
+
+/* =====================================================
+   DETALHE DA AÇÃO - BLOCO SUPERIOR AJUSTE NEUTRO
+===================================================== */
+
+.acao-topo-box {
+  background: #FFFFFF;
+  border: 1px solid #D8D1C7;
+  border-radius: 30px;
+  box-shadow: 0 4px 18px rgba(30, 30, 30, 0.045);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.acao-topo-titulo-box {
+  background: #123131;
+  padding: 28px 36px;
+}
+
+.acao-topo-titulo {
+  margin: 0;
+  color: #F8F4ED;
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+.acao-topo-importancia {
+  padding: 24px 30px;
+  background: #F8F4ED;
+  color: #3E3E3E;
+  font-size: 20px;
+  line-height: 1.55;
+  border-bottom: 1px solid #E5DED2;
+}
+
+.acao-topo-importancia strong {
+  color: #333333;
+  font-weight: 850;
+}
+
+.acao-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid #E5DED2;
+}
+
+.acao-info-grid:last-child {
+  border-bottom: none;
+}
+
+.acao-info-campo {
+  padding: 22px 28px;
+  border-right: 1px solid #E5DED2;
+  background: #FFFFFF;
+}
+
+.acao-info-campo:nth-child(2) {
+  border-right: none;
+}
+
+.acao-info-rotulo {
+  color: #123131;
+  font-size: 15px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.acao-info-valores {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acao-info-valor {
+  background: #F8F4ED;
+  color: #26352D;
+  border: 1px solid #E5DED2;
+  border-radius: 18px;
+  padding: 8px 12px;
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+@media (max-width: 760px) {
+  .acao-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .acao-info-campo {
+    border-right: none;
+    border-bottom: 1px solid #E5DED2;
+  }
+
+  .acao-info-campo:last-child {
+    border-bottom: none;
+  }
+
+  .acao-topo-titulo {
+    font-size: 27px;
+  }
+}
+
+/* =====================================================
+   AJUSTE CONSOLIDADO - DETALHE DA AÇÃO
+   Mantém classes existentes
+===================================================== */
+
+.acao-detalhe-page {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 24px 50px;
+  background: #F8F4ED;
+  color: #26352D;
+  font-family: "Rawline", Arial, Helvetica, sans-serif;
+}
+
+.acao-card-principal,
+.acao-section-card {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.acao-titulo {
+  margin: 0 0 24px;
+  font-size: 34px;
+  font-weight: 850;
+  line-height: 1.3;
+  color: #14301E;
+}
+
+.acao-importancia-box {
+  background: #F0EADF;
+  border-radius: 30px;
+  padding: 22px 26px;
+  font-size: 20px;
+  line-height: 1.55;
+  color: #454545;
+  margin-top: 28px;
 }
 
 /* =====================================================

@@ -2,6 +2,144 @@
 # Página de políticas públicas
 # ---------------------------
 
+preparar_acao_ui <- function(dados_acoes, id_acao, objeto_acoes = NULL) {
+
+  if (is.null(dados_acoes) || nrow(dados_acoes) == 0) {
+    return(NULL)
+  }
+
+  # Compatibilidade entre nomes antigos e novos
+  coluna_id <- if ("ID" %in% names(dados_acoes)) {
+    "ID"
+  } else if ("id" %in% names(dados_acoes)) {
+    "id"
+  } else {
+    return(NULL)
+  }
+
+  linha <- dados_acoes[
+    as.character(dados_acoes[[coluna_id]]) == as.character(id_acao),
+    ,
+    drop = FALSE
+  ]
+
+  if (nrow(linha) == 0) {
+    return(NULL)
+  }
+
+  valor_coluna <- function(nome_novo, nome_antigo = NULL, vazio = NA_character_) {
+
+    if (nome_novo %in% names(linha)) {
+      return(valor_txt(linha[[nome_novo]][1], vazio = vazio))
+    }
+
+    if (!is.null(nome_antigo) && nome_antigo %in% names(linha)) {
+      return(valor_txt(linha[[nome_antigo]][1], vazio = vazio))
+    }
+
+    vazio
+  }
+
+  valor_lista <- function(nome_novo, nome_antigo = NULL) {
+
+    if (nome_novo %in% names(linha)) {
+      return(linha[[nome_novo]][[1]])
+    }
+
+    if (!is.null(nome_antigo) && nome_antigo %in% names(linha)) {
+      return(linha[[nome_antigo]][[1]])
+    }
+
+    list()
+  }
+  
+  # --------- O que Fazer -----------------------
+  o_que_fazer <- NA_character_
+
+    if (!is.null(objeto_acoes) &&
+       !is.null(objeto_acoes$o_que_fazer)) {
+
+       linha_o_que_fazer <- objeto_acoes$o_que_fazer[
+       objeto_acoes$o_que_fazer$id == id_acao,
+       ,drop = FALSE]
+
+      if (nrow(linha_o_que_fazer) > 0) {
+        o_que_fazer <- linha_o_que_fazer$o_que_fazer[1]
+      }
+    }
+    
+  # --------- Dicas Praticas --------------------
+  dicas_praticas <- NA_character_
+
+  if (!is.null(objeto_acoes) &&
+    !is.null(objeto_acoes$dicas_praticas)) {
+
+  linha_dicas_praticas <- objeto_acoes$dicas_praticas[
+    objeto_acoes$dicas_praticas$id == id_acao,
+    ,
+    drop = FALSE
+  ]
+
+    if (nrow(linha_dicas_praticas) > 0) {
+      dicas_praticas <- linha_dicas_praticas$dicas_praticas[1]
+    }
+  }
+  
+  # ------- Base Tecnica -------------------------
+  
+  base_tecnica <- data.frame(
+      id = character(0),
+      id_referencia = character(0),
+      titulo = character(0),
+      o_que_trata = character(0),
+      relacao = character(0),
+      stringsAsFactors = FALSE
+  )
+
+  if (!is.null(objeto_acoes) &&
+      !is.null(objeto_acoes$base_tecnica)) {
+
+       base_tecnica <- objeto_acoes$base_tecnica[
+       objeto_acoes$base_tecnica$id == id_acao,
+      ,
+       drop = FALSE
+      ]
+   }
+
+  list(
+    id 					= valor_coluna("id", "ID"),
+    nome_curto 			= valor_coluna("nome_curto", "acao"),
+    nome_ficha 			= valor_coluna("nome_ficha", "Nome_ficha"),
+    por_que_importante 	= valor_coluna("por_que_importante", "importancia"),
+    indicador_de_exposicao_relacionado = valor_coluna(
+      "indicador_de_exposicao_relacionado",
+      "Indicador_relacionado"
+    ),
+
+    estrategia_de_atuacao_da_acao = valor_coluna(
+      "estrategia_de_atuacao_da_acao",
+      "acao"
+    ),
+
+    tipologia_da_acao = valor_coluna(
+      "tipologia_da_acao",
+      "tipologia"
+    ),
+
+    local_da_acao = valor_coluna(
+      "local_da_acao",
+      "local"
+    ),
+    
+    tags 				= valor_lista("tags"),
+    temas 				= valor_lista("temas_lista"),
+    cores_tema 			= valor_lista("cores_tema"),
+    o_que_fazer 		= o_que_fazer,
+    dicas_praticas 		= dicas_praticas,
+    base_tecnica 		= base_tecnica
+  )
+}
+
 acoes_recomendadas_ui <- function() {
 
   tagList(
@@ -56,163 +194,216 @@ acoes_recomendadas_ui <- function() {
   )
 }
 
+regua_temas_acao_ui <- function(cores_tema) {
 
+  if (is.null(cores_tema) || nrow(cores_tema) == 0) {
+    return(
+      tags$div(
+        class = "acao-card-regua",
+        tags$div(
+          class = "acao-card-regua-item",
+          style = "background:#113131;"
+        )
+      )
+    )
+  }
 
+  tags$div(
+    class = "acao-card-regua",
+    lapply(seq_len(nrow(cores_tema)), function(i) {
+      tags$div(
+        class = "acao-card-regua-item",
+        title = cores_tema$tema[i],
+        style = paste0(
+          "background:",
+          cores_tema$cor_dark[i],
+          ";"
+        )
+      )
+    })
+  )
+}
+
+base_tecnica_acao_ui <- function(base_tecnica) {
+
+  if (is.null(base_tecnica) || nrow(base_tecnica) == 0) {
+    return(
+      tags$p("Sem informação.")
+    )
+  }
+
+  tagList(
+    lapply(seq_len(nrow(base_tecnica)), function(i) {
+
+      tags$div(
+        class = "acao-ref-card",
+
+        tags$div(
+          class = "acao-ref-titulo",
+          valor_txt(base_tecnica$titulo[i])
+        ),
+
+        tags$div(
+          class = "acao-ref-linha",
+
+          tags$div(
+            class = "acao-ref-label",
+            "O que trata:"
+          ),
+
+          tags$div(
+            class = "acao-ref-conteudo",
+            valor_txt(base_tecnica$o_que_trata[i])
+          )
+        ),
+
+        tags$div(
+          class = "acao-ref-linha",
+
+          tags$div(
+            class = "acao-ref-label",
+            "Relação:"
+          ),
+
+          tags$div(
+            class = "acao-ref-conteudo",
+            valor_txt(base_tecnica$relacao[i])
+          )
+        )
+      )
+    })
+  )
+}
+
+campo_lista_acao_ui <- function(rotulo, valores) {
+
+  valores <- limpar_opcoes_filtro_acoes(valores)
+
+  if (length(valores) == 0) {
+    valores <- "Sem informação"
+  }
+
+  tags$div(
+    class = "acao-info-campo",
+
+    tags$div(
+      class = "acao-info-rotulo",
+      rotulo
+    ),
+
+    tags$div(
+      class = "acao-info-valores",
+
+      lapply(valores, function(x) {
+        tags$div(
+          class = "acao-info-valor",
+          x
+        )
+      })
+    )
+  )
+}
+
+acao_topo_detalhe_ui <- function(acao) {
+
+  tags$div(
+    class = "acao-topo-box",
+
+    tags$div(
+      class = "acao-topo-titulo-box",
+      tags$h1(
+        class = "acao-topo-titulo",
+        valor_txt(acao$nome_ficha)
+      )
+    ),
+
+    tags$div(
+      class = "acao-topo-importancia",
+
+      tags$strong("Por que isso é importante: "),
+
+      tags$span(
+        valor_txt(acao$por_que_importante)
+      )
+    ),
+
+    tags$div(
+      class = "acao-info-grid linha-1",
+
+      campo_lista_acao_ui(
+        "Indicador",
+        acao$indicador_de_exposicao_relacionado
+      ),
+
+      campo_lista_acao_ui(
+        "Estratégia",
+        acao$estrategia_de_atuacao_da_acao
+      )
+    ),
+
+    tags$div(
+      class = "acao-info-grid linha-2",
+
+      campo_lista_acao_ui(
+        "Tipologia",
+        acao$tipologia_da_acao
+      ),
+
+      campo_lista_acao_ui(
+        "Onde acontece",
+        acao$local_da_acao
+      )
+    )
+  )
+}
 
 acao_detalhe_ui <- function(obj) {
+
+  acao <- obj
 
   tags$div(
     class = "acao-detalhe-page",
 
     # =========================
-    # BREADCRUMB
+    # TOPO DA AÇÃO
     # =========================
-    tags$div(
-      class = "acao-breadcrumb",
-
-      actionLink(
-        inputId = "voltar_lista_acoes_topo",
-        label = "Ações Recomendadas",
-        class = "acao-breadcrumb-link"
-      ),
-
-      tags$span(
-        class = "acao-breadcrumb-sep",
-        "›"
-      ),
-
-      tags$span(
-        class = "acao-breadcrumb-current",
-        acao$nome_curto
-      )
-    ),
+    acao_topo_detalhe_ui(acao),
 
     # =========================
-    # CARD PRINCIPAL
-    # =========================
-    tags$div(
-      class = "acao-card-principal",
-
-      tags$div(
-        class = "acao-card-barra"
-      ),
-
-      tags$div(
-        class = "acao-card-conteudo",
-
-        tags$div(
-          class = "acao-topo",
-
-          tags$h1(
-            class = "acao-titulo",
-            acao$nome_ficha
-          ),
-        ),
-
-        tags$div(
-          class = "acao-tags",
-
-          lapply(acao$tags, function(x) {
-            tags$span(
-              class = "acao-tag",
-              x
-            )
-          })
-        ),
-
-        tags$div(
-          class = "acao-importancia-box",
-
-          tags$strong(
-            "Por que isso é importante: "
-          ),
-
-          tags$span(
-            acao$por_que_importante
-          )
-        )
-      )
-    ),
-
-    # =========================
-    # DESCRIÇÃO
+    # O QUE FAZER
     # =========================
     tags$div(
       class = "acao-section-card",
 
-      tags$h2("Descrição da ação"),
+      tags$h2("O que fazer"),
 
       tags$p(
-        acao$descricao_acao
+        valor_txt(acao$o_que_fazer)
       )
     ),
 
     # =========================
-    # OBSERVAÇÃO
+    # DICAS PRÁTICAS
     # =========================
     tags$div(
       class = "acao-section-card",
 
-      tags$h2("Observação"),
+      tags$h2("Dicas práticas"),
 
       tags$p(
-        acao$observacao
+        valor_txt(acao$dicas_praticas)
       )
     ),
 
     # =========================
-    # REFERÊNCIAS
+    # BASE TÉCNICA
     # =========================
-
-
     tags$div(
       class = "acao-section-card acao-referencias-section",
 
-      tags$h2("Referências bibliográficas"),
+      tags$h2("Base Técnica"),
 
-      lapply(acao$referencias, function(ref) {
-
-        tags$div(
-          class = "acao-ref-card",
-
-          tags$div(
-            class = "acao-ref-texto",
-
-            tags$div(
-              class = "acao-ref-titulo",
-              ref$titulo
-            ),
-
-tags$div(
-  class = "acao-ref-linha",
-
-  tags$div(
-    class = "acao-ref-label",
-    "O que trata:"
-  ),
-
-  tags$div(
-    class = "acao-ref-conteudo",
-    ref$o_que_trata
-  )
-),
-
-tags$div(
-  class = "acao-ref-linha",
-
-  tags$div(
-    class = "acao-ref-label",
-    "Relação com a ação:"
-  ),
-
-  tags$div(
-    class = "acao-ref-conteudo",
-    ref$relacao
-  )
-)
-          )
-        )
-      })
+      base_tecnica_acao_ui(acao$base_tecnica)
     ),
 
     # =========================
@@ -222,8 +413,8 @@ tags$div(
       class = "acao-voltar-area",
 
       actionButton(
-        "voltar_lista_acoes",
-        "← Voltar para lista",
+        inputId = "voltar_origem_acao",
+        label = "← Voltar",
         class = "btn-voltar-acoes"
       )
     )

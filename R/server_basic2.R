@@ -34,27 +34,15 @@ valor_txt <- function(x, vazio = "Sem informação") {
   x
 }
 
-limpar_opcoes_filtro_acoes <- function(x, separador = ",") {
+padronizar_colunas_acoes <- function(df) {
 
-  if (is.null(x) || length(x) == 0) {
-    return(character(0))
-  }
+  names(df) <- names(df) |>
+    tolower() |>
+    trimws() |>
+    gsub("\\s+", "_", x = _) |>
+    gsub("\\.", "_", x = _)
 
-  x <- as.character(x)
-
-  x <- x[!is.na(x)]
-
-  if (length(x) == 0) {
-    return(character(0))
-  }
-
-  x <- unlist(strsplit(x, separador, fixed = TRUE))
-
-  x <- trimws(x)
-
-  x <- x[!is.na(x) & x != ""]
-
-  sort(unique(x))
+  df
 }
 
 
@@ -85,28 +73,6 @@ dropdown_filtro_acoes <- function(id, titulo, escolhas) {
         selected = character(0)
       )
     )
-  )
-}
-
-preparar_acao_ui <- function(dados_acoes, id_acao) {
-
-  linha <- dados_acoes[dados_acoes$ID == id_acao, , drop = FALSE]
-
-  if (nrow(linha) == 0) {
-    return(NULL)
-  }
-
-  list(
-    id = linha$ID[1],
-    nome_curto = linha$acao[1],
-    nome_ficha = linha$Nome_ficha[1],
-    por_que_importante = linha$importancia[1],
-    descricao_acao = linha$descricao[1],
-    observacao = linha$observacao[1],
-    referencias = linha$referencia[[1]],
-    tags = linha$tags[[1]],
-    temas = linha$temas_lista[[1]],
-    cores_tema = linha$cores_tema[[1]]
   )
 }
 
@@ -162,6 +128,8 @@ server <- function(input, output, session) {
 
   pagina_ativa <- reactiveVal("inicio")
   indicador_ativo <- reactiveVal(NULL)
+  acao_ativa <- reactiveVal(NULL)
+  origem_acao <- reactiveVal(NULL)
 
   # -------------------------------------------------------
   # Navegação principal
@@ -218,6 +186,41 @@ server <- function(input, output, session) {
   })
 
 
+  observeEvent(input$acao_selecionada, {
+
+  req(input$acao_selecionada)
+
+  acao_ativa(input$acao_selecionada)
+  origem_acao(pagina_ativa())
+
+  pagina_ativa("acao_detalhe")
+
+  shinyjs::runjs("
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  ")
+  })
+  
+  observeEvent(input$voltar_origem_acao, {
+
+  destino <- origem_acao()
+
+  if (is.null(destino) || is.na(destino) || destino == "") {
+    destino <- "acoes"
+  }
+
+  acao_ativa(NULL)
+  pagina_ativa(destino)
+
+  shinyjs::runjs("
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  ")
+})
   # -------------------------------------------------------
   # Renderização da página atual
   # -------------------------------------------------------
@@ -236,6 +239,29 @@ server <- function(input, output, session) {
 
     if (pagina == "acoes") {
       return(acoes_recomendadas_ui())
+    }
+    
+    if (pagina == "acao_detalhe") {
+
+      req(acao_ativa())
+
+      acao <- preparar_acao_ui(
+       dados_acoes = objeto_acoes$destaque,
+       id_acao = acao_ativa(),
+       objeto_acoes = objeto_acoes
+       
+      )
+
+    if (is.null(acao)) {
+      return(
+       tags$div(
+         class = "acao-detalhe-page",
+         tags$p("Ação não encontrada.")
+       )
+      )
+    }
+
+    return(acao_detalhe_ui(acao))
     }
 
     if (pagina == "projeto") {
@@ -340,126 +366,214 @@ server <- function(input, output, session) {
   # =======================================================
 
   # -------------------------------------------------------
-  # Define a base de ações a ser usada pela função
-  # montar_objeto_acoes().
+  # Base de ações
   #
-  # Preferência:
-  #   1. objeto global dados_acao, se existir;
-  #   2. info_acoes$dados_acao, se existir.
+  # Mantém o nome base_acoes(), mas agora usa o objeto
+  # já montado em R/montar_objeto_acoes.R:
+  #
+  #   objeto_acoes$destaque
+  #
+  # Não usa mais dados_acao_df.
   # -------------------------------------------------------
 
   base_acoes <- reactive({
 
-    if (exists("dados_acao_df")) {
-      return(dados_acao_df)
+    validate(
+      need(
+        exists("objeto_acoes") &&
+          !is.null(objeto_acoes) &&
+          !is.null(objeto_acoes$destaque),
+        "Objeto de ações não encontrado. Verifique se objeto_acoes foi montado em R/montar_objeto_acoes.R."
+      )
+    )
+
+    objeto_acoes$destaque
+  })
+
+
+    # -------------------------------------------------------
+  # Função de compatibilidade para os cards atuais
+  #
+  # Ela evita mudar preparar_cards_acoes() e cards_acoes_ui().
+  # Cria apelidos com nomes antigos caso os cards ainda usem:
+  #   ID, Nome_ficha, importancia, Indicador_relacionado,
+  #   acao, local, tipologia, temas_lista, cores_tema.
+  # -------------------------------------------------------
+
+  compatibilizar_acoes_para_cards <- function(dados) {
+
+    if (is.null(dados) || nrow(dados) == 0) {
+      return(dados)
     }
 
-    NULL
-  })
+    if (!"ID" %in% names(dados) && "id" %in% names(dados)) {
+      dados$ID <- dados$id
+    }
+
+    if (!"Nome_ficha" %in% names(dados) && "nome_da_ficha" %in% names(dados)) {
+      dados$Nome_ficha <- dados$nome_da_ficha
+    }
+
+    if (!"importancia" %in% names(dados) &&
+        "por_que_isso_e_importante" %in% names(dados)) {
+      dados$importancia <- dados$por_que_isso_e_importante
+    }
+
+    if (!"Indicador_relacionado" %in% names(dados) &&
+        "indicador_de_exposicao_relacionado" %in% names(dados)) {
+      dados$Indicador_relacionado <- dados$indicador_de_exposicao_relacionado
+    }
+
+    if (!"acao" %in% names(dados) &&
+        "estrategia_de_atuacao_da_acao" %in% names(dados)) {
+      dados$acao <- dados$estrategia_de_atuacao_da_acao
+    }
+
+    if (!"local" %in% names(dados) &&
+        "local_da_acao" %in% names(dados)) {
+      dados$local <- dados$local_da_acao
+    }
+
+    if (!"tipologia" %in% names(dados) &&
+        "tipologia_da_acao" %in% names(dados)) {
+      dados$tipologia <- dados$tipologia_da_acao
+    }
+
+    if (!"temas_lista" %in% names(dados) &&
+        "grupo_tematico" %in% names(dados)) {
+      dados$temas_lista <- lapply(
+        dados$grupo_tematico,
+        limpar_opcoes_filtro_acoes,
+        separador = ";"
+      )
+    }
+
+    if (!"cores_tema" %in% names(dados) &&
+        all(c("grupo_tematico", "cor_tema_dark") %in% names(dados))) {
+
+      dados$cores_tema <- lapply(seq_len(nrow(dados)), function(i) {
+        data.frame(
+          tema = dados$grupo_tematico[i],
+          cor_dark = dados$cor_tema_dark[i],
+          stringsAsFactors = FALSE
+        )
+      })
+    }
+
+    dados
+  }
 
   # -------------------------------------------------------
   # Barra de seleção das ações recomendadas
+  #
+  # Mantém:
+  #   output$barra_selecao_acoes
+  #   filtro_tema
+  #   filtro_indicador_relacionado
+  #   filtro_acao
+  #   filtro_local
+  #   filtro_tipologia
   # -------------------------------------------------------
 
   output$barra_selecao_acoes <- renderUI({
 
     dados <- base_acoes()
 
-    validate(
-      need(
-        !is.null(dados),
-        "Base de ações não encontrada. Verifique se dados_acao_df foi criado."
+    escolhas_tema <- limpar_opcoes_filtro_acoes(
+      dados$grupo_tematico,
+      separador = ","
+    )
+
+    escolhas_indicador <- limpar_opcoes_filtro_acoes(
+      dados$indicador_de_exposicao_relacionado
+    )
+
+    escolhas_acao <- limpar_opcoes_filtro_acoes(
+      dados$estrategia_de_atuacao_da_acao
+    )
+
+    escolhas_local <- limpar_opcoes_filtro_acoes(
+      dados$local_da_acao
+    )
+
+    escolhas_tipologia <- limpar_opcoes_filtro_acoes(
+      dados$tipologia_da_acao
+    )
+
+    tags$div(
+      class = "acoes-selecao-barra",
+
+      dropdown_filtro_acoes(
+        id = "filtro_tema",
+        titulo = "Grupo temático",
+        escolhas = escolhas_tema
+      ),
+
+      dropdown_filtro_acoes(
+        id = "filtro_indicador_relacionado",
+        titulo = "Indicador de exposição \nrelacionado",
+        escolhas = escolhas_indicador
+      ),
+
+      dropdown_filtro_acoes(
+        id = "filtro_acao",
+        titulo = "Estratégia de atuação \nda ação",
+        escolhas = escolhas_acao
+      ),
+
+      dropdown_filtro_acoes(
+        id = "filtro_local",
+        titulo = "Local da ação",
+        escolhas = escolhas_local
+      ),
+
+      dropdown_filtro_acoes(
+        id = "filtro_tipologia",
+        titulo = "Tipologia da ação",
+        escolhas = escolhas_tipologia
+      ),
+
+      tags$button(
+        id = "limpar_filtros_acoes",
+        type = "button",
+        class = "acoes-limpar-btn",
+        "Limpar seleção",
+        onclick = "
+          Shiny.setInputValue(
+            'limpar_filtros_acoes_click',
+            Math.random(),
+            {priority: 'event'}
+          );
+        "
       )
     )
-
-  escolhas_tema <- limpar_opcoes_filtro_acoes(
-    unlist(dados$temas_lista)
-  )
-
-  escolhas_indicador <- limpar_opcoes_filtro_acoes(
-    dados$Indicador_relacionado
-  )
-
-  escolhas_acao <- limpar_opcoes_filtro_acoes(
-    dados$acao
-  )
-
-  escolhas_local <- limpar_opcoes_filtro_acoes(
-    dados$local
-  )
-
-  escolhas_tipologia <- limpar_opcoes_filtro_acoes(
-    dados$tipologia
-  )
-
-  tags$div(
-    class = "acoes-selecao-barra",
-
-    dropdown_filtro_acoes(
-      id = "filtro_tema",
-      titulo = "Grupo temático",
-      escolhas = escolhas_tema
-    ),
-
-    dropdown_filtro_acoes(
-      id = "filtro_indicador_relacionado",
-      titulo = "Indicador de exposição \nrelacionado",
-      escolhas = escolhas_indicador
-    ),
-
-    dropdown_filtro_acoes(
-      id = "filtro_acao",
-      titulo = "Estratégia de atuação \nda ação",
-      escolhas = escolhas_acao
-    ),
-
-    dropdown_filtro_acoes(
-      id = "filtro_local",
-      titulo = "Local da ação",
-      escolhas = escolhas_local
-    ),
-
-    dropdown_filtro_acoes(
-      id = "filtro_tipologia",
-      titulo = "Tipologia da ação",
-      escolhas = escolhas_tipologia
-    ),
-
-    tags$button(
-      id = "limpar_filtros_acoes",
-      type = "button",
-      class = "acoes-limpar-btn",
-      "Limpar seleção",
-      onclick = "
-        Shiny.setInputValue(
-          'limpar_filtros_acoes_click',
-          Math.random(),
-          {priority: 'event'}
-        );
-      "
-    )
-  )
   })
 
 
-  # -------------------------------------------------------
+# -------------------------------------------------------
   # Seleções feitas pelo usuário
+  #
+  # Mantém o nome selecao_acoes() e mantém os inputIds.
+  # Só muda o nome interno dos campos para conversar com
+  # filtrar_acoes_recomendadas().
   # -------------------------------------------------------
 
   selecao_acoes <- reactive({
 
     list(
-      tema 					= input$filtro_tema,
-      indicador_relacionado = input$filtro_indicador_relacionado,
-      acao 					= input$filtro_acao,
-      local 				= input$filtro_local,
-      tipologia 			= input$filtro_tipologia
+      grupo_tematico = input$filtro_tema,
+      indicador_de_exposicao_relacionado = input$filtro_indicador_relacionado,
+      estrategia_de_atuacao_da_acao = input$filtro_acao,
+      local_da_acao = input$filtro_local,
+      tipologia_da_acao = input$filtro_tipologia
     )
   })
 
 
   # -------------------------------------------------------
   # Limpa os filtros da nova barra
+  #
+  # Mantém exatamente os mesmos inputIds.
   # -------------------------------------------------------
 
   observeEvent(input$limpar_filtros_acoes_click, {
@@ -498,22 +612,19 @@ server <- function(input, output, session) {
 
   # -------------------------------------------------------
   # Objeto final de ações, já filtrado pela seleção
+  #
+  # Mantém o nome objeto_acoes_filtrado().
+  # Agora usa filtrar_acoes_recomendadas().
   # -------------------------------------------------------
 
   objeto_acoes_filtrado <- reactive({
 
     dados <- base_acoes()
 
-    validate(
-      need(
-        !is.null(dados),
-        "Base de ações não encontrada. Verifique se dados_acao_df foi carregado."
-      )
-    )
-
-    montar_objeto_acoes(
-      dados_acao = dados,
-      selecao = selecao_acoes()
+    filtrar_acoes_recomendadas(
+      destaque = dados,
+      selecao = selecao_acoes(),
+      regra = "OR"
     )
   })
 
@@ -521,45 +632,48 @@ server <- function(input, output, session) {
   # -------------------------------------------------------
   # Área de resultados das ações
   #
-  # Nesta etapa, ainda é apenas uma saída de validação.
-  # A forma final de apresentação será construída depois.
+  # Mantém output$pagina_acoes.
+  # Mantém preparar_cards_acoes() e cards_acoes_ui().
   # -------------------------------------------------------
 
-output$pagina_acoes <- renderUI({
+  output$pagina_acoes <- renderUI({
 
-  selecao <- selecao_acoes()
+    selecao <- selecao_acoes()
 
-  if (!tem_selecao_acoes(selecao)) {
-    return(
-      tags$div(
-        class = "acoes-mensagem-inicial",
-        "Selecione um ou mais filtros na barra acima para visualizar as ações recomendadas."
-      )
-    )
-  }
-
-  obj <- objeto_acoes_filtrado()
-
-  cards <- preparar_cards_acoes(
-    obj$dados
-  )
-
-  tagList(
-    tags$div(
-      class = "acoes-resultados-resumo",
-      HTML(
-        paste0(
-          "<b>",
-          obj$total,
-          "</b> ações encontradas"
+    if (!tem_selecao_acoes(selecao)) {
+      return(
+        tags$div(
+          class = "acoes-mensagem-inicial",
+          "Selecione um ou mais filtros na barra acima para visualizar as ações recomendadas."
         )
       )
-    ),
+    }
 
-    cards_acoes_ui(cards)
-  )
-})
+    obj <- objeto_acoes_filtrado()
 
+    dados_cards <- compatibilizar_acoes_para_cards(
+      obj$dados
+    )
+
+    cards <- preparar_cards_acoes(
+      dados_cards
+    )
+
+    tagList(
+      tags$div(
+        class = "acoes-resultados-resumo",
+        HTML(
+          paste0(
+            "<b>",
+            obj$total,
+            "</b> ações encontradas"
+          )
+        )
+      ),
+
+      cards_acoes_ui(cards)
+    )
+  })
 
 
 }

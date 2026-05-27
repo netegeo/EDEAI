@@ -7,22 +7,23 @@ preparar_cards_acoes <- function(dados_acoes) {
 
   quebrar_multivalor <- function(x, separador = ",") {
 
-    if (is.null(x) || length(x) == 0 || all(is.na(x))) {
-      return(character(0))
+    limpar_opcoes_filtro_acoes(
+      x = x,
+      separador = separador
+    )
+  }
+
+  valor_coluna_card <- function(linha, nome_novo, nome_antigo = NULL, vazio = NA_character_) {
+
+    if (nome_novo %in% names(linha)) {
+      return(valor_txt(linha[[nome_novo]][1], vazio = vazio))
     }
 
-    x <- as.character(x)
-    x <- x[!is.na(x)]
-
-    if (length(x) == 0) {
-      return(character(0))
+    if (!is.null(nome_antigo) && nome_antigo %in% names(linha)) {
+      return(valor_txt(linha[[nome_antigo]][1], vazio = vazio))
     }
 
-    x <- unlist(strsplit(x, separador, fixed = TRUE))
-    x <- trimws(x)
-    x <- x[!is.na(x) & x != ""]
-
-    unique(x)
+    vazio
   }
 
   obter_cores_tema <- function(x) {
@@ -43,10 +44,10 @@ preparar_cards_acoes <- function(dados_acoes) {
       return(data.frame())
     }
 
-    # Prioriza cor_dark, caso exista.
-    # Se não existir, usa cor_bg como alternativa.
     coluna_cor <- if ("cor_dark" %in% names(cores)) {
       "cor_dark"
+    } else if ("cor" %in% names(cores)) {
+      "cor"
     } else if ("cor_bg" %in% names(cores)) {
       "cor_bg"
     } else {
@@ -72,28 +73,44 @@ preparar_cards_acoes <- function(dados_acoes) {
     linha <- dados_acoes[i, , drop = FALSE]
 
     list(
-      id = linha$ID[1],
+      id = valor_coluna_card(linha, "id", "ID"),
 
-      nome_ficha = valor_txt(linha$Nome_ficha[1]),
+      nome_ficha = valor_coluna_card(linha, "nome_ficha", "Nome_ficha"),
 
       cores_tema = obter_cores_tema(
         linha$cores_tema[[1]]
       ),
 
       indicador_relacionado = quebrar_multivalor(
-        linha$Indicador_relacionado[1]
+        valor_coluna_card(
+          linha,
+          "indicador_de_exposicao_relacionado",
+          "Indicador_relacionado"
+        )
       ),
 
       estrategia_acao = quebrar_multivalor(
-        linha$acao[1]
+        valor_coluna_card(
+          linha,
+          "estrategia_de_atuacao_da_acao",
+          "acao"
+        )
       ),
 
       tipologia = quebrar_multivalor(
-        linha$tipologia[1]
+        valor_coluna_card(
+          linha,
+          "tipologia_da_acao",
+          "tipologia"
+        )
       ),
 
       local = quebrar_multivalor(
-        linha$local[1]
+        valor_coluna_card(
+          linha,
+          "local_da_acao",
+          "local"
+        )
       )
     )
   })
@@ -101,9 +118,62 @@ preparar_cards_acoes <- function(dados_acoes) {
   cards
 }
 
-campo_card_acao_ui <- function(titulo, valores) {
+quebrar_valores_card_acao <- function(valores, separador = ",") {
 
   if (is.null(valores) || length(valores) == 0) {
+    return(character(0))
+  }
+
+  valores <- as.character(valores)
+  valores <- valores[!is.na(valores)]
+
+  if (length(valores) == 0) {
+    return(character(0))
+  }
+
+  marcador_pm25 <- "__MARCADOR_PM25__"
+
+  # Protege o trecho decimal antes da quebra por vírgula.
+  # Preserva os parênteses e o restante do texto.
+  valores <- gsub(
+    pattern = "PM\\s*2\\s*,\\s*5",
+    replacement = marcador_pm25,
+    x = valores,
+    ignore.case = TRUE
+  )
+
+  valores <- unlist(
+    strsplit(
+      valores,
+      separador,
+      fixed = TRUE
+    )
+  )
+
+  valores <- gsub(
+    pattern = marcador_pm25,
+    replacement = "PM 2,5",
+    x = valores,
+    fixed = TRUE
+  )
+
+  valores <- limpar_espacos_unicode(valores)
+  valores <- valores[!is.na(valores) & valores != ""]
+
+  chave <- normalizar_chave_filtro(valores)
+  valores <- valores[!duplicated(chave)]
+
+  sort(valores)
+}
+
+campo_card_acao_ui <- function(titulo, valores, separador = ",") {
+
+  valores <- limpar_opcoes_filtro_acoes(
+    x = valores,
+    separador = separador
+  )
+
+  if (length(valores) == 0) {
     valores <- "Sem informação"
   }
 
@@ -136,8 +206,13 @@ card_acao_ui <- function(card) {
     class = "acao-card-novo",
 
     # 1. Nome da ficha
-    tags$h3(
-      class = "acao-card-novo-titulo",
+    tags$a(
+      href = "#",
+       class = "acao-card-novo-titulo",
+        onclick = sprintf(
+        "Shiny.setInputValue('acao_selecionada', '%s', {priority: 'event'}); return false;",
+        card$id
+      ),
       card$nome_ficha
     ),
 
