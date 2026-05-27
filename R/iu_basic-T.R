@@ -10,12 +10,15 @@
 #
 # Páginas definidas neste arquivo:
 #   - início
-#   - indicadores
-#   - políticas públicas
-#   - leitura do painel
+#   - Diagnóstico Municipio
+#   - Ações Recomendadas  
+#   - Sobre o projeto 
+#       - O Painel
+#       - Metodologia
+#       - Quem Somos
 #
-# Componentes externos:
-#   - footer_ui.R
+# Componentes internos:
+#   - Inicio
 #   - municipio_ui.R
 #
 # Observações:
@@ -56,24 +59,21 @@ ui <- fluidPage(
       actionButton("menu_inicio", "Início", class = "menu-btn"),
       actionButton("menu_municipio", "Diagnóstico de Municípios", class = "menu-btn"),
       actionButton("menu_acoes_recomendadas", "Ações Recomendadas", class = "menu-btn"), 
-      div(
-        class = "menu-dropdown",
+      div(class = "menu-dropdown",
         tags$button(
-            class = "menu-btn dropdown-toggle",
-            "Sobre o Projeto"
-              ),
-        div(class = "dropdown-content",
-           actionButton("menu_projeto","O Painel",
-              class = "dropdown-item"  ),
-            actionButton("menu_indicadores","Metodologia",
-               class = "dropdown-item"),
-            actionButton("footer_quem_somos","Quem somos",
-               class = "dropdown-item")
-  
-               
-    )) 
-    )
-  ),
+        class = "menu-btn dropdown-toggle", "Sobre o Projeto"),
+            div(
+                class = "menudrop-content",
+                actionButton("menu_projeto","O Painel",
+                class = "menudrop-item" ),
+                actionButton("menu_indicadores","Metodologia",
+                class = "menudrop-item"),
+                actionButton("footer_quem_somos","Quem somos",
+                class = "menudrop-item")
+                )
+        ) 
+      )
+    ),
   uiOutput("pagina_atual"),
   footer_ui()
 )
@@ -89,26 +89,26 @@ tagList(
     class = "inicio-page",
 
     div(
-      class = "hero-section",
+      class = "inicio-section",
 
       div(
-        class = "hero-card hero-vertical",
+        class = "hero-card inicio-vertical",
 
         img(
           src = "icons/SAMI_16052026.svg",
-          class = "hero-img"
+          class = "inicio-img"
         ),
 
         div(
-          class = "hero-text",
+          class = "inicio-text",
 
           div(
-            class = "hero-subtitle",
+            class = "inicio-subtitle",
             "Uma ferramenta que reúne dados e informações para garantir o direito de crianças e adolescentes a viver em um ambiente limpo, saudável e seguro."
           ),
 
           div(
-            class = "hero-actions",
+            class = "inicio-actions",
 
             actionButton(
               "hero_municipio",
@@ -120,33 +120,45 @@ tagList(
       )
     ),
     div(
-      class = "section-wrap",
-      div(class = "section-title", "O que você encontra no painel"),
+      class = "card-wrap",
+      div(class = "card-title", card_inicio$title),
       div(
         class = "cards-grid",
         div(
           class = "info-card",
-          div(class = "info-icon", tags$img(src = "icons/classificacao.svg", height = "120px")),
-          div(class = "info-title", "Diagnóstico"),
-          div(class = "info-text", "Entenda o desempenho da sua cidade e identifique em quais temas ela se destaca ou enfrenta maiores desafios em relação a outros municípios de mesmo porte.")
+          div(class = "cards-icon", tags$img(  
+            src = info_card$icons[info_card$name_card == "diagnostico"], height = "120px")),
+          div(class = "cards-title", 
+              info_card$title_card[info_card$name_card == "diagnostico"]),
+          div(class = "cards-text", 
+              info_card$text_card[info_card$name_card == "diagnostico"])
         ),
         div(
           class = "info-card",
-          div(class = "info-icon", tags$img(src = "icons/contexto.svg", height = "120px")),
-          div(class = "info-title", "Dados"),
-          div(class = "info-text", "Acesse de maneira simples e unificada os dados da sua cidade em relação a 14 indicadores de exposição ambiental.")
+          div(class = "cards-icon", tags$img(
+            src = info_card$icons[info_card$name_card == "dados"], height = "120px")),
+          div(class = "cards-title", 
+              info_card$title_card[info_card$name_card == "dados"]),
+          div(class = "cards-text", 
+              info_card$text_card[info_card$name_card == "dados"])
         ),
         div(
           class = "info-card",
-          div(class = "info-icon", tags$img(src = "icons/foco.svg", height = "120px")),
-          div(class = "info-title", "Ações"),
-          div(class = "info-text", "Conheça recomendações de ações baseadas nas melhores práticas nacionais e internacionais para responder aos desafios apontados pelos indicadores.")
+          div(class = "cards-icon", tags$img(            
+            src = info_card$icons[info_card$name_card == "açoes"], height = "120px")),
+          div(class = "cards-title", 
+              info_card$title_card[info_card$name_card == "açoes"]),
+          div(class = "info-text", 
+              info_card$text_card[info_card$name_card == "açoes"])
         ),
         div(
           class = "info-card",
-          div(class = "info-icon", tags$img(src = "icons/criancas.svg", height = "120px")),
-          div(class = "info-title", "Crianças e adolescentes "),
-          div(class = "info-text", "Verifique o perfil da população infantojuvenil do seu município e identifique onde as ações podem ser mais urgentes.")
+          div(class = "cards-icon", tags$img(            
+            src = info_card$icons[info_card$name_card == "criancas"], height = "120px")),
+          div(class = "cards-title", 
+              info_card$title_card[info_card$name_card == "criancas"]),
+          div(class = "cards-text", 
+              info_card$text_card[info_card$name_card == "criancas"])
         )
       )
     )
@@ -168,9 +180,9 @@ div(
 
   div(
     class = "projeto-hero-text",
-    h1("O que é o Painel ?"),
+    h1("O que é o Painel?"),
   div(
-    class = "linhas-decorativas",
+    class = "linhas-proj",
     span(),
     span(),
     span(),
@@ -203,7 +215,7 @@ div(
           titulo = "Como funciona",
           icone = "chart-bar",
           texto = "O painel reúne 14 indicadores de exposição
-          ambiental, distribuídos em 4 áreas temáticas, que afetam o bem-estar e a saúde de crianças e adolescentes no Brasil. A ferramenta gera diagnósticos e recomendações para os municípios com base no seu desempenho em cada indicado"
+          ambiental, distribuídos em 4 áreas temáticas, que afetam o bem-estar e a saúde de crianças e adolescentes no Brasil. A ferramenta gera diagnósticos e recomendações para os municípios com base no seu desempenho em cada indicador."
         ),
 
         projeto_card(

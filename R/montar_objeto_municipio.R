@@ -31,9 +31,9 @@ print("montar_objeto_municipio.R carregado com sucesso")
 
 # Temporario
 
-dados_app$info$metadado$Título[dados_app$info$metadado$Título=="Dias com poluição do ar MP 2,5 acima do limite"]						<-"Dias com partículas finas acima do limite (PM2.5)"
-dados_app$info$metadado$Título[dados_app$info$metadado$Título=="População sem água tratada"]											<-"Estimativa da População sem água tratada"
-dados_app$info$metadado$Título[dados_app$info$metadado$Título=="Crianças e adolescentes sem acesso à água via rede de abastecimento"]	<-"Crianças e adolescentes sem água da rede geral"
+#dados_app$info$metadado$Título[dados_app$info$metadado$Título=="Dias com poluição do ar MP 2,5 acima do limite"]						<-"Dias com partículas finas acima do limite (PM2.5)"
+#dados_app$info$metadado$Título[dados_app$info$metadado$Título=="População sem água tratada"]											<-"Estimativa da População sem água tratada"
+#dados_app$info$metadado$Título[dados_app$info$metadado$Título=="Crianças e adolescentes sem acesso à água via rede de abastecimento"]	<-"Crianças e adolescentes sem água da rede geral"
 
 
 montar_objeto_municipio <- function(dados_app, uf, municipio) {
@@ -48,6 +48,7 @@ montar_objeto_municipio <- function(dados_app, uf, municipio) {
   dados_brutos 			<- dados_app$info$dados_brutos
   dados_classificados 	<- dados_app$info$dados_classificados
   cores 				<- dados_app$info$cores
+  selo_unicef			<- dados_app$info$selo_unicef
 
   # -------------------------------------------------------
   # 2. Filtra o município selecionado nas bases
@@ -61,7 +62,7 @@ montar_objeto_municipio <- function(dados_app, uf, municipio) {
   ]
   
   # Apenas para teste - Assim que aparecer o dado unicef trocar
-  base_mun$selo_unicef<-NA  
+  base_mun$selo_unicef<-selo_unicef$Valor[selo_unicef$sigla_uf == uf & selo_unicef$nome_mun == municipio]  
   
   class_mun <- dados_classificados[
     dados_classificados$sigla_uf == uf & dados_classificados$nome_mun == municipio,
@@ -118,8 +119,8 @@ montar_objeto_municipio <- function(dados_app, uf, municipio) {
       NA
     }
     
-	polaridade <- if ("polaridade" %in% names(metadado)) {
-		metadado$polaridade[i]
+	polaridade <- if ("Polaridade" %in% names(metadado)) {
+		metadado$Polaridade[i]
 	} else {
 		NA
 	}
@@ -256,7 +257,7 @@ to_numeric_safe <- function(x) {
 }
 
 verificar_selo_unicef <- function(x) {
-  if (length(x) == 0 || is.null(x) || is.na(x)) {
+  if (length(x) == 0 || is.null(x) || is.na(x) || x == 0) {
     return("Não")
   }
 
