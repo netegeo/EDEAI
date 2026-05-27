@@ -169,10 +169,10 @@ equipe_projeto_ui <- function() {
         tags$h1("Conheça a equipe do projeto"),
         tags$div(
           class = "equipe-linhas",
-          tags$span(class = "linha linha-1"),
-          tags$span(class = "linha linha-2"),
-          tags$span(class = "linha linha-3"),
-          tags$span(class = "linha linha-4")
+          tags$span(class = "linha equipe_linha-1"),
+          tags$span(class = "linha equipe_linha-2"),
+          tags$span(class = "linha equipe_linha-3"),
+          tags$span(class = "linha equipe_linha-4")
         )
       ),
 

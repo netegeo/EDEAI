@@ -115,7 +115,7 @@ body {
   color:  #F8F4ED;
   min-width: 240px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-  border-radius: 30px;
+  border-radius: 10px;
   overflow: hidden;
   z-index: 9999;
 }
@@ -145,9 +145,9 @@ body {
 
 .inicio-page {
   max-width: 1200px;
-  margin: 50px auto;
+  margin: 30px auto;
   background: #F8F4ED;
-  border-radius: 30px;
+  border-radius: 16px;
   padding: 28px;
 }
 
@@ -232,7 +232,7 @@ body {
 
 .info-card {
   background: white;
-  border-radius: 30px;  
+  border-radius: 14px;  
   border: 1px solid #E2ECE8;
   box-shadow: 0 3px 12px #afcfb4 ;
   padding: 12px 18px;
@@ -268,7 +268,7 @@ body {
 ============================================== */
 
 .projeto-page {
-  margin: 50px auto;
+  padding: 46px 34px 60px;
   background: #F8F4ED;
 }
 
@@ -277,7 +277,7 @@ body {
   margin: 30px auto;
   background:  #113131 ;
   color: #F8F4ED !important;
-  border-radius: 30px;
+  border-radius: 16px;
   padding: 28px;
 }
 
@@ -288,7 +288,7 @@ body {
   max-width: 1200px;
   margin: 0 auto 34px;
   padding: 48px 56px;
-  border-radius: 30px;
+  border-radius: 24px;
   background: #ffffff ; 
   color: #113131 ;
   border: 1px solid #E2ECE8;
@@ -317,7 +317,7 @@ body {
 .projeto-metrica-card {
   background: rgba(248, 244, 237, 0.70);
   border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 30px;
+  border-radius: 18px;
   padding: 26px 24px;
   text-align: center;
   backdrop-filter: blur(8px);
@@ -377,7 +377,7 @@ body {
 
 .projeto-card {
   background: white;
-  border-radius: 30px;
+  border-radius: 18px;
   padding: 30px 26px;
   min-height: 330px;
   border: 1px solid #E2ECE8;
@@ -407,6 +407,7 @@ body {
 .projeto-card-line {
   width: 48px;
   height: 4px;
+  border-radius: 999px;
   background: #bc3e44ff;
   margin: 14px 0 22px;
 }
@@ -499,6 +500,7 @@ body {
   width: 120px;
   height: 10px;
   background: #ffffff;
+  border-radius: 999px;
   display: block;
 }
 .linhas-proj span:nth-child(4) {
@@ -601,617 +603,66 @@ body {
   font-size: 14px;
 }
 
-/* =====================================================
-   PAGINA DE METODOLOGIA Atualizada 26/05/2026
-===================================================== */
+/* Trecho sem Revisão  */
 
-.metodo-page {
-  background: #F8F4ED;
-  margin: 50px auto;
+.municipio-card-novo {
+  max-width: 1100px;
+  margin: 24px auto 0 auto;
 }
 
-.metodo-hero {
-  display: grid;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  max-width: 1150px;
-  margin: 10px auto 4px;
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.70) ; 
-  color: #1f523c ;
-  border: 1px solid #E2ECE8;
-  box-shadow: 0 3px 12px #afcfb4 ;
-  position: relative;
-  overflow: hidden;
-  font-size: 46px;
-  align-items: stretch;
+.municipio-cabecalho {
+  background: #f7f7f7;
+  border-radius: 18px;
+  padding: 18px 24px;
+  margin-bottom: 20px;
 }
 
-.metodo-hero-text {
-  flex: 1;
+.acoes-col {
+  background: rgba(255,255,255,0.55);
+  border-radius: 18px;
+  padding: 18px 20px;
 }
 
-.metodo-hero-text h1 {
-  font-size: 46px;
-  line-height: 1.05;
-  font-weight: 900;
-  margin: 30px 30px 0;
-  position: relative;
-  overflow: hidden;
-  color: #113131 !important;
-}
-
-.linhas-decorativas {
-  display: flex;
-  gap: 12px;
-  margin: 10px 30px 0;
-}
-
-.linhas-decorativas span {
-  width: 120px;
-  height: 10px;
-  background: #ffffff;
-  display: block;
-}
-.linhas-decorativas span:nth-child(4) {
-  background: #c05817ff;
-}
-
-.linhas-decorativas span:nth-child(3) {
-  background: #6a7e29ff;
-}
-
-.linhas-decorativas span:nth-child(2) {
-  background: #1a829aff;
-}
-
-.linhas-decorativas span:nth-child(1) {
-  background: #bc3e44ff;
-}
-
-.metodologia-section {
-  max-width: 1150px;
-  margin: 0 auto 0;
-  padding: 0 10px 10px 10px;
-  display: flex;
-  grid-template-columns: 0.8fr 1.2fr;
-  align-items: center; 
-  gap:40px;
-  font-size: 28px;
-  position: relative;  
-  flex: 1;
-}
-
-.metodo-metricas {
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px 10px 10px 10px;
-}
-
-.metodo-metrica-card {
-  background: #F8F4ED;
-  border: 1px solid #E2ECE8;
-  color: #113131 ;
-  border-radius: 30px;
-  padding: 10px 10px;
-  text-align: center;
-  backdrop-filter: blur(8px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-}
-
-.metodo-metrica-numero {
-  font-size: 44px;
-  line-height: 1;
-  font-weight: 900;
-  color: #113131 ;
-  margin-bottom: 10px;
-}
-
-.metodo-metrica-label {
+.acoes-titulo {
   font-size: 20px;
-  font-weight: 700;
-  color: #113131;
+  font-weight: 800;
+  margin-bottom: 12px;
 }
 
-.metodo-texto-area {
+.acoes-lista {
   display: flex;
   flex-direction: column;
-  padding: 40px 20px 20px 20px;
-  align-items: flex-start;
-}
-
-.metodologia-intro{
-  max-width: 1000px;
-  display: flex;
-  width: 750px;
-  background: #F8F4ED;
-  border-radius: 30px;
-  padding: 20px 20px 20px 20px;
-  font-size: 18px;
-  color:#000000;
-  flex: 1;
-}
-
-.metodo-botoes {
-  display: flex;
   gap: 18px;
-  flex-wrap: wrap;
 }
 
-.btn-baixar-metodo {
-  background:  #123131 ;
-  color: #F8F4ED !important;
-  border-radius: 50px;
-  padding: 10px 15px;
-  margin-top: 20px; 
-  font-size: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  min-width: 160px;
-}
-
-/* = Fim do Primeiro Bloco = */
-
-.indicador-section {
-  max-width: 1150px;
-  margin: 0 auto 34px;
-  padding: 40px 40px;
-  align-items: center; 
-  background: #ffffff;
-  gap:50px;
-    border: 1px solid #E2ECE8;
-  box-shadow: 0 3px 12px #afcfb4 ;
-  border-radius: 30px;
-
-}
-
-.linhas-indicador {
-  display: flex;
-  gap: 2px;
-  margin: 1px 3px 0;
-}
-.linhas-indicador span {
-  width: 10px;
-  height: 10px;
-  display: block;
-}
-
-.indicadores-h2{
-  font-size: 28px;
-  font-weight: 700;
-  color: #0f3131;
-  margin-bottom: 18px;
-}
-
-.indicador-t3{
-  font-size: 44px;
-  font-weight: 600;
-  color: #000000;
-  margin-bottom: 18px;
-}
-
-.indicadores-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.2fr;
-  gap: 24px;
-  align-items: start;
-  font-size: 28px;
-  font-weight: 700;
-  color: #113131;
-  cursor: pointer;
-  background: #ffffff;
-}
-
-.indicador-box {
-  background: #ffffff;
-  border: 1px solid #D7E8E3;
-  border-left: 6px solid #039368;
-  border-radius: 30px;
-  padding: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid #E2ECE8;
-  box-shadow: 0 3px 12px #afcfb4 ;
-}
-
-.indicador-box:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
-}
-.indicador-box-infra:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
-}
-
-.indicador-box.destaque {
-  flex: 1;
-}
-
-
-.indicador-box-titulo {
-  font-size: 21px;
-  font-weight: 700;
-  color: #0f3131;
+.acoes-lista li {
   margin-bottom: 10px;
-  line-height: 1.25;
+  line-height: 1.3;
+  font-size: 16px;
 }
 
-.indicador-seta-dropdown {
-  width: 14px;
-  height: 14px;
-  border-right: 5px solid #000;
-  border-bottom: 5px solid #000;
-  transform: rotate(45deg);
-  display: inline-block;
-  margin-left: 12px;
-  margin-bottom: 2px;  
-}
-
-.indicador-box-desc {
-
-  font-size: 18px;
-  line-height: 1.5;
-  color: #000000;
-}
-
-.indicador-lista {
-  margin-top: 14px;
-  border-top: 1px solid #D7E8E3;
-  padding-top: 10px;
-}
-
-.indicador-item {
-  background: #F8F4ED;
-  border: 1px solid #DCE9E4;
-  border-radius: 30px;
-  padding: 10px 12px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  color: #113131;
-}
-
-.indicador-item:hover {
-  background: #F8F4ED;
-}
-
-.indicador-item-titulo-link {
-  font-size: 21px;
-  font-weight: 600;
-  color: #0f3131 !important;
-  line-height: 1.4;
-  text-decoration: none;
-}
-
-.indicador-item-desc {
-  margin-top: 8px;
-  font-size: 18px;
-  line-height: 2;
-  color: #000000;
-  padding-top: 8px;
-  border-top: 1px dashed #0f3131;
-}
-
-.indicador-seta-left {
-  width: 14px;
-  height: 14px;
-  border-right: 5px solid #000;
-  border-bottom: 5px solid #000;
-  transform: rotate(315deg);
-  display: inline-block;
-  margin-left: 12px;
-  margin-bottom: 2px;  
-}
-
-.hidden {
-  display: none;
-}
-
-@media (max-width: 900px) {
-  .indicadores-layout {
-    grid-template-columns: 1fr;
-
-  }
-}
-
-/* = Fim do Segundo Bloco = */
-
-.metodologia-box-fim{
-  display: grid;
-  align-items: center;
-  gap: 2px;
-  max-width: 1150px;
-  justify-content: center;
-  margin: 10px auto 20px auto;
-  padding: 20px 2px 20px 30px;
-  border-radius: 30px;
-  background: rgba(255, 255, 255) ; 
-  color: #1f523c ;
-  border: 1px solid #E2ECE8;
-  box-shadow: 0 3px 12px #afcfb4 ;
-  position: relative;
-  overflow: hidden;
-  font-size: 21px;
-  grid-template-columns: 0.2fr 1.8fr;
-}
-
-
-/* =========================
-   PÁGINA DO INDICADOR
-========================= */
-
-.indicador-page {
-  max-width: 1200px;
-  background: #F8F4ED;
-  display: grid;
-  margin: 50px auto;
-}
-
-/* =========================
-   CABEÇALHO / HERO
-========================= */
-
-.indicador-hero {
-  background:#fdfdfd ;
-  border-radius: 30px;
-  padding: 30px 30px;
-  margin-bottom: 30px;
-  border: 1px solid #E2ECE8;
-  box-shadow: 0 3px 12px #afcfb4 ;
-}
-
-.indicador-page-titulo {
-  max-width: 900px;
-  font-size: 28px;
-  font-weight: 800;
-  color:  #1f523c;
-  line-height: 1.2;
-  margin-bottom: 22px;
-}
-
-/* Tema dentro do hero */
-.indicador-tema {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 15px 10px 10px;
-  margin-bottom: 30px;
-  min-height: auto;
-  width: auto;
-  background: #f8f4ed;
-  border: none;
-  border-radius: 15px;
-  font-size: 18px;
-  color:  #1e523c;
-  font-weight: 800;
-}
-
-.indicador-temah1{
-  display: inline-flex;
-  align-items: center;
-  min-height: auto;
-  width: auto;
-  background: transparent;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  color:  #000000;
-  font-weight: 800;
- }
-
-.indicador-temap{
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 10px 10px 20px;
-  min-height: auto;
-  width: auto;
-  background: transparent;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  color:  #000000;
-  font-weight: 400;
- }
-
-.indicador-grid {
-  display: grid;
-  max-width: 1200px;
-  margin: 20px auto 40px;
-  grid-template-columns: repeat(4, minmax(280px, 1fr));
-  gap: 20px;
-  align-items: stretch;
-}
-
-.indicador-coluna {
-  background: white;
-  border-radius: 30px;
-  padding: 20px 20px;
-  min-height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  border: 1px solid #E2ECE8;
-  box-shadow: 0 3px 12px #afcfb4 ;
-  border-radius: 30px;
-}
-
-/* =========================
-   BLOCOS BASE
-========================= */
-.indicador-info {
-  background: transparent;
-  border-radius: 30px;
-}
-
-
-.indicador-bloco {
-  background: rgb(255, 255, 255);
-  border: 1px solid #E2ECE8;
-  box-shadow: 0 3px 12px #afcfb4 ;
-  border-radius: 30px;
-  padding: 20px 20px 20px 20px;
-  margin-bottom: 18px;
-  font-size: 18px;
-  line-height: 1.55;
-  color:  #000000;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  text-decoration: none;
-}
-
-/* remove aparência de tabela antiga */
-.indicador-bloco:nth-child(even) {
-  background: #FFFFFF;
-}
-
-/* Labels */
-.indicador-bloco b {
-  display: inline;
-  background: transparent;
-  border: none;
-  padding: 0;
-  min-height: auto;
-  font-size: 19px;
-  font-weight: 800;
-  color:  #1e523c;
-}
-
-.lista-acoes-indicador {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.linha-acao-link {
-  display: block;
-  padding: 10px 10px 10px 10px;
-  margin: 0 30px 0 30px;
-  border-radius: 8px;
-  background: #F8F4ED;
-  border: 1px solid #E2E8E0;
-  color: #0F3131;
-  font-size: 18px;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.linha-acao-link:hover {
-  background: #F8F4ED;
-  color: #0F3131;
-  text-decoration: underline;
-}
-
-/* =========================
-   DESCRIÇÃO
-========================= */
-
-.indicador-page > .indicador-bloco:nth-of-type(1) {
-  background: #F9FCF7;
-  border-color: #DCEAD4;
-  font-size: 20px;
-  margin-bottom: 24px;
-}
-
-/*    BOTÃO  */
-
-.btn-voltar-ind {
-  margin: 10px 400px 0;
-  background: #1e523c;
-  border: none;
-  color: white !important;
-  font-size: 18px;
-  font-weight: 700;
-  padding: 10px 24px;
-  border-radius: 50px;
-  transition: 0.2s ease;
-  box-shadow: 0 3px 10px rgba(13, 76, 151, 0.22);
-}
-
-.btn-voltar-ind::before {
-  content: "← ";
-}
-
-.btn-voltar-ind:hover,
-.btn-voltar-ind:focus {
-  background: #1e523c;
-  color: white !important;
-}
-
-/*    RESPONSIVO  */
-
-@media (max-width: 1100px) {
-  .indicador-page > .indicador-bloco:nth-of-type(2),
-  .indicador-page > .indicador-bloco:nth-of-type(3),
-  .indicador-page > .indicador-bloco:nth-of-type(4),
-  .indicador-page > .indicador-bloco:nth-of-type(5),
-  .indicador-page > .indicador-bloco:nth-of-type(8) {
-    width: calc(33.333% - 14px);
-  }
-}
-
-@media (max-width: 760px) {
-  .indicador-page {
-    margin: 22px auto 34px;
-    padding: 0 14px 24px;
-  }
-
-  .indicador-hero {
-    padding: 26px 22px;
-    border-radius: 30px;
-  }
-
-  .indicador-page-titulo {
-    font-size: 28px;
-    color:  #1e523c;
-  }
-
-  .indicador-page > .indicador-bloco:nth-of-type(2),
-  .indicador-page > .indicador-bloco:nth-of-type(3),
-  .indicador-page > .indicador-bloco:nth-of-type(4),
-  .indicador-page > .indicador-bloco:nth-of-type(5),
-  .indicador-page > .indicador-bloco:nth-of-type(8) {
-    width: 100%;
-    margin-right: 0;
-    min-height: auto;
-  }
-
-  .indicador-page > .indicador-bloco:nth-of-type(6),
-  .indicador-page > .indicador-bloco:nth-of-type(7),
-  .indicador-page > .indicador-bloco:nth-of-type(9),
-  .indicador-page > .indicador-bloco:nth-of-type(10) {
-    padding-left: 24px;
-    padding-top: 92px;
-  }
-
-  .indicador-page > .indicador-bloco:nth-of-type(6)::before,
-  .indicador-page > .indicador-bloco:nth-of-type(7)::before,
-  .indicador-page > .indicador-bloco:nth-of-type(9)::before,
-  .indicador-page > .indicador-bloco:nth-of-type(10)::before {
-    left: 24px;
-    top: 24px;
-  }
-}
-
-/* Fim da Sesão de Metodologia e Indicadores */
 
 /* =========================
    MUNICÍPIO
 ========================= */
+.form-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
 
 .municipio-panel {
-  max-width: 1200px;
-  margin: 50px auto;
+  max-width: 1100px;
+  margin: 30px auto;
   background: white;
-  border-radius: 30px;
+  border-radius: 16px;
   padding: 28px;
 }
 
 .municipio-title {
-  font-size: 46px;
+  font-size: 42px;
   font-weight: 800;
-  color: #1f523c;
+  color: #2F6F8F;
   margin-bottom: 20px;
 }
 
@@ -1221,7 +672,7 @@ body {
   margin-top: 18px;
   border-radius: 50px;
   font-size: 22px;
-  font-weight: 400;
+  font-weight: 600;
   border: none;
   padding: 5px 15px;
   max-width: 300px;
@@ -1230,7 +681,7 @@ body {
 .municipio-card {
   margin-top: 24px;
   background: #F8FAFD;
-  border-radius: 30px;
+  border-radius: 14px;
   padding: 20px;
 }
 
@@ -1244,13 +695,6 @@ body {
   font-size: 22px;
   color: #4A607B;
 }
-
-.form-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 20px;
-}
-
 
 /* =========================
    RESPONSIVO
@@ -1281,42 +725,592 @@ body {
 }
 
 
-.municipio-card-novo {
-  max-width: 1100px;
-  margin: 24px auto 0 auto;
+/* =====================================================
+   PAGINA DE METODOLOGIA Atualizada 09/05/2026
+===================================================== */
+.metodo-page {
+  padding: 46px 34px 60px;
+  background: #F8F4ED;
 }
 
-.municipio-cabecalho {
-  background: #f7f7f7;
-  border-radius: 30px;
-  padding: 18px 24px;
-  margin-bottom: 20px;
+.metodo-hero {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 1250px;
+  margin: 10px auto 4px;
+  padding: 20px 2px 2px 30px;
+  border-radius: 16px;
+  background: rgba(251, 252, 251, 0.70) ; 
+  color: #1f523c ;
+  border: 1px solid #E2ECE8;
+  box-shadow: 0 3px 12px #afcfb4 ;
+  position: relative;
+  overflow: hidden;
+  font-size: 46px;
 }
 
-.acoes-col {
-  background: rgba(255,255,255,0.55);
-  border-radius: 30px;
-  padding: 18px 20px;
-}
-
-.acoes-titulo {
+.metodo-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
   font-size: 20px;
-  font-weight: 800;
-  margin-bottom: 12px;
 }
 
-.acoes-lista {
+.metodo-hero-text {
+  flex: 1;
+  font-size: 20px;
+}
+.metodo-hero-text h1 {
+  font-size: 46px;
+  line-height: 1.05;
+  font-weight: 950;
+  margin: 0 0 22px;
+  color: #113131 !important  
+}
+
+.linhas-decorativas {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.linhas-decorativas span {
+  width: 120px;
+  height: 10px;
+  background: #ffffff;
+  border-radius: 999px;
+  display: block;
+}
+.linhas-decorativas span:nth-child(4) {
+  background: #c05817ff;
+}
+
+.linhas-decorativas span:nth-child(3) {
+  background: #6a7e29ff;
+}
+
+.linhas-decorativas span:nth-child(2) {
+  background: #1a829aff;
+}
+
+.linhas-decorativas span:nth-child(1) {
+  background: #bc3e44ff;
+}
+
+
+.metodologia-section {
+  max-width: 1200px;
+  margin: 0 auto 10px;
+  padding: 20px 40px;
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  align-items: center; 
+  gap:50px;
+  font-size: 28px;
+}
+
+.metodologia--box-fim{
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 1250px;
+  margin: 10px auto 4px;
+  padding: 20px 2px 2px 30px;
+  border-radius: 16px;
+  background: rgba(251, 252, 251, 0.70) ; 
+  color: #1f523c ;
+  border: 1px solid #E2ECE8;
+  box-shadow: 0 3px 12px #afcfb4 ;
+  position: relative;
+  overflow: hidden;
+  font-size: 21px;
+}
+
+.metodo-metricas {
+  width: 250px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 10px;
 }
 
-.acoes-lista li {
+
+.metodologia-intro{
+  max-width: 1100px;
+  width: 800px;
+  background: rgba(248, 244, 237, 0.75);
+  border-radius: 16px;
+  padding: 10px 10px;
+  font-size: 20px;
+}
+
+.metodo-metrica-card {
+  background: #F8F4ED;
+  border: 1px solid #E2ECE8;
+  color: #113131 ;
+  border-radius: 18px;
+  padding: 10px 10px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.metodo-metrica-numero {
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 900;
+  color: #113131 ;
   margin-bottom: 10px;
-  line-height: 1.3;
-  font-size: 16px;
 }
 
+.metodo-metrica-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: #113131;
+}
+
+.btn-baixar-metodo {
+  background:  #123131 ;
+  color: #F8F4ED !important;
+  border-radius: 50px;
+  padding: 10px 15px;
+  margin-top: 20px; 
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 160px;
+}
+
+
+.indicador-section {
+  max-width: 1320px;
+  margin: 0 auto 34px;
+  padding: 40px 40px;
+  align-items: center; 
+  gap:50px;
+}
+
+
+.indicadores-titulo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #113131;
+  margin-bottom: 18px;
+}
+
+.indicadores-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 24px;
+  align-items: start;
+  font-size: 28px;
+  font-weight: 700;
+  color: #113131;
+}
+
+.indicador-box {
+  background: linear-gradient(135deg, #EAF6F4, #F7FBF8);
+  border: 1px solid #D7E8E3;
+  border-left: 6px solid #039368;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.indicador-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+}
+.indicador-box-infra:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+}
+
+.indicador-box.destaque {
+  flex: 1;
+}
+
+
+.indicador-box-titulo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1F4E5F;
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+.indicador-box-desc {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #113131;
+}
+
+.indicador-lista {
+  margin-top: 14px;
+  border-top: 1px solid #D7E8E3;
+  padding-top: 10px;
+}
+
+.indicador-item {
+  background: rgba(255,255,255,0.72);
+  border: 1px solid #DCE9E4;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #113131;
+}
+
+.indicador-item:hover {
+  background: #FFFFFF;
+}
+
+.indicador-item-titulo-link {
+  font-size: 24px;
+  font-weight: 600;
+  color: #113131 !important;
+  line-height: 1.4;
+}
+
+.indicador-item-desc {
+  margin-top: 8px;
+  font-size: 20px;
+  line-height: 2;
+  color: #113131;
+  padding-top: 8px;
+  border-top: 1px dashed #D7E8E3;
+}
+
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .indicadores-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================
+   PÁGINA DO INDICADOR
+========================= */
+
+.pagina-indicador {
+  max-width: 1180px;
+  margin: 34px auto 42px;
+  padding: 0 18px 28px;
+  background: transparent;
+  border: none;
+  font-family: Arial, sans-serif;
+  color: #0F1F16;
+}
+
+/* =========================
+   CABEÇALHO / HERO
+========================= */
+
+.indicador-hero {
+  background:#fdfdfd ;
+  border: 1px solid #DCEAD4;
+  border-radius: 22px;
+  padding: 34px 38px;
+  margin-bottom: 26px;
+  box-shadow: 0 4px 18px rgba(24, 65, 38, 0.10);
+}
+
+.pagina-indicador-titulo {
+  max-width: 900px;
+  font-size: 40px;
+  font-weight: 800;
+  color:  #1e523c;
+  line-height: 1.18;
+  margin-bottom: 22px;
+}
+
+/* Tema dentro do hero */
+.indicador-hero .pagina-indicador-bloco {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: auto;
+  width: auto;
+  padding: 10px 18px;
+  background: #E0EFD8;
+  border: none;
+  border-radius: 14px;
+  box-shadow: none;
+  font-size: 18px;
+  color:  #1e523c;
+}
+
+.indicador-hero .pagina-indicador-bloco b {
+  display: inline;
+  background: transparent;
+  border: none;
+  padding: 0;
+  min-height: auto;
+  font-size: 18px;
+  color:  #1e523c;
+}
+
+/* =========================
+   BLOCOS BASE
+========================= */
+
+.pagina-indicador-bloco {
+  background: #FFFFFF;
+  border: 1px solid #E2E8E0;
+  border-radius: 18px;
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  font-size: 19px;
+  line-height: 1.55;
+  color:  #1e523c;
+  box-shadow: 0 3px 14px rgba(20, 44, 27, 0.08);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* remove aparência de tabela antiga */
+.pagina-indicador-bloco:nth-child(even) {
+  background: #FFFFFF;
+}
+
+/* Labels */
+.pagina-indicador-bloco b {
+  display: inline;
+  background: transparent;
+  border: none;
+  padding: 0;
+  min-height: auto;
+  font-size: 19px;
+  font-weight: 800;
+  color:  #1e523c;
+}
+
+/* =========================
+   CARDS TÉCNICOS
+   pega Unidade, Granularidade,
+   Periodicidade, Série, Fonte
+========================= */
+
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(2),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(3),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(4),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(5),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(8) {
+  display: inline-flex;
+  vertical-align: top;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(24.3% - 10px);
+  min-height: 170px;
+  margin-right: 14px;
+  margin-bottom: 22px;
+  text-align: center;
+  padding: 24px 16px;
+}
+
+/* último card sem sobra estranha */
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(8) {
+  margin-right: 0;
+}
+
+/* Títulos dos cards técnicos */
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(2) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(3) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(4) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(5) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(8) b {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+
+/* =========================
+   DESCRIÇÃO
+========================= */
+
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(1) {
+  background: #F9FCF7;
+  border-color: #DCEAD4;
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+/* =========================
+   SEÇÕES LONGAS
+   Cálculo, Conceituação,
+   Categorias e Interpretação
+========================= */
+
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(6),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(7),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(9),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(10) {
+  position: relative;
+  padding-left: 104px;
+  min-height: 118px;
+}
+
+
+/* título das seções longas */
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(6) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(7) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(9) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(10) b {
+  display: block;
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   BOTÃO
+========================= */
+
+.btn-voltar-ind {
+  margin: 10px 400px 0;
+  background: #1e523c;
+  border: none;
+  color: white !important;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 18px;
+  transition: 0.2s ease;
+  box-shadow: 0 3px 10px rgba(13, 76, 151, 0.22);
+}
+
+.btn-voltar-ind::before {
+  content: "← ";
+}
+
+.btn-voltar-ind:hover,
+.btn-voltar-ind:focus {
+  background: #1e523c;
+  color: white !important;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 1100px) {
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(2),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(3),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(4),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(5),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(8) {
+    width: calc(33.333% - 14px);
+  }
+}
+
+@media (max-width: 760px) {
+  .pagina-indicador {
+    margin: 22px auto 34px;
+    padding: 0 14px 24px;
+  }
+
+  .indicador-hero {
+    padding: 26px 22px;
+    border-radius: 18px;
+  }
+
+  .pagina-indicador-titulo {
+    font-size: 28px;
+    color:  #1e523c;
+  }
+
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(2),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(3),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(4),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(5),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(8) {
+    width: 100%;
+    margin-right: 0;
+    min-height: auto;
+  }
+
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(6),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(7),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(9),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(10) {
+    padding-left: 24px;
+    padding-top: 92px;
+  }
+
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(6)::before,
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(7)::before,
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(9)::before,
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(10)::before {
+    left: 24px;
+    top: 24px;
+  }
+}
+
+.tema-texto {
+  color: #f6f6f6;
+  font-weight: 700;
+}
+
+
+/* =========================
+   DOWNLOAD AREA
+========================= */
+
+.pagina-indicador-download-area {
+  max-width: 1180px;
+  margin: 24px auto 12px;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -65px;
+  margin-bottom: 60px;
+  padding-right: 40px;
+}
+
+
+.btn-baixar-indicador {
+  background: #0D4C97;
+  color: white;
+  border: none;
+  border-radius: 18px;
+  padding: 13px 20px;
+  font-size: 17px;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(13, 76, 151, 0.22);
+}
+
+.btn-baixar-indicador:hover {
+  background: #093A73;
+}
+
+#indicador_pdf {
+  margin: 0 auto;
+  background: #F8F4ED;
+}
+
+.indicador-hero,
+.pagina-indicador-bloco {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* FUNDO SUAVE DOS BLOCOS */
+
+
+
+/* =====================================================
+   BLOCO BÁSICO DO MUNICÍPIO
+   GEORGE
+===================================================== */
 
 /* =====================================================
    TEXTO INTRODUTÓRIO DA PÁGINA MUNICIPAL
@@ -1326,21 +1320,19 @@ body {
 .municipio-cabecalho {
   background: #FFFFFF;
   border: 1px solid rgba(24, 49, 83, 0.12);
-  border-radius: 30px;
+  border-radius: 18px;
   padding: 18px 20px;
   box-shadow: 0 4px 14px rgba(24, 49, 83, 0.06);
-  color: #000000;
-  font-size: 16px;
 }
 
 .municipio-texto-intro {
-  margin: 24px 0 0 0;
+  margin: 24px 0 18px 0;
   padding: 18px 22px;
   background: #ffffff;
   /*border-left: 5px solid #0B5CAD;*/
-  border-radius: 30px;
-  color: #000000;
-  font-size: 18px;
+  border-radius: 12px;
+  color: #183153;
+  font-size: 1rem;
   line-height: 1.55;
 }
 
@@ -1353,6 +1345,7 @@ body {
   padding: 22px;
 }
 
+.municipio-texto-intro,
 .municipio-legenda-geral {
   padding: 22px;
   margin-bottom: 22px;
@@ -1363,14 +1356,7 @@ body {
   gap: 14px;
   margin-bottom: 14px;
   background: #ffffff;
-
 }
-
-.linha-1 { background: #ffffff; }
-.linha-2 { background: #ffffff; }
-.linha-3 { background: #ffffff; }
-.linha-4 { background: #ffffff; }
-
 
 .municipio-basico-grid.linha-1 {
   grid-template-columns: 2fr 0.7fr 1fr;
@@ -1384,24 +1370,24 @@ body {
 .municipio-campo {
   background: transparent;
   border: 1px solid rgba(24, 49, 83, 0.08);
-  border-radius: 30px;
+  border-radius: 12px;
   padding: 12px 14px;
   min-height: 82px;
 }
 
 .municipio-campo-rotulo {
-  font-size: 14px;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: #000000;
+  color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin-bottom: 6px;
 }
 
 .municipio-campo-valor {
-  font-size: 14px;
-  font-weight: 400;
-  color: #000000;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .alerta-popij {
@@ -1411,7 +1397,7 @@ body {
   margin-top: 18px;
   padding: 16px 18px;
   background: #FFFFFF;
-  border-radius: 30px;
+  border-radius: 14px;
   border: 1px solid rgba(24, 49, 83, 0.12);
   box-shadow: 0 2px 8px rgba(24, 49, 83, 0.06);
 }
@@ -1425,7 +1411,7 @@ body {
 }
 
 .span-2 {
-  grid-column: span 1.5;
+  grid-column: span 1;
 }
 
 /* =====================================================
@@ -1435,7 +1421,7 @@ body {
 .municipio-legenda-titulo {
   font-size: 16px;
   font-weight: 800;
-  color: #000000;
+  color: #1F4370;
   margin-bottom: 8px;
 }
 
@@ -1455,17 +1441,22 @@ body {
 }
 
 .municipio-legenda-lista strong {
-  color: #000000;
+  color: #1F4370;
 }
 
 /* =====================================================
    TEMAS
 ===================================================== */
 
+/*.tema-bloco {
+  border-radius: 26px;
+  padding: 20px 22px 22px 22px;
+  margin-bottom: 22px;
+}*/
+
 .tema-bloco {
   background: #FFFFFF;
-  color: #000000;
-  border-radius: 30px;
+  border-radius: 22px;
   padding: 22px;
   margin-bottom: 22px;
   box-sizing: border-box;
@@ -1476,14 +1467,14 @@ body {
   font-size: 24px;
   font-weight: 800;
   margin: 0 0 8px 0;
-  color: #000000;
+  color: #1F4370;
   line-height: 1.15;
 }
 
 .tema-descricao-inline {
   font-size: 14px;
   line-height: 1.45;
-  color: #000000;
+  color: #34506B;
   margin: 0 0 16px 0;
   max-width: 1100px;
 }
@@ -1511,9 +1502,9 @@ body {
 }
 
 .indicadores-cabecalho .indicadores-col {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 800;
-  color: #000000;
+  color: #1F4370;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   line-height: 1.2;
@@ -1527,7 +1518,7 @@ body {
   grid-template-columns: 2.2fr 0.75fr 1fr 2.4fr 0.55fr;
   gap: 10px;
   align-items: center;
-  border-radius: 30px;
+  border-radius: 16px;
   padding: 11px 14px;
   box-sizing: border-box;
 }
@@ -1537,7 +1528,7 @@ body {
 }
 
 .indicador-col-nome {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 800;
   line-height: 1.25;
 }
@@ -1575,6 +1566,7 @@ body {
   justify-content: center;
   min-width: 50px;
   padding: 6px 10px;
+  border-radius: 999px;
   font-size: 13px;
   font-weight: 900;
   line-height: 1;
@@ -1592,23 +1584,19 @@ body {
 }
 
 .btn-baixar-diagnostico {
-  background: #1f523c;
+  background: #0B5CAD;
   color: #ffffff;
   border: none;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50px;
-  padding: 10px 20px;
-  margin-left: 400px;
-  font-size: 18px;
-  font-weight: 400;
+  border-radius: 14px;
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 800;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
 .btn-baixar-diagnostico:hover {
-  background: #f8f4ed;
-  color: #1f523c;
+  background: #084A8A;
 }
 
 .no-export {
@@ -1664,7 +1652,7 @@ body {
 }
 
 .footer-nav-link:hover {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 
@@ -1706,7 +1694,7 @@ body {
 ========================================================= */
 .quem-page {
   display: grid;
-  margin: 50px auto;
+  padding: 46px 34px 60px;
   background: #F8F4ED;
 }
 
@@ -1716,7 +1704,7 @@ body {
   max-width: 1200px;
   margin: 30px auto 30px;
   padding: 40px 10px 40px 40px;
-  border-radius: 30px;
+  border-radius: 24px;
   background: #ffffff ; 
   color: #1f523c ;
   border: 1px solid #E2ECE8;
@@ -1766,7 +1754,7 @@ body {
   display: grid;
   grid-template-columns: minmax(240px, 1.1fr) minmax(320px, 0.9fr);
   min-height: 200px;
-  border-radius: 30px;
+  border-radius: 28px;
   overflow: hidden;
   margin-bottom: 28px;
   background: #F8F4ED;
@@ -1853,7 +1841,7 @@ body {
 
 .equipe-page {
   background: #f8f4ed;
-  margin: 50px auto;
+  padding: 42px 28px 64px;
   font-family: "Rawline";
 }
 
@@ -1879,12 +1867,13 @@ body {
   display: block;
   width: 86px;
   height: 8px;
+  border-radius: 999px;
 }
 
-.equipe_linha-1 { background: #b33d42; }
-.equipe_linha-2 { background: #607b3c; }
-.equipe_linha-3 { background: #14727b; }
-.equipe_linha-4 { background: #c76b20; }
+.linha-1 { background: #b33d42; }
+.linha-2 { background: #607b3c; }
+.linha-3 { background: #14727b; }
+.linha-4 { background: #c76b20; }
 
 /* agora o grid vira uma coluna: uma caixa por linha */
 .equipe-grid {
@@ -1900,7 +1889,7 @@ body {
 .equipe-card {
   background: #ffffff;
   max-width: 1180px;
-  border-radius: 30px;
+  border-radius: 14px;
   padding: 20px 20px 20px 50px;
   border: 1px solid #E2ECE8;
   box-shadow: 0 3px 12px #afcfb4 ; 
@@ -1925,6 +1914,7 @@ body {
   height: 5px;
   margin-top: 20px;
   margin-bottom: 30px;
+  border-radius: 999px;
   background: #607b3c;
 }
 
@@ -2102,7 +2092,7 @@ body {
   margin: 18px auto 48px auto;
   background: #FFFFFF;
   border: 1px solid rgba(18, 49, 49, 0.12);
-  border-radius: 30px;
+  border-radius: 16px;
   padding: 24px 28px;
   color: #123131;
   font-size: 18px;
@@ -2114,7 +2104,7 @@ body {
   max-width: 1500px;
   margin: 0 auto 28px auto;
   background: #123131;
-  border-radius: 30px;
+  border-radius: 0;
   padding: 0 18px;
   display: flex;
   flex-wrap: wrap;
@@ -2138,7 +2128,7 @@ body {
   background: transparent;
   color: #F8F4ED;
   border: none;
-  border-radius: 50px;
+  border-radius: 0;
   padding: 0 22px;
   font-size: 19px;
   font-weight: 700;
@@ -2170,7 +2160,7 @@ body {
   overflow-y: auto;
   background: #123131;
   color: #F8F4ED;
-  border-radius: 0 0 15px 15px;
+  border-radius: 0 0 12px 12px;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
   padding: 12px 14px;
 }
@@ -2199,7 +2189,7 @@ body {
   line-height: 1.25;
   font-weight: 500;
   padding: 8px 10px;
-  border-radius: 15px;
+  border-radius: 8px;
   white-space: normal;
 }
 
@@ -2221,7 +2211,7 @@ body {
   background: transparent;
   color: #F8F4ED;
   border: none;
-  border-radius: 50px;
+  border-radius: 0;
   padding: 0 22px;
   font-size: 18px;
   font-weight: 700;
@@ -2269,7 +2259,7 @@ body {
 .acao-card-novo {
   background: #FFFFFF;
   border: 1px solid rgba(18, 49, 49, 0.12);
-  border-radius: 30px;
+  border-radius: 18px;
   padding: 22px 22px 24px;
   box-shadow: 0 4px 14px rgba(18, 49, 49, 0.06);
   min-height: 420px;
@@ -2299,6 +2289,7 @@ body {
   height: 6px;
   flex: 1;
   min-width: 38px;
+  border-radius: 999px;
 }
 
 .acao-card-tema-linha.sem-cor {
@@ -2332,6 +2323,7 @@ body {
   background: #F8F4ED;
   color: #26352D;
   border: 1px solid #E5DED2;
+  border-radius: 999px;
   padding: 6px 10px;
   font-size: 13px;
   line-height: 1.2;
@@ -2341,7 +2333,7 @@ body {
 .acoes-sem-resultados {
   background: #FFFFFF;
   border: 1px solid rgba(18, 49, 49, 0.12);
-  border-radius: 30px;
+  border-radius: 16px;
   padding: 24px;
   color: #123131;
   font-size: 18px;
@@ -2385,7 +2377,7 @@ body {
 .acoes-page {
   background: #F8F4ED;
   min-height: calc(100vh - 70px);
-  margin: 50px auto;
+  padding: 34px 42px 48px;
   color: #16321A;
 }
 /* ---------- HERO ---------- */
@@ -2395,7 +2387,7 @@ body {
   margin: 0 auto 26px;
   background: #FFFFFF;
   border: 1px solid rgba(22, 50, 26, 0.10);
-  border-radius: 30px;
+  border-radius: 16px;
   box-shadow: 0 6px 22px rgba(20, 40, 30, 0.06);
   padding: 34px 38px;
 }
@@ -2404,7 +2396,7 @@ body {
   display: inline-block;
   background: #F8F4ED;
   color: #2C5B3A;
-  border-radius: 30px;
+  border-radius: 16px;
   padding: 7px 14px;
   font-size: 15px;
   font-weight: 800;
@@ -2455,7 +2447,7 @@ body {
 .acoes-filtros-card {
   background: #FFFFFF;
   border: 1px solid #D8D1C7;
-  border-radius: 30px;
+  border-radius: 18px;
   padding: 30px 32px;
   box-shadow: 0 3px 12px rgba(40, 35, 25, 0.04);
 }
@@ -2512,7 +2504,7 @@ body {
   height: 25px;
   margin: 0;
   border: 2px solid #C7DDD3;
-  border-radius: 30px;
+  border-radius: 6px;
   background: #FFFFFF;
   cursor: pointer;
   flex: 0 0 25px;
@@ -2538,7 +2530,7 @@ body {
 /* destaca linha marcada */
 .acoes-filtros-body .checkbox:has(input[type="checkbox"]:checked) {
   background: #DDF4EA;
-  border-radius: 30px;
+  border-radius: 10px;
   padding: 7px 12px;
   margin-left: -10px;
   margin-right: -10px;
@@ -2556,7 +2548,7 @@ body {
 .btn-acoes-limpar {
   width: 100%;
   min-height: 56px;
-  border-radius: 50px;
+  border-radius: 10px;
   font-size: 20px;
   font-weight: 500;
   background: #FFFFFF;
@@ -2605,7 +2597,7 @@ body {
   gap: 12px;
   background: #FFFFFF;
   border: 1px solid #D7D0C6;
-  border-radius: 30px;
+  border-radius: 12px;
   padding: 0 18px;
 }
 
@@ -2643,7 +2635,7 @@ body {
   background: #FFFFFF;
   border: 1px solid #F8F4ED;
   border-left: 7px solid #123131;
-  border-radius: 30px;
+  border-radius: 18px;
   padding: 24px 28px;
   box-shadow: 0 3px 12px rgba(40, 35, 25, 0.04);
   cursor: pointer;
@@ -2702,6 +2694,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: 999px;
   padding: 6px 15px;
   font-size: 16px;
   line-height: 1;
@@ -2751,7 +2744,7 @@ body {
 .paginacao-acoes .page-btn {
   width: 48px;
   height: 48px;
-  border-radius: 50px;
+  border-radius: 12px;
   border: 1px solid #D7D0C5;
   background: #FFFFFF;
   color: #2D2D2D;
@@ -2779,6 +2772,7 @@ body {
 .acao-detalhe-page {
   background: transparent;
   color: #26352D;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .acao-breadcrumb {
@@ -2808,7 +2802,7 @@ body {
 .acao-card-principal {
   background: #FFFFFF;
   border: 1px solid #D8D1C7;
-  border-radius: 30px;
+  border-radius: 18px;
   box-shadow: 0 4px 18px rgba(30, 30, 30, 0.045);
   display: grid;
   grid-template-columns: 7px 1fr;
@@ -2841,7 +2835,7 @@ body {
 
 .acao-importancia-box {
   background: #F0EADF;
-  border-radius: 30px;
+  border-radius: 14px;
   padding: 22px 26px;
   font-size: 20px;
   line-height: 1.55;
@@ -2857,7 +2851,7 @@ body {
 .acao-section-card {
   background: #FFFFFF;
   border: 1px solid #D8D1C7;
-  border-radius: 30px;
+  border-radius: 18px;
   box-shadow: 0 4px 16px rgba(30, 30, 30, 0.035);
   padding: 34px 38px;
   margin-bottom: 20px;
@@ -2881,7 +2875,7 @@ body {
 
 .acao-ref-card {
   background: #F0EADF;
-  border-radius: 30px;
+  border-radius: 14px;
   padding: 20px 24px;
   margin-bottom: 16px;
 }
@@ -2917,7 +2911,7 @@ body {
   background: #F8F4ED;
   color: #222222 !important;
   border: 1px solid #BDB6AA;
-  border-radius: 30px;
+  border-radius: 12px;
   padding: 13px 24px;
   font-size: 20px;
   font-weight: 500;

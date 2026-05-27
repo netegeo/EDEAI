@@ -50,7 +50,7 @@ limpar_base_municipal <- function(df) {
 #   dados_app$porte_pop
 # ---------------------------------------------------------
 
-info_raw <- readRDS("data/informacoes_20260510.rds")
+info_raw <- readRDS("data/informacoes_20260526.rds")
 
 # Objeto responsavel por trazer as informações de ações públicas recomendadas
 acao_objetos <- readRDS("data/objeto_acao_rds_20260430.rds")
@@ -78,7 +78,8 @@ dados_app <- list(
   info = list(metadado				= info_raw$metadados,
 			  dados_brutos 			= limpar_base_municipal(info_raw$brutos),
 			  dados_classificados 	= limpar_base_municipal(info_raw$classe),
-			  cores 				= info_raw$tabela_cores)
+			  cores 				= info_raw$tabela_cores,
+        selo_unicef   = info_raw$selo_unicef)
   
   # -------------------------------------------------------
   # Exemplos de futuras bases a serem adicionadas

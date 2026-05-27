@@ -406,7 +406,7 @@ municipio_card_ui <- function(obj) {
 
               estilo_indicador <- paste0(
 					"background:#FFFFFF;",
-					"color:#183153;",
+					"color:#000000;",
 					if (!is.na(linha$cor_bg) && trimws(linha$cor_bg) != "") {
 					paste0("border:2px solid ", linha$cor_bg, ";")
 					} else {
