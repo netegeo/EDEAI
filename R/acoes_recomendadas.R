@@ -156,10 +156,10 @@ acoes_recomendadas_ui <- function() {
         div(
           class = "acoes-hero-content",
 
-          tags$div(
-            class = "acoes-kicker",
-            "Ações recomendadas"
-          ),
+          # tags$div(
+          #   class = "acoes-kicker",
+          #   "Ações recomendadas"
+          # ),
 
           tags$h2(
             class = "acoes-hero-title",

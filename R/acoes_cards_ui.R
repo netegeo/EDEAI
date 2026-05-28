@@ -213,7 +213,7 @@ card_acao_ui <- function(card) {
         "Shiny.setInputValue('acao_selecionada', '%s', {priority: 'event'}); return false;",
         card$id
       ),
-      card$nome_ficha
+      card$nome_ficha,tags$span(class = "acoes-seta-left")
     ),
 
     # 2. Linhas/tags coloridas dos temas

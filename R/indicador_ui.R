@@ -199,29 +199,61 @@ tags$a(
 pagina_indicador_ui <- function(df) {
 
  acoes_indicador = readRDS("data/ficha_indicadores_20260525.rds")$acoes_indicador  
-sel_acoes <- acoes_indicador$acao[
-  acoes_indicador$indicador == df$Título[1]
+
+sel_acoes <- acoes_indicador[
+  acoes_indicador$indicador == df$Título[1],
+  ,
+  drop = FALSE
 ]
+
+  # acoes_indicador = objeto_acoes$destaque[,c(2,3,5)] 
+  # nn1 = grep(df$Título[1],acoes_indicador[,3])
+  # sel_acoes <- acoes_indicador[,2]
+  
+#df_acoes <- tagList(
+
+#  lapply(seq_along(sel_acoes), function(i) {
+
+#    tagList(
+
+#      tags$a(
+#        href = "#",
+#        onclick = sprintf(
+#    "Shiny.setInputValue('acao_selecionada', '%s', {priority: 'event'})",
+#    sel_acoes[i]),
+#        class = "linha-acao-link",
+#        sel_acoes[i]
+#      ),
+
+#      tags$br()
+
+#    )
+
+#  })
+
+#)
 
 df_acoes <- tagList(
 
-  lapply(seq_along(sel_acoes), function(i) {
+  lapply(seq_len(nrow(sel_acoes)), function(i) {
 
     tagList(
 
       tags$a(
         href = "#",
+        onclick = sprintf(
+          "Shiny.setInputValue('acao_selecionada', '%s', {priority: 'event'}); return false;",
+          sel_acoes$id_acao[i]
+        ),
         class = "linha-acao-link",
-        sel_acoes[i]
+        sel_acoes$acao[i],tags$span(class = "acoes-seta-left")
       ),
 
       tags$br()
-
     )
-
   })
-
 )
+
 
     div(class = "indicador-page",
       div(class = "indicador-hero",
@@ -296,7 +328,7 @@ div(
 
     actionButton(
       "voltar_indicadores",
-      "Voltar para indicadores",
+      "Voltar",
       class = "btn-voltar-ind no-export",
           onclick =  "setTimeout(function() {
                       window.scrollTo({

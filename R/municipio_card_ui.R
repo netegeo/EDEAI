@@ -435,8 +435,17 @@ municipio_card_ui <- function(obj) {
 
                 tags$div(
                   class = "indicadores-col indicador-col-nome",
-                  valor_txt(linha$indicador)
-                ),
+
+                  tags$a(
+                   href = "#",
+                   class = "indicador-municipio-link",
+                    onclick = sprintf(
+                    "Shiny.setInputValue('indicador_selecionado', '%s', {priority: 'event'}); return false;",
+                      linha$codigo
+                     ),
+                     valor_txt(linha$indicador)
+                   )
+                 ),
 
                 tags$div(
                   class = "indicadores-col indicador-col-valor",

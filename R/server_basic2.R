@@ -130,6 +130,7 @@ server <- function(input, output, session) {
   indicador_ativo <- reactiveVal(NULL)
   acao_ativa <- reactiveVal(NULL)
   origem_acao <- reactiveVal(NULL)
+  origem_indicador <- reactiveVal(NULL)
 
   # -------------------------------------------------------
   # Navegação principal
@@ -176,13 +177,39 @@ server <- function(input, output, session) {
   # -------------------------------------------------------
 
   observeEvent(input$indicador_selecionado, {
+
+    req(input$indicador_selecionado)
+
     indicador_ativo(input$indicador_selecionado)
+    origem_indicador(pagina_ativa())
+
     pagina_ativa("indicador_detalhe")
+
+    shinyjs::runjs("
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    ")
   })
 
   observeEvent(input$voltar_indicadores, {
+
+    destino <- origem_indicador()
+
+    if (is.null(destino) || is.na(destino) || destino == "") {
+      destino <- "indicadores"
+    }
+
     indicador_ativo(NULL)
-    pagina_ativa("indicadores")
+    pagina_ativa(destino)
+
+    shinyjs::runjs("
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    ")
   })
 
 
