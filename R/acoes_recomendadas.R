@@ -54,24 +54,35 @@ preparar_acao_ui <- function(dados_acoes, id_acao, objeto_acoes = NULL) {
   }
   
   # --------- O que Fazer -----------------------
-  o_que_fazer <- NA_character_
+o_que_fazer <- character(0)
 
-    if (!is.null(objeto_acoes) &&
-       !is.null(objeto_acoes$o_que_fazer)) {
+if (!is.null(objeto_acoes) &&
+    !is.null(objeto_acoes$o_que_fazer)) {
 
-       linha_o_que_fazer <- objeto_acoes$o_que_fazer[
-       objeto_acoes$o_que_fazer$id == id_acao,
-       ,drop = FALSE]
+  linha_o_que_fazer <- objeto_acoes$o_que_fazer[
+    objeto_acoes$o_que_fazer$id == id_acao,
+    ,
+    drop = FALSE
+  ]
 
-      if (nrow(linha_o_que_fazer) > 0) {
-        o_que_fazer <- linha_o_que_fazer$o_que_fazer[1]
-      }
-    }
+  if (nrow(linha_o_que_fazer) > 0) {
+
+    ordem_num <- suppressWarnings(as.numeric(linha_o_que_fazer$ordem))
+
+    linha_o_que_fazer <- linha_o_que_fazer[
+      order(ordem_num, na.last = TRUE),
+      ,
+      drop = FALSE
+    ]
+
+    o_que_fazer <- linha_o_que_fazer$o_que_fazer
+  }
+}
     
   # --------- Dicas Praticas --------------------
-  dicas_praticas <- NA_character_
+dicas_praticas <- character(0)
 
-  if (!is.null(objeto_acoes) &&
+if (!is.null(objeto_acoes) &&
     !is.null(objeto_acoes$dicas_praticas)) {
 
   linha_dicas_praticas <- objeto_acoes$dicas_praticas[
@@ -80,10 +91,19 @@ preparar_acao_ui <- function(dados_acoes, id_acao, objeto_acoes = NULL) {
     drop = FALSE
   ]
 
-    if (nrow(linha_dicas_praticas) > 0) {
-      dicas_praticas <- linha_dicas_praticas$dicas_praticas[1]
-    }
+  if (nrow(linha_dicas_praticas) > 0) {
+
+    ordem_num <- suppressWarnings(as.numeric(linha_dicas_praticas$ordem))
+
+    linha_dicas_praticas <- linha_dicas_praticas[
+      order(ordem_num, na.last = TRUE),
+      ,
+      drop = FALSE
+    ]
+
+    dicas_praticas <- linha_dicas_praticas$dicas_praticas
   }
+}
   
   # ------- Base Tecnica -------------------------
   
@@ -107,29 +127,29 @@ preparar_acao_ui <- function(dados_acoes, id_acao, objeto_acoes = NULL) {
    }
 
   list(
-    id 					= valor_coluna("id", "ID"),
-    nome_curto 			= valor_coluna("nome_curto", "acao"),
-    nome_ficha 			= valor_coluna("nome_ficha", "Nome_ficha"),
-    por_que_importante 	= valor_coluna("por_que_importante", "importancia"),
-    indicador_de_exposicao_relacionado = valor_coluna(
+    id 					= limpar_texto_html(valor_coluna("id", "ID")),
+    nome_curto 			= limpar_texto_html(valor_coluna("nome_curto", "acao")),
+    nome_ficha 			= limpar_texto_html(valor_coluna("nome_ficha", "Nome_ficha")),
+    por_que_importante 	= limpar_texto_html(valor_coluna("por_que_importante", "importancia")),
+    indicador_de_exposicao_relacionado = limpar_texto_html(valor_coluna(
       "indicador_de_exposicao_relacionado",
       "Indicador_relacionado"
-    ),
+    )),
 
-    estrategia_de_atuacao_da_acao = valor_coluna(
+    estrategia_de_atuacao_da_acao = limpar_texto_html(valor_coluna(
       "estrategia_de_atuacao_da_acao",
       "acao"
-    ),
+    )),
 
-    tipologia_da_acao = valor_coluna(
+    tipologia_da_acao = limpar_texto_html(valor_coluna(
       "tipologia_da_acao",
       "tipologia"
-    ),
+    )),
 
-    local_da_acao = valor_coluna(
+    local_da_acao = limpar_texto_html(valor_coluna(
       "local_da_acao",
       "local"
-    ),
+    )),
     
     tags 				= valor_lista("tags"),
     temas 				= valor_lista("temas_lista"),
@@ -156,10 +176,10 @@ acoes_recomendadas_ui <- function() {
         div(
           class = "acoes-hero-content",
 
-          tags$div(
-            class = "acoes-kicker",
-            "Ações recomendadas"
-          ),
+          # tags$div(
+          #   class = "acoes-kicker",
+          #   "Ações recomendadas"
+          # ),
 
           tags$h2(
             class = "acoes-hero-title",
@@ -224,6 +244,82 @@ regua_temas_acao_ui <- function(cores_tema) {
   )
 }
 
+o_que_fazer_acao_ui <- function(o_que_fazer) {
+
+  if (is.null(o_que_fazer) ||
+      length(o_que_fazer) == 0 ||
+      all(is.na(o_que_fazer)) ||
+      all(trimws(as.character(o_que_fazer)) == "")) {
+    return(
+      tags$p("Sem informação.")
+    )
+  }
+
+  o_que_fazer <- as.character(o_que_fazer)
+
+  o_que_fazer <- o_que_fazer[
+    !is.na(o_que_fazer) &
+      trimws(o_que_fazer) != ""
+  ]
+
+  tagList(
+    lapply(seq_along(o_que_fazer), function(i) {
+
+      tags$div(
+        class = "acao-info-card",
+
+        tags$div(
+          class = "acao-info-numero",
+          i
+        ),
+
+        tags$div(
+          class = "acao-info-conteudo",
+          limpar_texto_html(valor_txt(o_que_fazer[i]))
+        )
+      )
+    })
+  )
+}
+
+dicas_praticas_acao_ui <- function(dicas_praticas) {
+
+  if (is.null(dicas_praticas) ||
+      length(dicas_praticas) == 0 ||
+      all(is.na(dicas_praticas)) ||
+      all(trimws(as.character(dicas_praticas)) == "")) {
+    return(
+      tags$p("Sem informação.")
+    )
+  }
+
+  dicas_praticas <- as.character(dicas_praticas)
+
+  dicas_praticas <- dicas_praticas[
+    !is.na(dicas_praticas) &
+      trimws(dicas_praticas) != ""
+  ]
+
+  tagList(
+    lapply(seq_along(dicas_praticas), function(i) {
+
+      tags$div(
+        class = "acao-info-card",
+
+        tags$div(
+          class = "acao-info-numero",
+          i
+        ),
+
+        tags$div(
+          class = "acao-info-conteudo",
+          limpar_texto_html(valor_txt(dicas_praticas[i]))
+        )
+      )
+    })
+  )
+}
+
 base_tecnica_acao_ui <- function(base_tecnica) {
 
   if (is.null(base_tecnica) || nrow(base_tecnica) == 0) {
@@ -240,7 +336,7 @@ base_tecnica_acao_ui <- function(base_tecnica) {
 
         tags$div(
           class = "acao-ref-titulo",
-          valor_txt(base_tecnica$titulo[i])
+          limpar_texto_html(valor_txt(base_tecnica$titulo[i]))
         ),
 
         tags$div(
@@ -253,7 +349,7 @@ base_tecnica_acao_ui <- function(base_tecnica) {
 
           tags$div(
             class = "acao-ref-conteudo",
-            valor_txt(base_tecnica$o_que_trata[i])
+            limpar_texto_html(valor_txt(base_tecnica$o_que_trata[i]))
           )
         ),
 
@@ -267,7 +363,7 @@ base_tecnica_acao_ui <- function(base_tecnica) {
 
           tags$div(
             class = "acao-ref-conteudo",
-            valor_txt(base_tecnica$relacao[i])
+            limpar_texto_html(valor_txt(base_tecnica$relacao[i]))
           )
         )
       )
@@ -313,7 +409,7 @@ acao_topo_detalhe_ui <- function(acao) {
       class = "acao-topo-titulo-box",
       tags$h1(
         class = "acao-topo-titulo",
-        valor_txt(acao$nome_ficha)
+        valor_txt(limpar_texto_html(acao$nome_ficha))
       )
     ),
 
@@ -323,7 +419,7 @@ acao_topo_detalhe_ui <- function(acao) {
       tags$strong("Por que isso é importante: "),
 
       tags$span(
-        valor_txt(acao$por_que_importante)
+        valor_txt(limpar_texto_html(acao$por_que_importante))
       )
     ),
 
@@ -377,9 +473,7 @@ acao_detalhe_ui <- function(obj) {
 
       tags$h2("O que fazer"),
 
-      tags$p(
-        valor_txt(acao$o_que_fazer)
-      )
+      o_que_fazer_acao_ui(acao$o_que_fazer)
     ),
 
     # =========================
@@ -390,9 +484,7 @@ acao_detalhe_ui <- function(obj) {
 
       tags$h2("Dicas práticas"),
 
-      tags$p(
-        valor_txt(acao$dicas_praticas)
-      )
+      dicas_praticas_acao_ui(acao$dicas_praticas)
     ),
 
     # =========================

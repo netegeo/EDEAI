@@ -75,7 +75,7 @@ preparar_cards_acoes <- function(dados_acoes) {
     list(
       id = valor_coluna_card(linha, "id", "ID"),
 
-      nome_ficha = valor_coluna_card(linha, "nome_ficha", "Nome_ficha"),
+      nome_ficha = limpar_texto_html(valor_coluna_card(linha, "nome_ficha", "Nome_ficha")),
 
       cores_tema = obter_cores_tema(
         linha$cores_tema[[1]]
@@ -213,7 +213,7 @@ card_acao_ui <- function(card) {
         "Shiny.setInputValue('acao_selecionada', '%s', {priority: 'event'}); return false;",
         card$id
       ),
-      card$nome_ficha
+      card$nome_ficha,tags$span(class = "acoes-seta-left")
     ),
 
     # 2. Linhas/tags coloridas dos temas

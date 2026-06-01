@@ -115,7 +115,6 @@ body {
   color:  #F8F4ED;
   min-width: 240px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-  border-radius: 30px;
   overflow: hidden;
   z-index: 9999;
 }
@@ -137,6 +136,7 @@ body {
 
 .menudrop-item:hover {
   background: #F8F4ED;
+  color: #123131;
 }
 
 /* ==========================================
@@ -905,6 +905,18 @@ body {
   margin-bottom: 2px;  
 }
 
+.acoes-seta-left {
+  width: 12px;
+  height: 12px;
+  border-right: 5px solid #000000;
+  border-bottom: 5px solid #000000;
+  transform: rotate(315deg);
+  display: inline-block;
+  margin-left: 12px;
+  margin-bottom: 2px;  
+}
+
+
 .hidden {
   display: none;
 }
@@ -1250,6 +1262,16 @@ body {
   gap: 20px;
 }
 
+.indicador-municipio-link {
+  color: inherit !important;
+  text-decoration: none !important;
+  font-weight: inherit;
+}
+
+.indicador-municipio-link:hover,
+.indicador-municipio-link:focus {
+  text-decoration: underline !important;
+}
 
 /* =========================
    RESPONSIVO
@@ -2364,10 +2386,9 @@ body {
 ===================================================== */
 
 .acoes-selecao-barra {
-  max-width: 1200px;
+  max-width: 1180px;
   margin: 0 auto 28px auto;
-  background: #123131;
-  border-radius: 30px;
+  background: #0F3131;
   padding: 0 150px 0 18px; /* reserva espaço para o botão limpar */
   display: grid;
   grid-template-columns: 0.9fr 1.55fr 1.55fr 0.9fr 0.9fr;
@@ -2397,7 +2418,6 @@ body {
   background: transparent;
   color: #F8F4ED !important;
   border: none;
-  border-radius: 50px;
   padding: 0 10px;
   font-size: 17px;
   font-weight: 700;
@@ -2422,7 +2442,6 @@ body {
   overflow-y: auto;
   background: #123131;
   color: #F8F4ED;
-  border-radius: 0 0 15px 15px;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
   padding: 12px 14px;
 }
@@ -2460,7 +2479,6 @@ body {
   line-height: 1.25;
   font-weight: 500;
   padding: 8px 10px;
-  border-radius: 15px;
   white-space: normal;
 }
 
@@ -2566,7 +2584,6 @@ body {
   height: 25px;
   margin: 0;
   border: 2px solid #C7DDD3;
-  border-radius: 30px;
   background: #FFFFFF;
   cursor: pointer;
   flex: 0 0 25px;
@@ -2610,8 +2627,7 @@ body {
 .btn-acoes-limpar {
   width: 100%;
   min-height: 56px;
-  border-radius: 50px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   background: #FFFFFF;
   color: #222222;
@@ -2684,7 +2700,6 @@ body {
   gap: 12px;
   background: #FFFFFF;
   border: 1px solid #D7D0C6;
-  border-radius: 30px;
   padding: 0 18px;
 }
 
@@ -3187,7 +3202,7 @@ body {
   padding: 0 24px 50px;
   background: #F8F4ED;
   color: #26352D;
-  font-family: "Rawline", Arial, Helvetica, sans-serif;
+  font-family: "Rawline";
 }
 
 .acao-card-principal,

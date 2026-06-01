@@ -194,116 +194,276 @@ tags$a(
   ))
 }
 
+selecionar_acoes_por_indicador <- function(df, objeto_acoes) {
 
+  if (is.null(df) || nrow(df) == 0) {
+    return(data.frame(
+      id_acao = character(0),
+      acao = character(0),
+      stringsAsFactors = FALSE
+    ))
+  }
 
-pagina_indicador_ui <- function(df) {
+  if (is.null(objeto_acoes) ||
+      is.null(objeto_acoes$destaque) ||
+      nrow(objeto_acoes$destaque) == 0) {
+    return(data.frame(
+      id_acao = character(0),
+      acao = character(0),
+      stringsAsFactors = FALSE
+    ))
+  }
 
- acoes_indicador = readRDS("data/ficha_indicadores_20260525.rds")$acoes_indicador  
-sel_acoes <- acoes_indicador$acao[
-  acoes_indicador$indicador == df$Título[1]
-]
+  destaque <- objeto_acoes$destaque
 
-df_acoes <- tagList(
+  titulo_indicador <- limpar_espacos_unicode(as.character(df$Título[1]))
 
-  lapply(seq_along(sel_acoes), function(i) {
+  codigo_indicador <- NA_character_
+
+  if ("Codigo" %in% names(df)) {
+    codigo_indicador <- limpar_espacos_unicode(as.character(df$Codigo[1]))
+  } else if ("codigo" %in% names(df)) {
+    codigo_indicador <- limpar_espacos_unicode(as.character(df$codigo[1]))
+  }
+
+  # -------------------------------------------------------
+  # Compatibilidade com nomes possíveis das colunas
+  # -------------------------------------------------------
+
+  coluna_id <- intersect(
+    c("id", "ID", "id_acao", "ID_acao"),
+    names(destaque)
+  )[1]
+
+  coluna_acao <- intersect(
+    c("acao", "Nome_ficha", "nome_ficha", "titulo", "ação"),
+    names(destaque)
+  )[1]
+
+  coluna_indicador <- intersect(
+    c(
+      "indicador",
+      "indicador_relacionado",
+      "Indicador_relacionado",
+      "Indicador Relacionado",
+      "indicador_de_exposicao_relacionado",
+      "Indicador_de_exposicao_relacionado",
+      "indicadores",
+      "Título",
+      "titulo_indicador"
+    ),
+    names(destaque)
+  )[1]
+
+  if (is.na(coluna_id) || is.na(coluna_acao) || is.na(coluna_indicador)) {
+    stop(
+      paste0(
+        "Não foi possível identificar as colunas necessárias em objeto_acoes$destaque. ",
+        "Verifique se existem colunas de ID da ação, nome da ação e indicador relacionado."
+      )
+    )
+  }
+
+  destaque$id_acao_tmp 		<- limpar_espacos_unicode(as.character(destaque[[coluna_id]]))
+  destaque$acao_tmp 		<- limpar_texto_html(as.character(destaque[[coluna_acao]]))
+  destaque$indicador_tmp 	<- limpar_espacos_unicode(as.character(destaque[[coluna_indicador]]))
+
+  # -------------------------------------------------------
+  # Seleção das ações associadas ao indicador
+  # -------------------------------------------------------
+  # Primeiro tenta por código, se existir.
+  # Depois tenta pelo título do indicador.
+
+  if (!is.na(codigo_indicador) && codigo_indicador != "") {
+
+    sel_acoes <- destaque[
+      grepl(
+        pattern = codigo_indicador,
+        x = destaque$indicador_tmp,
+        fixed = TRUE
+      ),
+      ,
+      drop = FALSE
+    ]
+
+  } else {
+
+    sel_acoes <- destaque[0, , drop = FALSE]
+  }
+
+  if (nrow(sel_acoes) == 0) {
+
+    sel_acoes <- destaque[
+      grepl(
+        pattern = titulo_indicador,
+        x = destaque$indicador_tmp,
+        fixed = TRUE
+      ),
+      ,
+      drop = FALSE
+    ]
+  }
+
+  if (nrow(sel_acoes) == 0) {
+    return(data.frame(
+      id_acao = character(0),
+      acao = character(0),
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  sel_acoes <- data.frame(
+    id_acao = sel_acoes$id_acao_tmp,
+    acao = sel_acoes$acao_tmp,
+    stringsAsFactors = FALSE
+  )
+
+  sel_acoes <- sel_acoes[
+    !is.na(sel_acoes$id_acao) &
+      sel_acoes$id_acao != "" &
+      !is.na(sel_acoes$acao) &
+      sel_acoes$acao != "",
+    ,
+    drop = FALSE
+  ]
+
+  sel_acoes <- sel_acoes[
+    !duplicated(sel_acoes$id_acao),
+    ,
+    drop = FALSE
+  ]
+
+  rownames(sel_acoes) <- NULL
+
+  sel_acoes
+}
+
+pagina_indicador_ui <- function(df, objeto_acoes) {
+
+  sel_acoes <- selecionar_acoes_por_indicador(
+    df = df,
+    objeto_acoes = objeto_acoes
+  )
+
+  df_acoes <- if (nrow(sel_acoes) == 0) {
+
+    tags$p("Não há ações recomendadas associadas a este indicador.")
+
+  } else {
 
     tagList(
+      lapply(seq_len(nrow(sel_acoes)), function(i) {
 
-      tags$a(
-        href = "#",
-        class = "linha-acao-link",
-        sel_acoes[i]
-      ),
+        tagList(
 
-      tags$br()
+          tags$a(
+            href = "#",
+            onclick = sprintf(
+              "Shiny.setInputValue('acao_selecionada', '%s', {priority: 'event'}); return false;",
+              sel_acoes$id_acao[i]
+            ),
+            class = "linha-acao-link",
+            limpar_texto_html(valor_txt(sel_acoes$acao[i])),
+            tags$span(class = "acoes-seta-left")
+          ),
 
+          tags$br()
+        )
+      })
     )
+  }
 
-  })
+  div(
+    class = "indicador-page",
 
-)
-
-    div(class = "indicador-page",
-      div(class = "indicador-hero",
-        div(
-          class = "indicador-page-titulo",
-          df$Título[1]
-        ),
-
-        div(
-          class = "indicador-tema",
-            div(class="indicador-temah1","Tema:"),
-            div(class="indicador-temap",df$tema[1])
-          )
-        ,
-        div(
-          class = "indicador-tema",
-            div(class="indicador-temah1","Descrição do indicador:"),
-            div(class="indicador-temap",df$Descrição[1])
-          )
-        ,
-        div(
-          class = "indicador-tema",
-            div(class="indicador-temah1","Interpretação e Uso:"),
-            div(class="indicador-temap",df$Interpretação.e.Uso[1])
-          )
-),
+    div(
+      class = "indicador-hero",
 
       div(
-        class = "indicador-grid",
-      div(
-        class = "indicador-coluna",
-          div(class="indicador-temah1","Unidade:"),
-          div(class="indicador-temap",df$Unidade[1])
+        class = "indicador-page-titulo",
+        df$Título[1]
       ),
 
+      div(
+        class = "indicador-tema",
+        div(class = "indicador-temah1", "Tema:"),
+        div(class = "indicador-temap", df$tema[1])
+      ),
+
+      div(
+        class = "indicador-tema",
+        div(class = "indicador-temah1", "Descrição do indicador:"),
+        div(class = "indicador-temap", df$Descrição[1])
+      ),
+
+      div(
+        class = "indicador-tema",
+        div(class = "indicador-temah1", "Interpretação e Uso:"),
+        div(class = "indicador-temap", df$Interpretação.e.Uso[1])
+      )
+    ),
+
+    div(
+      class = "indicador-grid",
 
       div(
         class = "indicador-coluna",
-          div(class="indicador-temah1","Periodicidade:"),
-          div(class="indicador-temap",df$Periodicidade[1])
-        ),
-
-      div(
-        class = "indicador-coluna",
-          div(class="indicador-temah1","Série histórica/ano:"),
-          div(class="indicador-temap",df$Série.histórica.ou.ano[1])
+        div(class = "indicador-temah1", "Unidade:"),
+        div(class = "indicador-temap", df$Unidade[1])
       ),
 
       div(
         class = "indicador-coluna",
-          div(class="indicador-temah1","Fonte:"),
-          div(class="indicador-temap",df$Fonte[1])
-      )),
-      div(class = "indicador-info",
+        div(class = "indicador-temah1", "Periodicidade:"),
+        div(class = "indicador-temap", df$Periodicidade[1])
+      ),
+
+      div(
+        class = "indicador-coluna",
+        div(class = "indicador-temah1", "Série histórica/ano:"),
+        div(class = "indicador-temap", df$Série.histórica.ou.ano[1])
+      ),
+
+      div(
+        class = "indicador-coluna",
+        div(class = "indicador-temah1", "Fonte:"),
+        div(class = "indicador-temap", df$Fonte[1])
+      )
+    ),
+
+    div(
+      class = "indicador-info",
+
       div(
         class = "indicador-bloco",
-          tags$b("Cálculo:"),
+        tags$b("Cálculo:"),
         tags$div(
           class = "lista-acoes-indicador",
-          df$Método.de.Cálculo[1])
+          df$Método.de.Cálculo[1]
+        )
       ),
-div(
-  class = "indicador-bloco",
 
-  tags$b("Ações Recomendadas:"),
-
-  tags$div(
-    class = "lista-acoes-indicador",
-    df_acoes
-  )
-)),
+      div(
+        class = "indicador-bloco",
+        tags$b("Ações Recomendadas:"),
+        tags$div(
+          class = "lista-acoes-indicador",
+          df_acoes
+        )
+      )
+    ),
 
     actionButton(
       "voltar_indicadores",
-      "Voltar para indicadores",
+      "Voltar",
       class = "btn-voltar-ind no-export",
-          onclick =  "setTimeout(function() {
-                      window.scrollTo({
-                      top: 0,
-                      behavior: 'smooth'});
-                      }, 50);"
-    ))
-
+      onclick = "setTimeout(function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }, 50);"
+    )
+  )
 }
 

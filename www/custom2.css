@@ -1,0 +1,5892 @@
+/* =====================================================
+   00. VARIÁVEIS E BASE GLOBAL
+   -----------------------------------------------------
+   Finalidade:
+     Definir padrões visuais e estruturais usados em todo
+     o dashboard, reduzindo repetição nas seções específicas.
+
+   Observações:
+     - Esta seção não altera nomes de classes existentes.
+     - As variáveis são novas por natureza, mas apenas
+       centralizam cores, espaçamentos e medidas recorrentes.
+     - Regras específicas de páginas devem permanecer nas
+       seções próprias de cada aba.
+===================================================== */
+
+/* =====================================================
+   00.X. QUEBRA DE TEXTO GLOBAL
+   -----------------------------------------------------
+   Evita separação indevida de palavras em títulos,
+   botões e rótulos curtos.
+===================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.btn,
+.action-button,
+.menu-btn,
+.btn-municipio,
+.btn-carregar,
+.btn-baixar-metodo,
+.btn-voltar-ind,
+.btn-baixar-diagnostico,
+.btn-baixar-indicador,
+.btn-equipe-projeto,
+.btn_equipe_inicio,
+.btn-voltar-acoes,
+.acoes-dropdown-btn,
+.acao-titulo,
+.acao-card-titulo,
+.acoes-card-titulo,
+.acao-item-titulo,
+.projeto-card h3,
+.equipe-card h2,
+.quem-hero h1,
+.metodo-hero-text h1,
+.projeto-hero-text h1,
+.indicador-page-titulo,
+.pagina-indicador-titulo,
+.municipio-title {
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+/* =====================================================
+   00.1. VARIÁVEIS GLOBAIS
+===================================================== */
+
+:root {
+  /* Cores institucionais e de fundo */
+  --cor-fundo-app: #F8F4ED;
+  --cor-verde-principal: #123131;
+  --cor-verde-escuro: #113131;
+  --cor-verde-titulo: #1f523c;
+  --cor-verde-texto: #0f3131;
+
+  /* Cores neutras */
+  --cor-branco: #FFFFFF;
+  --cor-preto: #000000;
+  --cor-borda-suave: #E2ECE8;
+  --cor-rodape: #F2F3F5;
+  --cor-borda-rodape: #D8DEE8;
+  
+  /* Cores temáticas - tons escuros */
+  --cor-tema-ambiente-escolar: #c05817;
+  --cor-tema-eventos-climaticos: #bc3e44;
+  --cor-tema-infraestrutura: #6a7e29;
+  --cor-tema-qualidade-ar: #1a829a;
+
+  /* Cores auxiliares já utilizadas no painel */
+  --cor-linha-vermelha: #bc3e44ff;
+  --cor-linha-verde: #6a7e29ff;
+  --cor-linha-azul: #1a829aff;
+  --cor-linha-laranja: #c05817ff;
+
+  /* Tipografia */
+  --fonte-principal: "Rawline", Arial, sans-serif;
+
+  /* Medidas globais */
+  --largura-pagina: 1200px;
+  --largura-pagina-menor: 1150px;
+
+  /* Bordas e sombras */
+  --raio-card: 30px;
+  --sombra-card: 0 3px 12px #afcfb4;
+  --sombra-suave: 0 4px 14px rgba(24, 49, 83, 0.06);
+
+  /* Espaçamentos */
+  --espaco-pagina-topo: 50px;
+  --padding-card: 28px;
+}
+
+/* =====================================================
+   00.2. BASE DO DOCUMENTO
+===================================================== */
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  background-color: var(--cor-fundo-app);
+  font-family: var(--fonte-principal);
+  color: var(--cor-preto);
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* =====================================================
+   00.3. ELEMENTOS HTML GERAIS
+===================================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* =====================================================
+   00.4. UTILITÁRIOS GLOBAIS
+===================================================== */
+
+.hidden {
+  display: none;
+}
+
+.no-export {
+  display: block;
+}
+
+/* =====================================================
+   00.5. PADRÕES GERAIS DE PÁGINA
+   -----------------------------------------------------
+   Mantém nomes já existentes e apenas agrupa páginas que
+   compartilham o mesmo comportamento estrutural.
+===================================================== */
+
+.inicio-page,
+.projeto-page,
+.metodo-page,
+.indicador-page,
+.municipio-panel,
+.quem-page,
+.equipe-page,
+.acoes-page {
+  background: var(--cor-fundo-app);
+  margin: var(--espaco-pagina-topo) auto;
+}
+
+/* =====================================================
+   00.6. PADRÃO GLOBAL DE CARDS / BLOCOS BRANCOS
+   -----------------------------------------------------
+   Atenção:
+     Regras específicas de cada classe ainda podem sobrescrever
+     estes padrões nas seções próprias.
+===================================================== */
+
+/*.info-card,
+.projeto-card,
+.projeto-hero,
+.metodo-hero,
+.indicador-section,
+.indicador-hero,
+.indicador-coluna,
+.indicador-bloco,
+.municipio-legenda-geral,
+.municipio-cabecalho,
+.tema-bloco,
+.quem-hero,
+.quem-instituicao-bloco,
+.equipe-card,
+.acoes-hero {
+  border-radius: var(--raio-card);
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+}*/
+
+/* =====================================================
+   00.7. LINHAS DECORATIVAS GLOBAIS
+   -----------------------------------------------------
+   Usada em mais de uma página:
+     - metodologia
+     - projeto
+     - equipe, com classe própria semelhante
+===================================================== */
+
+.linhas-decorativas,
+.linhas-proj {
+  display: flex;
+  gap: 12px;
+}
+
+.linhas-decorativas span,
+.linhas-proj span {
+  width: 120px;
+  height: 10px;
+  display: block;
+}
+
+.linhas-decorativas span:nth-child(1),
+.linhas-proj span:nth-child(1) {
+  background: var(--cor-linha-vermelha);
+}
+
+.linhas-decorativas span:nth-child(2),
+.linhas-proj span:nth-child(2) {
+  background: var(--cor-linha-azul);
+}
+
+.linhas-decorativas span:nth-child(3),
+.linhas-proj span:nth-child(3) {
+  background: var(--cor-linha-verde);
+}
+
+.linhas-decorativas span:nth-child(4),
+.linhas-proj span:nth-child(4) {
+  background: var(--cor-linha-laranja);
+}
+
+/* =====================================================
+   00.8. EXPORTAÇÃO / PDF
+===================================================== */
+
+#diagnostico_municipio_pdf,
+#indicador_pdf {
+  box-sizing: border-box;
+  background: var(--cor-fundo-app);
+}
+
+.indicador-hero,
+.indicador-bloco,
+.pagina-indicador-bloco {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* =====================================================
+   00.9. RESPONSIVIDADE GLOBAL BÁSICA
+   -----------------------------------------------------
+   Regras gerais. Ajustes finos devem ficar na seção de
+   cada aba.
+===================================================== */
+
+@media (max-width: 1200px) {
+  .inicio-page,
+  .projeto-page,
+  .metodo-page,
+  .indicador-page,
+  .municipio-panel,
+  .quem-page,
+  .equipe-page,
+  .acoes-page {
+    max-width: calc(100% - 32px);
+  }
+}
+
+@media (max-width: 900px) {
+  .inicio-page,
+  .projeto-page,
+  .metodo-page,
+  .indicador-page,
+  .municipio-panel,
+  .quem-page,
+  .equipe-page,
+  .acoes-page {
+    margin: 32px auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .inicio-page,
+  .projeto-page,
+  .metodo-page,
+  .indicador-page,
+  .municipio-panel,
+  .quem-page,
+  .equipe-page,
+  .acoes-page {
+    max-width: calc(100% - 24px);
+    margin: 24px auto;
+  }
+}
+
+/* =====================================================
+   01. FONTES
+   -----------------------------------------------------
+   Finalidade:
+     Carregar a família tipográfica Rawline utilizada no
+     dashboard e definir pesos disponíveis para uso global.
+
+   Observações:
+     - Os nomes dos arquivos seguem a estrutura já usada
+       no custom.css original.
+     - A família Rawline já foi definida como fonte principal
+       na Seção 00 por meio da variável --fonte-principal.
+     - Esta seção apenas registra os arquivos de fonte.
+===================================================== */
+
+
+/* =====================================================
+   01.1. RAWLINE - PESO 400
+===================================================== */
+
+@font-face {
+  font-family: 'Rawline';
+  src: url('fonts/rawline-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* =====================================================
+   01.2. RAWLINE - PESO 500
+===================================================== */
+
+@font-face {
+  font-family: 'Rawline';
+  src: url('fonts/rawline-500.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* =====================================================
+   01.3. RAWLINE - PESO 600
+===================================================== */
+
+@font-face {
+  font-family: 'Rawline';
+  src: url('fonts/rawline-600.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* =====================================================
+   01.4. RAWLINE - PESO 700
+===================================================== */
+
+@font-face {
+  font-family: 'Rawline';
+  src: url('fonts/rawline-700.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* =====================================================
+   01.5. RAWLINE - PESO 800
+===================================================== */
+
+@font-face {
+  font-family: 'Rawline';
+  src: url('fonts/rawline-800.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* =====================================================
+   01.6. RAWLINE - PESO 900
+===================================================== */
+
+@font-face {
+  font-family: 'Rawline';
+  src: url('fonts/rawline-900.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =====================================================
+   02. LAYOUT GLOBAL
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura geral das páginas do dashboard,
+     padronizando largura, margens, espaçamentos e
+     comportamento básico dos containers principais.
+
+   Observações:
+     - Esta seção não substitui o layout específico de cada aba.
+     - As regras específicas continuam nas seções próprias.
+     - O objetivo aqui é reduzir repetição estrutural.
+===================================================== */
+
+
+/* =====================================================
+   02.1. CONTAINERS PRINCIPAIS DE PÁGINA
+===================================================== */
+
+.inicio-page,
+.projeto-page,
+.metodo-page,
+.indicador-page,
+.municipio-panel,
+.quem-page,
+.equipe-page,
+.acoes-page {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* =====================================================
+   02.2. CONTAINERS COM LARGURA MENOR
+   -----------------------------------------------------
+   Usado para blocos internos que, no CSS atual, aparecem
+   com largura próxima de 1150px.
+===================================================== */
+
+.metodo-hero,
+.metodologia-section,
+.indicador-section,
+.metodologia-box-fim,
+.municipio-card-novo,
+.municipio-card-novo2,
+.quem-section-inner,
+.equipe-header,
+.equipe-grid {
+  width: 100%;
+  max-width: var(--largura-pagina-menor);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* =====================================================
+   02.3. CONTAINERS COM LARGURA PADRÃO DE 1200px
+===================================================== */
+
+.projeto-hero,
+.projeto-cards,
+.indicador-grid,
+.quem-hero,
+.acoes-hero,
+.acoes-layout,
+.acoes-conteudo,
+.acoes-selecao-barra {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* =====================================================
+   02.4. COMPORTAMENTO GERAL DE SEÇÕES
+===================================================== */
+
+.inicio-section,
+.hero-section,
+.projeto-section,
+.metodologia-section,
+.indicador-section,
+.quem-section,
+.equipe-section {
+  width: 100%;
+}
+
+
+/* =====================================================
+   02.5. GRIDS E FLEX GERAIS
+   -----------------------------------------------------
+   Apenas padrões seguros. A definição de colunas deve
+   permanecer na seção específica de cada aba.
+===================================================== */
+
+.cards-grid,
+.projeto-cards,
+.indicador-grid,
+.indicadores-layout,
+.indicadores-layout-dinamico,
+.municipio-basico-grid,
+.equipe-grid {
+  width: 100%;
+}
+
+.footer-content,
+.menu-inner,
+.inicio-actions,
+.hero-actions,
+.metodo-botoes,
+.municipio-download-area,
+.pagina-indicador-download-area,
+.quem-equipe-cta,
+.equipe-btn-inic {
+  width: 100%;
+}
+
+
+/* =====================================================
+   02.6. IMAGENS E MÍDIA EM LAYOUT
+===================================================== */
+
+.inicio-img,
+.hero-img,
+.footer-logo,
+.footer-logos-img,
+.footer-rega-logos,
+.quem-logo-img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* =====================================================
+   02.7. ÁREAS DE EXPORTAÇÃO
+===================================================== */
+
+.municipio-export-wrapper,
+.pagina-indicador-export-wrapper {
+  width: 100%;
+}
+
+#diagnostico_municipio_pdf,
+#indicador_pdf {
+  width: 100%;
+}
+
+
+/* =====================================================
+   02.8. RESPONSIVIDADE ESTRUTURAL GLOBAL
+   -----------------------------------------------------
+   Ajusta apenas largura e margens gerais.
+   Ajustes específicos de grid, fonte e conteúdo devem
+   ficar nas seções de cada aba.
+===================================================== */
+
+@media (max-width: 1200px) {
+  .inicio-page,
+  .projeto-page,
+  .metodo-page,
+  .indicador-page,
+  .municipio-panel,
+  .quem-page,
+  .equipe-page,
+  .acoes-page,
+  .projeto-hero,
+  .projeto-cards,
+  .metodo-hero,
+  .metodologia-section,
+  .indicador-section,
+  .indicador-grid,
+  .metodologia-box-fim,
+  .municipio-card-novo,
+  .municipio-card-novo2,
+  .quem-hero,
+  .quem-section-inner,
+  .equipe-header,
+  .equipe-grid,
+  .acoes-hero,
+  .acoes-layout,
+  .acoes-conteudo,
+  .acoes-selecao-barra {
+    max-width: calc(100% - 32px);
+  }
+}
+
+@media (max-width: 900px) {
+  .inicio-page,
+  .projeto-page,
+  .metodo-page,
+  .indicador-page,
+  .municipio-panel,
+  .quem-page,
+  .equipe-page,
+  .acoes-page {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  .projeto-hero,
+  .metodo-hero,
+  .indicador-section,
+  .quem-hero,
+  .acoes-hero {
+    max-width: calc(100% - 28px);
+  }
+}
+
+@media (max-width: 768px) {
+  .inicio-page,
+  .projeto-page,
+  .metodo-page,
+  .indicador-page,
+  .municipio-panel,
+  .quem-page,
+  .equipe-page,
+  .acoes-page {
+    max-width: calc(100% - 24px);
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+
+  .projeto-hero,
+  .projeto-cards,
+  .metodo-hero,
+  .metodologia-section,
+  .indicador-section,
+  .indicador-grid,
+  .metodologia-box-fim,
+  .municipio-card-novo,
+  .municipio-card-novo2,
+  .quem-hero,
+  .quem-section-inner,
+  .equipe-header,
+  .equipe-grid,
+  .acoes-hero,
+  .acoes-layout,
+  .acoes-conteudo,
+  .acoes-selecao-barra {
+    max-width: 100%;
+  }
+}
+
+/* =====================================================
+   03. COMPONENTES GLOBAIS
+   -----------------------------------------------------
+   Finalidade:
+     Centralizar componentes reutilizados em diferentes
+     páginas do dashboard.
+
+   Observações:
+     - Esta seção não muda nomes de classes existentes.
+     - Regras específicas de páginas continuam nas seções
+       próprias de cada aba.
+     - Menu e rodapé não entram aqui, pois terão seções
+       exclusivas.
+===================================================== */
+
+
+/* =====================================================
+   03.1. BOTÕES - BASE COMPARTILHADA
+   -----------------------------------------------------
+   Agrupa botões que compartilham aparência geral.
+   Cada botão pode manter ajustes específicos em sua seção.
+===================================================== */
+
+.btn-municipio,
+.btn-carregar,
+.btn-baixar-metodo,
+.btn-voltar-ind,
+.btn-baixar-diagnostico,
+.btn-baixar-indicador,
+.btn-equipe-projeto,
+.btn_equipe_inicio,
+.btn-acoes-buscar,
+.btn-acoes-limpar,
+.btn-voltar-acoes {
+  border: none;
+  cursor: pointer;
+  font-family: var(--fonte-principal);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.btn-municipio,
+.btn-carregar,
+.btn-baixar-metodo,
+.btn-voltar-ind,
+.btn-baixar-diagnostico,
+.btn-equipe-projeto,
+.btn_equipe_inicio,
+.btn-voltar-acoes {
+  background: var(--cor-verde-principal);
+  color: var(--cor-fundo-app) !important;
+}
+
+.btn-municipio:hover,
+.btn-municipio:focus,
+.btn-carregar:hover,
+.btn-carregar:focus,
+.btn-baixar-metodo:hover,
+.btn-baixar-metodo:focus,
+.btn-voltar-ind:hover,
+.btn-voltar-ind:focus,
+.btn-equipe-projeto:hover,
+.btn-equipe-projeto:focus,
+.btn_equipe_inicio:hover,
+.btn_equipe_inicio:focus,
+.btn-voltar-acoes:hover,
+.btn-voltar-acoes:focus {
+  background: var(--cor-verde-escuro);
+  color: var(--cor-fundo-app) !important;
+}
+
+
+/* =====================================================
+   03.2. BOTÕES EM FORMATO PILULA
+===================================================== */
+
+.btn-municipio,
+.btn-carregar,
+.btn-baixar-metodo,
+.btn-voltar-ind,
+.btn-baixar-diagnostico,
+.btn-equipe-projeto,
+.btn_equipe_inicio,
+.btn-voltar-acoes {
+  border-radius: 50px;
+}
+
+
+/* =====================================================
+   03.3. CARDS E BLOCOS - BASE COMPARTILHADA
+   -----------------------------------------------------
+   Mantém apenas propriedades comuns e seguras.
+   O bloco 00.6 já foi comentado, então aqui a regra é
+   mais conservadora.
+===================================================== */
+
+.info-card,
+.projeto-card,
+.projeto-metrica-card,
+.metodo-metrica-card,
+.indicador-box,
+.indicador-item,
+.indicador-coluna,
+.indicador-bloco,
+.pagina-indicador-bloco,
+.municipio-campo,
+.municipio-legenda-geral,
+.municipio-cabecalho,
+.tema-bloco,
+.quem-instituicao-bloco,
+.equipe-card,
+.acao-section-card,
+.acao-card-principal,
+.acao-ref-card {
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   03.4. LINHAS DECORATIVAS
+   -----------------------------------------------------
+   Usadas em mais de uma página.
+===================================================== */
+
+.linhas-decorativas,
+.linhas-proj,
+.equipe-linhas {
+  display: flex;
+  gap: 12px;
+}
+
+.linhas-decorativas span,
+.linhas-proj span {
+  width: 120px;
+  height: 10px;
+  display: block;
+}
+
+.equipe-linhas span {
+  width: 86px;
+  height: 8px;
+  display: block;
+}
+
+.linhas-decorativas span:nth-child(1),
+.linhas-proj span:nth-child(1),
+.equipe_linha-1 {
+  background: var(--cor-linha-vermelha);
+}
+
+.linhas-decorativas span:nth-child(2),
+.linhas-proj span:nth-child(2),
+.equipe_linha-2 {
+  background: var(--cor-linha-azul);
+}
+
+.linhas-decorativas span:nth-child(3),
+.linhas-proj span:nth-child(3),
+.equipe_linha-3 {
+  background: var(--cor-linha-verde);
+}
+
+.linhas-decorativas span:nth-child(4),
+.linhas-proj span:nth-child(4),
+.equipe_linha-4 {
+  background: var(--cor-linha-laranja);
+}
+
+
+/* =====================================================
+   03.5. SETAS VISUAIS
+===================================================== */
+
+.indicador-seta-dropdown,
+.indicador-seta-left,
+.acoes-seta-left {
+  display: inline-block;
+  margin-left: 12px;
+  margin-bottom: 2px;
+}
+
+.indicador-seta-dropdown {
+  width: 14px;
+  height: 14px;
+  border-right: 5px solid var(--cor-preto);
+  border-bottom: 5px solid var(--cor-preto);
+  transform: rotate(45deg);
+}
+
+.indicador-seta-left {
+  width: 14px;
+  height: 14px;
+  border-right: 5px solid var(--cor-preto);
+  border-bottom: 5px solid var(--cor-preto);
+  transform: rotate(315deg);
+}
+
+.acoes-seta-left {
+  width: 12px;
+  height: 12px;
+  border-right: 5px solid var(--cor-preto);
+  border-bottom: 5px solid var(--cor-preto);
+  transform: rotate(315deg);
+}
+
+
+/* =====================================================
+   03.6. LINKS GLOBAIS
+===================================================== */
+
+.footer-nav-link,
+.footer-link,
+.indicador-item-titulo-link,
+.indicador-municipio-link,
+.linha-acao-link,
+.quem-link-site a {
+  text-decoration: none;
+}
+
+.footer-link:hover,
+.footer-link:focus,
+.indicador-item-titulo-link:hover,
+.indicador-item-titulo-link:focus,
+.indicador-municipio-link:hover,
+.indicador-municipio-link:focus,
+.linha-acao-link:hover,
+.linha-acao-link:focus,
+.quem-link-site a:hover,
+.quem-link-site a:focus {
+  text-decoration: underline;
+}
+
+
+/* =====================================================
+   03.7. CLASSES UTILITÁRIAS
+===================================================== */
+
+.hidden {
+  display: none;
+}
+
+.no-export {
+  display: block;
+}
+
+.span-2 {
+  grid-column: span 1;
+}
+
+
+/* =====================================================
+   03.8. ÁREAS DE DOWNLOAD / EXPORTAÇÃO
+===================================================== */
+
+.municipio-download-area,
+.pagina-indicador-download-area,
+.acao-voltar-area,
+.quem-equipe-cta,
+.equipe-btn-inic {
+  display: flex;
+}
+
+.municipio-download-area,
+.pagina-indicador-download-area {
+  justify-content: flex-end;
+}
+
+.acao-voltar-area,
+.quem-equipe-cta,
+.equipe-btn-inic {
+  justify-content: center;
+}
+
+
+/* =====================================================
+   03.9. COMPORTAMENTO DE HOVER EM CARDS CLICÁVEIS
+===================================================== */
+
+.indicador-box,
+.indicador-box-infra,
+.indicador-item,
+.linha-acao-link {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.indicador-box:hover,
+.indicador-box-infra:hover {
+  transform: translateY(-3px);
+}
+
+
+/* =====================================================
+   03.10. RESPONSIVIDADE BÁSICA DOS COMPONENTES
+===================================================== */
+
+@media (max-width: 768px) {
+  .btn-municipio,
+  .btn-equipe-projeto,
+  .btn_equipe_inicio {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .linhas-decorativas,
+  .linhas-proj,
+  .equipe-linhas {
+    flex-wrap: wrap;
+  }
+
+  .linhas-decorativas span,
+  .linhas-proj span {
+    width: 72px;
+  }
+
+  .equipe-linhas span {
+    width: 64px;
+  }
+}
+
+/* =====================================================
+   04. MENU
+   -----------------------------------------------------
+   Finalidade:
+     Definir a barra superior de navegação do dashboard,
+     incluindo botões principais e menu suspenso.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - Preserva compatibilidade com duas nomenclaturas:
+       .dropdown-content / .dropdown-item
+       .menudrop-content / .menudrop-item
+     - A navegação em si continua controlada pelo Shiny.
+===================================================== */
+
+
+/* =====================================================
+   04.1. BARRA PRINCIPAL
+===================================================== */
+
+.menu-bar {
+  background: var(--cor-verde-principal);
+  padding: 0 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+}
+
+
+/* =====================================================
+   04.2. CONTAINER INTERNO DO MENU
+===================================================== */
+
+.menu-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+
+/* =====================================================
+   04.3. BOTÕES PRINCIPAIS DO MENU
+===================================================== */
+
+.menu-btn {
+  background: transparent;
+  color: var(--cor-fundo-app);
+  border: none;
+  padding: 16px 22px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  font-family: var(--fonte-principal);
+  text-decoration: none;
+  box-shadow: none;
+}
+
+.menu-btn:hover,
+.menu-btn:focus {
+  background: rgb(17, 49, 49);
+  color: var(--cor-fundo-app);
+  outline: none;
+  box-shadow: none;
+}
+
+
+/* =====================================================
+   04.4. CONTAINER DO DROPDOWN
+===================================================== */
+
+.menu-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+
+/* =====================================================
+   04.5. CONTEÚDO DO DROPDOWN
+   -----------------------------------------------------
+   Mantém compatibilidade com:
+     - dropdown-content / dropdown-item
+     - menudrop-content / menudrop-item
+===================================================== */
+
+.dropdown-content,
+.menudrop-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--cor-verde-principal);
+  color: var(--cor-fundo-app);
+  min-width: 240px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.menu-dropdown:hover .dropdown-content,
+.menu-dropdown:hover .menudrop-content,
+.menu-dropdown:focus-within .dropdown-content,
+.menu-dropdown:focus-within .menudrop-content {
+  display: block;
+}
+
+
+/* =====================================================
+   04.6. ITENS DO DROPDOWN
+===================================================== */
+
+.dropdown-item,
+.menudrop-item {
+  width: 100%;
+  text-align: left;
+  background: var(--cor-verde-principal);
+  border: none;
+  padding: 14px 18px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--cor-fundo-app);
+  border-bottom: 1px solid rgba(248, 244, 237, 0.35);
+  cursor: pointer;
+  font-family: var(--fonte-principal);
+  box-shadow: none;
+}
+
+.dropdown-item:last-child,
+.menudrop-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus,
+.menudrop-item:hover,
+.menudrop-item:focus {
+  background: var(--cor-fundo-app);
+  color: var(--cor-verde-principal);
+  outline: none;
+  box-shadow: none;
+}
+
+
+/* =====================================================
+   04.7. AJUSTES DO BOOTSTRAP/SHINY
+   -----------------------------------------------------
+   Evita que estilos padrão de .btn, .dropdown-toggle
+   ou actionButton interfiram na aparência do menu.
+===================================================== */
+
+.menu-bar .btn,
+.menu-bar .btn:hover,
+.menu-bar .btn:focus,
+.menu-bar .btn:active {
+  border: none;
+  box-shadow: none;
+}
+
+.menu-bar .dropdown-toggle::after {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+
+/* =====================================================
+   04.8. RESPONSIVIDADE DO MENU
+===================================================== */
+
+@media (max-width: 900px) {
+  .menu-bar {
+    padding: 8px 12px;
+  }
+
+  .menu-inner {
+    gap: 6px;
+  }
+
+  .menu-btn {
+    padding: 12px 14px;
+    font-size: 18px;
+  }
+
+  .dropdown-content,
+  .menudrop-content {
+    min-width: 220px;
+  }
+
+  .dropdown-item,
+  .menudrop-item {
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .menu-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .menu-btn {
+    width: 100%;
+    text-align: left;
+  }
+
+  .menu-dropdown {
+    width: 100%;
+  }
+
+  .dropdown-content,
+  .menudrop-content {
+    position: static;
+    width: 100%;
+    min-width: 100%;
+    box-shadow: none;
+  }
+
+  .dropdown-item,
+  .menudrop-item {
+    width: 100%;
+  }
+}
+
+/* =====================================================
+   05. RODAPÉ
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura visual do rodapé institucional,
+     incluindo navegação inferior, régua de logos e
+     copyright.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - Consolida regras duplicadas do custom.css original.
+     - O conteúdo do rodapé continua definido em footer_ui.R.
+===================================================== */
+
+
+/* =====================================================
+   05.1. BLOCO PRINCIPAL DO RODAPÉ
+===================================================== */
+
+.footer {
+  background: var(--cor-rodape);
+  padding: 10px 0 20px;
+  border-top: 1px solid var(--cor-borda-rodape);
+  width: 100%;
+}
+
+
+/* =====================================================
+   05.2. CONTEÚDO INTERNO
+===================================================== */
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   05.3. LADO ESQUERDO - LINKS DE PÁGINAS
+===================================================== */
+
+.footer-left {
+  max-width: 420px;
+  margin-left: 0;
+}
+
+.footer-left.footer-pages {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+/* =====================================================
+   05.4. NAVEGAÇÃO DO RODAPÉ
+===================================================== */
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-nav-link {
+  color: var(--cor-preto);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.footer-nav-link:hover,
+.footer-nav-link:focus {
+  text-decoration: underline;
+}
+
+
+/* =====================================================
+   05.5. LADO DIREITO - LOGOS
+===================================================== */
+
+.footer-right {
+  display: flex;
+  gap: 20px;
+  max-width: none;
+}
+
+.footer-right.footer-logos {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.footer-logos-img {
+  max-width: 420px;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.footer-rega-logos {
+  width: 1200px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+/* =====================================================
+   05.6. LOGO/TÍTULOS ANTIGOS OU COMPLEMENTARES
+   -----------------------------------------------------
+   Mantidos por compatibilidade, caso ainda existam em
+   alguma versão da interface.
+===================================================== */
+
+.footer-logo {
+  width: 900px;
+  max-width: 100%;
+  height: auto;
+  padding: 60px 20px;
+}
+
+.footer-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #3E7FA5;
+  line-height: 1.2;
+  margin-left: 10px;
+  margin-top: 40px;
+}
+
+.footer-subtitle {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   05.7. COLUNAS ANTIGAS OU COMPLEMENTARES
+   -----------------------------------------------------
+   Mantidas por compatibilidade com possíveis versões
+   anteriores do rodapé.
+===================================================== */
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-col-title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #1F2D3D;
+}
+
+.footer-column a {
+  font-size: 14px;
+  color: #1F2D3D;
+  text-decoration: none;
+}
+
+.footer-column a:hover,
+.footer-column a:focus {
+  text-decoration: underline;
+}
+
+.footer-link {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-link:hover,
+.footer-link:focus {
+  text-decoration: underline;
+}
+
+
+/* =====================================================
+   05.8. BASE / COPYRIGHT
+===================================================== */
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid var(--cor-borda-rodape);
+  font-size: 14px;
+  color: #1F2D3D;
+}
+
+
+/* =====================================================
+   05.9. RESPONSIVIDADE DO RODAPÉ
+===================================================== */
+
+@media (max-width: 900px) {
+  .footer-content {
+    gap: 24px;
+  }
+
+  .footer-rega-logos {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-left.footer-pages,
+  .footer-right.footer-logos {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .footer-right.footer-logos {
+    align-items: flex-start;
+  }
+
+  .footer-nav {
+    width: 100%;
+  }
+
+  .footer-logos-img,
+  .footer-rega-logos {
+    max-width: 100%;
+  }
+}
+
+/* =====================================================
+   06. PÁGINA INÍCIO
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura visual da página inicial do painel,
+     incluindo hero de abertura, chamada principal e cards
+     de apresentação.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - Preserva compatibilidade entre classes inicio-* e hero-*.
+     - A classe .btn-municipio permanece compartilhada com
+       componentes globais, mas recebe ajustes aqui quando
+       usada na página inicial.
+===================================================== */
+
+
+/* =====================================================
+   06.1. CONTAINER PRINCIPAL
+===================================================== */
+
+.inicio-page {
+  max-width: var(--largura-pagina);
+  margin: var(--espaco-pagina-topo) auto;
+  background: var(--cor-fundo-app);
+  border-radius: var(--raio-card);
+  padding: 28px;
+}
+
+
+/* =====================================================
+   06.2. HERO / ABERTURA
+   -----------------------------------------------------
+   Mantém compatibilidade com:
+     - .hero-section / .hero-vertical / .hero-img
+     - .inicio-section / .inicio-vertical / .inicio-img
+===================================================== */
+
+.hero-section,
+.inicio-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px;
+}
+
+.hero-card {
+  width: 100%;
+}
+
+.hero-vertical,
+.inicio-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+
+/* =====================================================
+   06.3. IMAGEM PRINCIPAL
+===================================================== */
+
+.hero-img,
+.inicio-img {
+  width: 130%;
+  max-width: 1200px;
+  height: auto;
+  display: block;
+}
+
+
+/* =====================================================
+   06.4. TEXTO DO HERO
+===================================================== */
+
+.hero-text,
+.inicio-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.hero-subtitle,
+.inicio-subtitle {
+  width: 800px;
+  max-width: 900px;
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--cor-verde-texto);
+  line-height: 1.4;
+  text-align: center;
+}
+
+
+/* =====================================================
+   06.5. AÇÕES DO HERO
+===================================================== */
+
+.hero-actions,
+.inicio-actions {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-left: 50px;
+  font-weight: 900;
+}
+
+.btn-municipio {
+  background: var(--cor-verde-principal);
+  color: var(--cor-fundo-app) !important;
+  border-radius: 50px;
+  padding: 18px 34px;
+  font-size: 28px;
+  font-weight: 500;
+  min-width: 160px;
+}
+
+.btn-municipio:hover,
+.btn-municipio:focus {
+  background: var(--cor-verde-escuro);
+  color: var(--cor-fundo-app) !important;
+}
+
+
+/* =====================================================
+   06.6. ÁREA DOS CARDS
+   -----------------------------------------------------
+   Mantém compatibilidade com:
+     - .section-wrap / .section-title
+     - .card-wrap / .card-title
+===================================================== */
+
+.section-wrap,
+.card-wrap {
+  padding: 34px 28px 40px;
+  align-items: start;
+}
+
+.section-title,
+.card-title {
+  text-align: center;
+  font-size: 46px;
+  font-weight: 700;
+  color: var(--cor-verde-titulo);
+  margin-bottom: 26px;
+}
+
+
+/* =====================================================
+   06.7. GRID DE CARDS
+===================================================== */
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+
+/* =====================================================
+   06.8. CARD INFORMATIVO
+===================================================== */
+
+.info-card {
+  background: var(--cor-branco);
+  border-radius: var(--raio-card);
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+  padding: 12px 18px;
+  text-align: left;
+}
+
+
+/* =====================================================
+   06.9. CONTEÚDO DOS CARDS
+   -----------------------------------------------------
+   Mantém compatibilidade com:
+     - .info-icon / .info-title / .info-text
+     - .cards-icon / .cards-title / .cards-text
+===================================================== */
+
+.info-icon,
+.cards-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+  color: var(--cor-verde-principal);
+  text-align: center;
+}
+
+.info-icon img,
+.cards-icon img {
+  width: auto;
+  height: 90px;
+  max-width: 90px;
+  display: block;
+  margin: 0 auto;
+}
+
+.info-title,
+.cards-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--cor-verde-texto);
+  margin-bottom: 10px;
+}
+
+.info-text,
+.cards-text {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--cor-preto);
+  line-height: 1.15;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+
+/* =====================================================
+   06.10. RESPONSIVIDADE DA PÁGINA INÍCIO
+===================================================== */
+
+@media (max-width: 1200px) {
+  .inicio-page {
+    max-width: calc(100% - 32px);
+  }
+
+  .hero-img,
+  .inicio-img {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 900px) {
+  .inicio-page {
+    margin: 32px auto;
+    padding: 24px;
+  }
+
+  .hero-subtitle,
+  .inicio-subtitle {
+    width: 100%;
+    max-width: 760px;
+    font-size: 20px;
+  }
+
+  .hero-actions,
+  .inicio-actions {
+    margin-left: 0;
+  }
+
+  .section-title,
+  .card-title {
+    font-size: 38px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .inicio-page {
+    max-width: calc(100% - 24px);
+    margin: 24px auto;
+    padding: 20px;
+  }
+
+  .hero-section,
+  .inicio-section {
+    padding: 12px 0;
+  }
+
+  .hero-text,
+  .inicio-text {
+    gap: 18px;
+  }
+
+  .hero-subtitle,
+  .inicio-subtitle {
+    font-size: 18px;
+    line-height: 1.45;
+  }
+
+  .btn-municipio {
+    width: 100%;
+    max-width: 100%;
+    font-size: 22px;
+    padding: 15px 22px;
+    text-align: center;
+  }
+
+  .section-wrap,
+  .card-wrap {
+    padding: 28px 0 32px;
+  }
+
+  .section-title,
+  .card-title {
+    font-size: 32px;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-card {
+    padding: 18px;
+  }
+
+  .info-title,
+  .cards-title {
+    font-size: 24px;
+  }
+
+  .info-icon img,
+  .cards-icon img {
+    height: 84px;
+    max-width: 84px;
+  }
+
+  .info-text,
+  .cards-text {
+    font-size: 16px;
+    line-height: 1.35;
+  }
+}
+
+/* =====================================================
+   07. PÁGINA O PAINEL / PROJETO
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura visual da página "O Painel",
+     incluindo bloco hero, métricas e cards explicativos.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - Consolida regras duplicadas de .projeto-hero.
+     - Preserva o layout em duas colunas no desktop e
+       empilha o conteúdo em telas menores.
+===================================================== */
+
+
+/* =====================================================
+   07.1. CONTAINER PRINCIPAL
+===================================================== */
+
+.projeto-page {
+  background: var(--cor-fundo-app);
+  margin: var(--espaco-pagina-topo) auto;
+}
+
+
+/* =====================================================
+   07.2. SEÇÃO DE APOIO / BLOCO VERDE
+   -----------------------------------------------------
+   Mantida por compatibilidade, caso ainda seja usada.
+===================================================== */
+
+.projeto-section {
+  max-width: var(--largura-pagina);
+  margin: 30px auto;
+  background: var(--cor-verde-escuro);
+  color: var(--cor-fundo-app) !important;
+  border-radius: var(--raio-card);
+  padding: 28px;
+}
+
+
+/* =====================================================
+   07.3. HERO PRINCIPAL
+===================================================== */
+
+.projeto-hero {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto 34px;
+  padding: 48px 56px;
+  border-radius: var(--raio-card);
+  background: var(--cor-branco);
+  color: var(--cor-verde-escuro);
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+
+/* =====================================================
+   07.4. TEXTO DO HERO
+===================================================== */
+
+.projeto-hero-text {
+  flex: 1;
+}
+
+.projeto-hero-text h1 {
+  font-size: 50px;
+  line-height: 1.05;
+  font-weight: 850;
+  margin: 0 0 22px;
+  color: var(--cor-verde-escuro);
+}
+
+.projeto-hero-text p {
+  max-width: 780px;
+  font-size: 24px;
+  line-height: 1.42;
+  font-weight: 500;
+  margin: 20px 0 0;
+  color: var(--cor-verde-escuro);
+}
+
+
+/* =====================================================
+   07.5. MÉTRICAS DO HERO
+===================================================== */
+
+.projeto-metricas {
+  width: 330px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex-shrink: 0;
+}
+
+.projeto-metrica-card {
+  background: rgba(248, 244, 237, 0.70);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--raio-card);
+  padding: 26px 24px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.projeto-metrica-numero {
+  font-size: 40px;
+  line-height: 1;
+  font-weight: 900;
+  color: var(--cor-verde-escuro);
+  margin-bottom: 10px;
+}
+
+.projeto-metrica-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cor-verde-escuro);
+}
+
+
+/* =====================================================
+   07.6. ÍCONE DO HERO
+   -----------------------------------------------------
+   Mantido por compatibilidade, caso volte a ser usado.
+===================================================== */
+
+.projeto-hero-icon {
+  width: 150px;
+  height: 150px;
+  min-width: 150px;
+  border-radius: 50%;
+  background: #E9F3DB;
+  color: #2E6B49;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 66px;
+}
+
+
+/* =====================================================
+   07.7. GRID DE CARDS DO PROJETO
+===================================================== */
+
+.projeto-cards {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+
+/* =====================================================
+   07.8. CARD DO PROJETO
+===================================================== */
+
+.projeto-card {
+  background: var(--cor-branco);
+  border-radius: var(--raio-card);
+  padding: 30px 26px;
+  min-height: 330px;
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+}
+
+.projeto-card-icon {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #f9f5ed;
+  color: #2E7D4F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  margin-bottom: 18px;
+}
+
+.projeto-card h3 {
+  font-size: 24px;
+  font-weight: 850;
+  color: #0D4C57;
+  margin: 0;
+}
+
+.projeto-card-line {
+  width: 48px;
+  height: 4px;
+  background: var(--cor-linha-vermelha);
+  margin: 14px 0 22px;
+}
+
+.projeto-card p {
+  font-size: 18px;
+  line-height: 1.45;
+  color: #173B4A;
+  margin: 0;
+}
+
+
+/* =====================================================
+   07.9. VARIAÇÕES DE COR DOS CARDS
+===================================================== */
+
+.projeto-card:nth-child(2) .projeto-card-line {
+  background: var(--cor-linha-azul);
+}
+
+.projeto-card:nth-child(3) .projeto-card-line {
+  background: var(--cor-linha-verde);
+}
+
+.projeto-card:nth-child(4) .projeto-card-line {
+  background: var(--cor-linha-laranja);
+}
+
+.projeto-card:nth-child(2) .projeto-card-icon,
+.projeto-card:nth-child(3) .projeto-card-icon,
+.projeto-card:nth-child(4) .projeto-card-icon {
+  background: #f9f5ed;
+  color: #2E7D4F;
+}
+
+
+/* =====================================================
+   07.10. LINHAS DECORATIVAS NO PROJETO
+   -----------------------------------------------------
+   A base já foi definida em componentes globais.
+   Aqui mantemos apenas espaçamento específico.
+===================================================== */
+
+.projeto-hero .linhas-decorativas,
+.linhas-proj {
+  margin-top: 18px;
+}
+
+
+/* =====================================================
+   07.11. RESPONSIVIDADE DA PÁGINA PROJETO
+===================================================== */
+
+@media (max-width: 1100px) {
+  .projeto-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 42px 40px;
+  }
+
+  .projeto-hero-text h1 {
+    font-size: 46px;
+  }
+
+  .projeto-hero-text p {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .projeto-hero .linhas-decorativas,
+  .linhas-proj {
+    justify-content: center;
+  }
+
+  .projeto-metricas {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .projeto-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 900px) {
+  .projeto-page {
+    margin: 32px auto;
+  }
+
+  .projeto-hero {
+    gap: 32px;
+  }
+
+  .projeto-hero-text h1 {
+    font-size: 42px;
+  }
+
+  .projeto-hero-text p {
+    font-size: 21px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .projeto-page {
+    margin: 24px auto;
+  }
+
+  .projeto-hero {
+    padding: 32px 24px;
+    border-radius: var(--raio-card);
+  }
+
+  .projeto-hero-text h1 {
+    font-size: 34px;
+  }
+
+  .projeto-hero-text p {
+    font-size: 18px;
+    line-height: 1.45;
+  }
+
+  .projeto-metricas {
+    max-width: 100%;
+  }
+
+  .projeto-metrica-card {
+    padding: 22px 18px;
+  }
+
+  .projeto-metrica-numero {
+    font-size: 34px;
+  }
+
+  .projeto-metrica-label {
+    font-size: 18px;
+  }
+
+  .projeto-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .projeto-card {
+    min-height: auto;
+    padding: 26px 22px;
+  }
+
+  .projeto-card h3 {
+    font-size: 22px;
+  }
+
+  .projeto-card p {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+}
+
+/* =====================================================
+   08. PÁGINA METODOLOGIA / INDICADORES
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura visual da subaba Metodologia,
+     incluindo hero, métricas, texto introdutório,
+     listagem dos indicadores por área temática e bloco
+     final explicativo.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - Preserva compatibilidade entre:
+       .metodologia-box-fim
+       .metodologia--box-fim
+     - A página individual do indicador será tratada em
+       seção própria.
+===================================================== */
+
+
+/* =====================================================
+   08.1. CONTAINER PRINCIPAL
+===================================================== */
+
+.metodo-page {
+  background: var(--cor-fundo-app);
+  margin: var(--espaco-pagina-topo) auto;
+}
+
+
+/* =====================================================
+   08.2. HERO DA METODOLOGIA
+===================================================== */
+
+.metodo-hero {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 10px auto 24px;
+  border-radius: var(--raio-card);
+  background: rgba(255, 255, 255, 0.70);
+  color: var(--cor-verde-titulo);
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  align-items: stretch;
+}
+
+
+/* =====================================================
+   08.3. TEXTO DO HERO
+===================================================== */
+
+.metodo-hero-text {
+  flex: 1;
+}
+
+.metodo-hero-text h1 {
+  font-size: 46px;
+  line-height: 1.05;
+  font-weight: 900;
+  margin: 30px 30px 0;
+  color: var(--cor-verde-escuro) !important;
+}
+
+
+/* =====================================================
+   08.4. LINHAS DECORATIVAS
+   -----------------------------------------------------
+   A base das cores já foi definida na seção global.
+===================================================== */
+
+.metodo-hero .linhas-decorativas {
+  margin: 10px 30px 0;
+}
+
+
+/* =====================================================
+   08.4.1. CORES TEMÁTICAS DAS TAGS / LINHAS
+===================================================== */
+
+.metodo-hero .linhas-decorativas span:nth-child(1),
+.indicador-section .linhas-decorativas span:nth-child(1),
+.metodologia-section .linhas-decorativas span:nth-child(1) {
+  background: var(--cor-tema-eventos-climaticos);
+}
+
+/* demais nth-child... */
+
+
+/* =====================================================
+   08.4.2. FORMATO DAS TAGS / LINHAS
+===================================================== */
+
+.metodo-hero .linhas-decorativas {
+  display: flex;
+  gap: 12px;
+  margin: 10px 30px 0;
+  padding-left: 0;
+  justify-content: flex-start;
+}
+
+.indicador-section .linhas-decorativas,
+.metodologia-section .linhas-decorativas {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  margin-left: 0;
+  padding-left: 0;
+  justify-content: flex-start;
+}
+
+/* demais regras de span... */
+
+
+/* =====================================================
+   08.5. BLOCO INTERNO DO HERO
+===================================================== */
+
+.metodologia-section {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+  padding: 0 10px 10px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  font-size: 28px;
+  position: relative;
+}
+
+
+/* =====================================================
+   08.6. MÉTRICAS DA METODOLOGIA
+===================================================== */
+
+.metodo-metricas {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+.metodo-metrica-card {
+  background: var(--cor-fundo-app);
+  border: 1px solid var(--cor-borda-suave);
+  color: var(--cor-verde-escuro);
+  border-radius: var(--raio-card);
+  padding: 10px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.metodo-metrica-numero {
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 900;
+  color: var(--cor-verde-escuro);
+  margin-bottom: 10px;
+}
+
+.metodo-metrica-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cor-verde-escuro);
+}
+
+
+/* =====================================================
+   08.7. ÁREA DE TEXTO DA METODOLOGIA
+===================================================== */
+
+.metodo-texto-area {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20px 20px;
+  align-items: flex-start;
+}
+
+.metodologia-intro {
+  width: 750px;
+  max-width: 100%;
+  display: flex;
+  flex: 1;
+  background: var(--cor-fundo-app);
+  border-radius: var(--raio-card);
+  padding: 20px;
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--cor-preto);
+}
+
+
+/* =====================================================
+   08.8. BOTÃO DA METODOLOGIA
+===================================================== */
+
+.metodo-botoes {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.btn-baixar-metodo {
+  background: var(--cor-verde-principal);
+  color: var(--cor-fundo-app) !important;
+  border-radius: 50px;
+  padding: 10px 15px;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 160px;
+}
+
+.btn-baixar-metodo:hover,
+.btn-baixar-metodo:focus {
+  background: var(--cor-verde-escuro);
+  color: var(--cor-fundo-app) !important;
+}
+
+
+/* =====================================================
+   08.9. SEÇÃO DOS INDICADORES
+===================================================== */
+
+.indicador-section {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto 34px;
+  padding: 40px;
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+  border-radius: var(--raio-card);
+  align-items: center;
+  gap: 50px;
+}
+
+.indicadores-titulo,
+.indicadores-h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--cor-verde-texto);
+  margin-bottom: 18px;
+}
+
+.indicador-section p {
+  font-size: 18px;
+  color: var(--cor-preto);
+  margin-top: 0;
+}
+
+
+/* =====================================================
+   08.10. LAYOUT DOS BLOCOS DE TEMAS
+===================================================== */
+
+.indicadores-layout,
+.indicadores-layout-dinamico {
+  display: grid;
+  width: 100%;
+  gap: 15px;
+  align-items: start;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--cor-verde-escuro);
+  background: var(--cor-branco);
+}
+
+.indicadores-layout {
+  grid-template-columns: 1fr 1fr 1.2fr;
+}
+
+
+/* =====================================================
+   08.11. BLOCO DINÂMICO DE TEMA
+===================================================== */
+
+.indicador-box,
+.indicador-box-dinamico {
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-left: 6px solid #039368;
+  border-radius: var(--raio-card);
+  padding: 18px;
+  box-shadow: var(--sombra-card);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.indicador-box:hover,
+.indicador-box-infra:hover,
+.indicador-box-dinamico:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+}
+
+.indicador-box.destaque {
+  flex: 1;
+}
+
+.indicador-box-head {
+  cursor: pointer;
+}
+
+.indicador-box-titulo {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--cor-verde-texto);
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+.indicador-box-desc {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--cor-preto);
+}
+
+
+/* =====================================================
+   08.12. LISTA DE INDICADORES DENTRO DO TEMA
+===================================================== */
+
+.indicador-lista {
+  margin-top: 14px;
+  border-top: 1px solid #D7E8E3;
+  padding-top: 10px;
+}
+
+.indicador-item {
+  background: var(--cor-fundo-app);
+  border: 1px solid #DCE9E4;
+  border-radius: var(--raio-card);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: var(--cor-verde-escuro);
+}
+
+.indicador-item:hover {
+  background: var(--cor-fundo-app);
+}
+
+.indicador-item-titulo-link {
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--cor-verde-texto) !important;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.indicador-item-titulo-link:hover,
+.indicador-item-titulo-link:focus {
+  text-decoration: underline;
+}
+
+.indicador-item-desc {
+  margin-top: 8px;
+  font-size: 18px;
+  line-height: 2;
+  color: var(--cor-preto);
+  padding-top: 8px;
+  border-top: 1px dashed var(--cor-verde-texto);
+}
+
+
+/* =====================================================
+   08.13. BLOCO FINAL DA METODOLOGIA
+===================================================== */
+
+.metodologia-box-fim,
+.metodologia--box-fim {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 10px auto 20px;
+  padding: 20px 30px;
+  border-radius: var(--raio-card);
+  background: var(--cor-branco);
+  color: var(--cor-verde-titulo);
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+  position: relative;
+  overflow: hidden;
+  font-size: 21px;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   08.X. CORES TEMÁTICAS DAS TAGS / LINHAS
+   -----------------------------------------------------
+   Aplica as quatro cores temáticas escuras usadas na aba
+   Metodologia.
+===================================================== */
+
+.metodo-hero .linhas-decorativas span:nth-child(1),
+.indicador-section .linhas-decorativas span:nth-child(1),
+.metodologia-section .linhas-decorativas span:nth-child(1) {
+  background: var(--cor-tema-eventos-climaticos);
+}
+
+.metodo-hero .linhas-decorativas span:nth-child(2),
+.indicador-section .linhas-decorativas span:nth-child(2),
+.metodologia-section .linhas-decorativas span:nth-child(2) {
+  background: var(--cor-tema-qualidade-ar);
+}
+
+.metodo-hero .linhas-decorativas span:nth-child(3),
+.indicador-section .linhas-decorativas span:nth-child(3),
+.metodologia-section .linhas-decorativas span:nth-child(3) {
+  background: var(--cor-tema-infraestrutura);
+}
+
+.metodo-hero .linhas-decorativas span:nth-child(4),
+.indicador-section .linhas-decorativas span:nth-child(4),
+.metodologia-section .linhas-decorativas span:nth-child(4) {
+  background: var(--cor-tema-ambiente-escolar);
+}
+
+/* =====================================================
+   08.14. RESPONSIVIDADE DA METODOLOGIA
+===================================================== */
+
+@media (max-width: 1100px) {
+  .metodo-hero,
+  .indicador-section,
+  .metodologia-box-fim,
+  .metodologia--box-fim {
+    max-width: calc(100% - 32px);
+  }
+
+  .metodologia-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    padding: 20px 30px 30px;
+  }
+
+  .metodo-metricas {
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .metodo-metrica-card {
+    flex: 1;
+  }
+
+  .metodologia-intro {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .metodo-page {
+    margin: 32px auto;
+  }
+
+  .metodo-hero-text h1 {
+    font-size: 40px;
+  }
+
+  .indicadores-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .indicador-section {
+    padding: 32px 28px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .metodo-page {
+    margin: 24px auto;
+  }
+
+  .metodo-hero,
+  .indicador-section,
+  .metodologia-box-fim,
+  .metodologia--box-fim {
+    max-width: calc(100% - 24px);
+  }
+
+  .metodo-hero-text h1 {
+    font-size: 32px;
+    margin: 24px 24px 0;
+  }
+
+  .metodo-hero .linhas-decorativas {
+    margin: 10px 24px 0;
+  }
+  
+  .metodo-hero .linhas-decorativas,
+.indicador-section .linhas-decorativas,
+.metodologia-section .linhas-decorativas {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.metodo-hero .linhas-decorativas span,
+.indicador-section .linhas-decorativas span,
+.metodologia-section .linhas-decorativas span {
+  width: 64px;
+  height: 8px;
+}
+
+  .metodologia-section {
+    padding: 18px 22px 26px;
+  }
+
+  .metodo-metricas {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .metodo-metrica-numero {
+    font-size: 36px;
+  }
+
+  .metodo-metrica-label {
+    font-size: 18px;
+  }
+
+  .metodologia-intro {
+    display: block;
+    font-size: 16px;
+    line-height: 1.45;
+    padding: 18px;
+  }
+
+  .btn-baixar-metodo {
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .indicador-section {
+    padding: 26px 20px;
+  }
+
+  .indicadores-titulo,
+  .indicadores-h2 {
+    font-size: 24px;
+  }
+
+  .indicador-box-titulo {
+    font-size: 19px;
+  }
+
+  .indicador-box-desc,
+  .indicador-item-desc {
+    font-size: 16px;
+  }
+
+  .indicador-item-titulo-link {
+    font-size: 18px;
+  }
+
+  .metodologia-box-fim,
+  .metodologia--box-fim {
+    font-size: 16px;
+    line-height: 1.45;
+    padding: 20px;
+  }
+}
+
+/* =====================================================
+   09. PÁGINA DO INDICADOR
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura visual da página individual de
+     cada indicador, incluindo cabeçalho, ficha técnica,
+     blocos informativos, ações relacionadas e botões de
+     navegação/download.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - Preserva compatibilidade entre:
+       .pagina-indicador / .indicador-page
+       .pagina-indicador-titulo / .indicador-page-titulo
+       .pagina-indicador-bloco / .indicador-bloco
+     - A lógica de download em PDF permanece no código R/JS.
+===================================================== */
+
+
+/* =====================================================
+   09.1. CONTAINER PRINCIPAL
+===================================================== */
+
+.pagina-indicador,
+.indicador-page {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: var(--espaco-pagina-topo) auto;
+  padding: 0 18px 28px;
+  background: var(--cor-fundo-app);
+  color: var(--cor-preto);
+}
+
+
+/* =====================================================
+   09.2. WRAPPER DE EXPORTAÇÃO
+===================================================== */
+
+.pagina-indicador-export-wrapper {
+  width: 100%;
+}
+
+#indicador_pdf {
+  width: 100%;
+  margin: 0 auto;
+  background: var(--cor-fundo-app);
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   09.3. HERO / CABEÇALHO DO INDICADOR
+===================================================== */
+
+.indicador-hero {
+  background: var(--cor-branco);
+  border-radius: var(--raio-card);
+  padding: 30px;
+  margin-bottom: 30px;
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+
+/* =====================================================
+   09.4. TÍTULO DO INDICADOR
+===================================================== */
+
+.pagina-indicador-titulo,
+.indicador-page-titulo {
+  max-width: 900px;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--cor-verde-titulo);
+  line-height: 1.2;
+  margin-bottom: 22px;
+}
+
+
+/* =====================================================
+   09.5. TEMA DO INDICADOR
+===================================================== */
+
+.indicador-tema {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 15px 10px 10px;
+  margin-bottom: 30px;
+  min-height: auto;
+  width: auto;
+  background: var(--cor-fundo-app);
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  color: var(--cor-verde-titulo);
+  font-weight: 800;
+}
+
+.indicador-temah1 {
+  display: inline-flex;
+  align-items: center;
+  min-height: auto;
+  width: auto;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  color: var(--cor-preto);
+  font-weight: 800;
+}
+
+.indicador-temap {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 10px 10px 20px;
+  min-height: auto;
+  width: auto;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  color: var(--cor-preto);
+  font-weight: 400;
+}
+
+.tema-texto {
+  color: var(--cor-fundo-app);
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   09.6. BLOCOS BASE DA FICHA
+===================================================== */
+
+.pagina-indicador-bloco,
+.indicador-bloco {
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+  border-radius: var(--raio-card);
+  padding: 20px;
+  margin-bottom: 18px;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--cor-preto);
+  word-break: break-word;
+  overflow-wrap: break-word;
+  text-decoration: none;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.pagina-indicador-bloco:nth-child(even),
+.indicador-bloco:nth-child(even) {
+  background: var(--cor-branco);
+}
+
+.pagina-indicador-bloco b,
+.indicador-bloco b {
+  display: inline;
+  background: transparent;
+  border: none;
+  padding: 0;
+  min-height: auto;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--cor-verde-titulo);
+}
+
+
+/* =====================================================
+   09.7. BLOCO DE DESCRIÇÃO
+   -----------------------------------------------------
+   O primeiro bloco após o hero costuma conter a descrição.
+===================================================== */
+
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(1),
+.indicador-page > .indicador-bloco:nth-of-type(1) {
+  background: #F9FCF7;
+  border-color: #DCEAD4;
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+
+/* =====================================================
+   09.8. GRID / CARDS TÉCNICOS
+   -----------------------------------------------------
+   Mantido para versões que usam cards técnicos em grade.
+===================================================== */
+
+.indicador-grid {
+  display: grid;
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 20px auto 40px;
+  grid-template-columns: repeat(4, minmax(240px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.indicador-coluna {
+  background: var(--cor-branco);
+  border-radius: var(--raio-card);
+  padding: 20px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+}
+
+
+/* =====================================================
+   09.9. CARDS TÉCNICOS POR ORDEM
+   -----------------------------------------------------
+   Mantido por compatibilidade com versões que organizam
+   blocos técnicos via nth-of-type.
+===================================================== */
+
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(2),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(3),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(4),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(5),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(8) {
+  display: inline-flex;
+  vertical-align: top;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(24.3% - 10px);
+  min-height: 150px;
+  margin-right: 14px;
+  margin-bottom: 22px;
+  text-align: center;
+  padding: 22px 16px;
+}
+
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(8) {
+  margin-right: 0;
+}
+
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(2) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(3) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(4) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(5) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(8) b {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+
+/* =====================================================
+   09.10. SEÇÕES LONGAS
+   -----------------------------------------------------
+   Para blocos como cálculo, conceituação, categorias e
+   interpretação, quando existirem na estrutura.
+===================================================== */
+
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(6),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(7),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(9),
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(10) {
+  position: relative;
+  min-height: 118px;
+}
+
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(6) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(7) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(9) b,
+.pagina-indicador > .pagina-indicador-bloco:nth-of-type(10) b {
+  display: block;
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+
+/* =====================================================
+   09.11. AÇÕES RELACIONADAS AO INDICADOR
+===================================================== */
+
+.lista-acoes-indicador {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.linha-acao-link {
+  display: block;
+  padding: 10px;
+  margin: 0 30px;
+  border-radius: 8px;
+  background: var(--cor-fundo-app);
+  border: 1px solid #E2E8E0;
+  color: var(--cor-verde-texto);
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.linha-acao-link:hover,
+.linha-acao-link:focus {
+  background: var(--cor-fundo-app);
+  color: var(--cor-verde-texto);
+  text-decoration: underline;
+}
+
+
+/* =====================================================
+   09.12. ÁREA DE DOWNLOAD DA FICHA
+===================================================== */
+
+.pagina-indicador-download-area {
+  max-width: var(--largura-pagina);
+  margin: -65px auto 60px;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 40px;
+}
+
+.btn-baixar-indicador {
+  background: var(--cor-verde-principal);
+  color: var(--cor-fundo-app) !important;
+  border: none;
+  border-radius: 50px;
+  padding: 13px 20px;
+  font-size: 17px;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(13, 76, 151, 0.22);
+  cursor: pointer;
+}
+
+.btn-baixar-indicador:hover,
+.btn-baixar-indicador:focus {
+  background: var(--cor-verde-escuro);
+  color: var(--cor-fundo-app) !important;
+}
+
+
+/* =====================================================
+   09.13. BOTÃO VOLTAR
+===================================================== */
+
+.btn-voltar-ind {
+  margin: 10px auto 0;
+  display: block;
+  background: var(--cor-verde-titulo);
+  border: none;
+  color: var(--cor-branco) !important;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 50px;
+  transition: 0.2s ease;
+  box-shadow: 0 3px 10px rgba(13, 76, 151, 0.22);
+  cursor: pointer;
+}
+
+.btn-voltar-ind::before {
+  content: "← ";
+}
+
+.btn-voltar-ind:hover,
+.btn-voltar-ind:focus {
+  background: var(--cor-verde-titulo);
+  color: var(--cor-branco) !important;
+}
+
+
+/* =====================================================
+   09.14. RESPONSIVIDADE DA PÁGINA DO INDICADOR
+===================================================== */
+
+@media (max-width: 1100px) {
+  .pagina-indicador,
+  .indicador-page,
+  .indicador-grid {
+    max-width: calc(100% - 32px);
+  }
+
+  .indicador-grid {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+  }
+
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(2),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(3),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(4),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(5),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(8) {
+    width: calc(50% - 14px);
+  }
+}
+
+
+@media (max-width: 760px) {
+  .pagina-indicador,
+  .indicador-page {
+    max-width: calc(100% - 24px);
+    margin: 24px auto;
+    padding: 0 0 24px;
+  }
+
+  .indicador-hero {
+    padding: 26px 22px;
+    border-radius: var(--raio-card);
+  }
+
+  .pagina-indicador-titulo,
+  .indicador-page-titulo {
+    font-size: 26px;
+  }
+
+  .indicador-grid {
+    max-width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(2),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(3),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(4),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(5),
+  .pagina-indicador > .pagina-indicador-bloco:nth-of-type(8) {
+    width: 100%;
+    margin-right: 0;
+    min-height: auto;
+  }
+
+  .pagina-indicador-bloco,
+  .indicador-bloco {
+    font-size: 16px;
+    padding: 18px;
+  }
+
+  .pagina-indicador-bloco b,
+  .indicador-bloco b {
+    font-size: 17px;
+  }
+
+  .pagina-indicador-download-area {
+    margin: 0 auto 20px;
+    padding-right: 0;
+    justify-content: center;
+  }
+
+  .btn-baixar-indicador,
+  .btn-voltar-ind {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .linha-acao-link {
+    margin: 0;
+    font-size: 16px;
+  }
+}
+
+/* =====================================================
+   10. PÁGINA DIAGNÓSTICO DO MUNICÍPIO
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura visual da página de diagnóstico
+     municipal, incluindo seleção territorial, informações
+     básicas do município, legenda, blocos temáticos,
+     tabela visual de indicadores e botão de exportação.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - A estrutura principal é gerada por municipio_ui()
+       e municipio_card_ui().
+     - As cores dos indicadores continuam vindo do objeto
+       do município e de estilos inline no R.
+===================================================== */
+
+
+/* =====================================================
+   10.1. PAINEL DE SELEÇÃO MUNICIPAL
+===================================================== */
+
+.municipio-panel {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: var(--espaco-pagina-topo) auto;
+  background: var(--cor-branco);
+  border-radius: var(--raio-card);
+  padding: 28px;
+}
+
+.municipio-title {
+  font-size: 46px;
+  font-weight: 800;
+  color: var(--cor-verde-titulo);
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+
+/* =====================================================
+   10.2. BOTÃO DE CARREGAMENTO
+===================================================== */
+
+.btn-carregar {
+  background: var(--cor-verde-escuro);
+  color: var(--cor-fundo-app) !important;
+  margin-top: 18px;
+  border-radius: 50px;
+  font-size: 22px;
+  font-weight: 400;
+  border: none;
+  padding: 5px 15px;
+  max-width: 300px;
+  cursor: pointer;
+}
+
+.btn-carregar:hover,
+.btn-carregar:focus {
+  background: var(--cor-verde-principal);
+  color: var(--cor-fundo-app) !important;
+}
+
+
+/* =====================================================
+   10.3. TEXTO INTRODUTÓRIO
+===================================================== */
+
+.municipio-texto-intro {
+  margin: 24px 0 0;
+  padding: 18px 22px;
+  background: var(--cor-branco);
+  border-radius: var(--raio-card);
+  color: var(--cor-preto);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+
+/* =====================================================
+   10.4. WRAPPERS DO CARD MUNICIPAL
+===================================================== */
+
+.municipio-card,
+.municipio-card-novo,
+.municipio-card-novo2 {
+  width: 100%;
+}
+
+.municipio-card {
+  margin-top: 24px;
+  background: #F8FAFD;
+  border-radius: var(--raio-card);
+  padding: 20px;
+}
+
+.municipio-card-novo {
+  max-width: var(--largura-pagina);
+  margin: 24px auto 0;
+}
+
+.municipio-card-novo2 {
+  margin-top: 24px;
+  background: transparent;
+}
+
+.municipio-export-wrapper {
+  width: 100%;
+}
+
+
+/* =====================================================
+   10.5. ÁREA DE DOWNLOAD DO DIAGNÓSTICO
+===================================================== */
+
+.municipio-download-area {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 16px;
+}
+
+.btn-baixar-diagnostico {
+  background: var(--cor-verde-titulo);
+  color: var(--cor-branco) !important;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 10px 20px;
+  margin-left: 0;
+  font-size: 18px;
+  font-weight: 400;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.btn-baixar-diagnostico:hover,
+.btn-baixar-diagnostico:focus {
+  background: var(--cor-fundo-app);
+  color: var(--cor-verde-titulo) !important;
+}
+
+
+/* =====================================================
+   10.6. ÁREA EXPORTADA PARA PDF
+===================================================== */
+
+#diagnostico_municipio_pdf {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--cor-fundo-app);
+  padding: 12px;
+}
+
+
+/* =====================================================
+   10.7. CABEÇALHO COM INFORMAÇÕES BÁSICAS
+===================================================== */
+
+.municipio-cabecalho,
+.municipio-legenda-geral {
+  background: var(--cor-branco);
+  border: 1px solid rgba(24, 49, 83, 0.12);
+  border-radius: var(--raio-card);
+  padding: 22px;
+  box-shadow: var(--sombra-suave);
+  color: var(--cor-preto);
+  font-size: 16px;
+}
+
+.municipio-cabecalho {
+  margin-bottom: 20px;
+}
+
+.municipio-legenda-geral {
+  margin-bottom: 22px;
+}
+
+
+/* =====================================================
+   10.8. GRID DE INFORMAÇÕES BÁSICAS
+===================================================== */
+
+.municipio-basico-grid {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+  background: var(--cor-branco);
+}
+
+.linha-1,
+.linha-2,
+.linha-3,
+.linha-4 {
+  background: var(--cor-branco);
+}
+
+.municipio-basico-grid.linha-1 {
+  grid-template-columns: 2fr 0.7fr 1fr;
+}
+
+.municipio-basico-grid.linha-2,
+.municipio-basico-grid.linha-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.span-2 {
+  grid-column: span 1;
+}
+
+
+/* =====================================================
+   10.9. CAMPOS DE INFORMAÇÃO MUNICIPAL
+===================================================== */
+
+.municipio-campo {
+  background: transparent;
+  border: 1px solid rgba(24, 49, 83, 0.08);
+  border-radius: var(--raio-card);
+  padding: 12px 14px;
+  min-height: 82px;
+}
+
+.municipio-campo-rotulo {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cor-preto);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+}
+
+.municipio-campo-valor {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cor-preto);
+}
+
+.municipio-nome {
+  font-size: 34px;
+  font-weight: 800;
+  color: #183A63;
+}
+
+.municipio-meta {
+  font-size: 22px;
+  color: #4A607B;
+}
+
+
+/* =====================================================
+   10.10. ALERTA DE POPULAÇÃO INFANTOJUVENIL
+===================================================== */
+
+.alerta-popij {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 16px 18px;
+  background: var(--cor-branco);
+  border-radius: var(--raio-card);
+  border: 1px solid rgba(24, 49, 83, 0.12);
+  box-shadow: 0 2px 8px rgba(24, 49, 83, 0.06);
+}
+
+.alerta-popij-p25 {
+  border-left: 6px solid #F59E0B;
+}
+
+.alerta-popij-p10 {
+  border-left: 6px solid #DC2626;
+}
+
+.alerta-popij-icone {
+  flex-shrink: 0;
+}
+
+.alerta-popij-conteudo {
+  flex: 1;
+}
+
+.alerta-popij-nivel {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--cor-preto);
+  margin-bottom: 4px;
+}
+
+.alerta-popij-msg {
+  margin: 0 0 6px;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--cor-preto);
+}
+
+.alerta-popij-prioridade {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--cor-preto);
+}
+
+
+/* =====================================================
+   10.11. LEGENDA GERAL DO MUNICÍPIO
+===================================================== */
+
+.municipio-legenda-titulo {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--cor-preto);
+  margin-bottom: 8px;
+}
+
+.municipio-legenda-lista {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.municipio-legenda-lista li {
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 6px;
+}
+
+.municipio-legenda-lista li:last-child {
+  margin-bottom: 0;
+}
+
+.municipio-legenda-lista strong {
+  color: var(--cor-preto);
+}
+
+
+/* =====================================================
+   10.12. BLOCOS TEMÁTICOS
+===================================================== */
+
+.tema-bloco {
+  background: var(--cor-branco);
+  color: var(--cor-preto);
+  border-radius: var(--raio-card);
+  padding: 22px;
+  margin-bottom: 22px;
+  box-sizing: border-box;
+  box-shadow: var(--sombra-suave);
+}
+
+.tema-titulo {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  color: var(--cor-preto);
+  line-height: 1.15;
+}
+
+.tema-descricao-inline {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--cor-preto);
+  margin: 0 0 16px;
+  max-width: 1100px;
+}
+
+
+/* =====================================================
+   10.13. TABELA VISUAL DE INDICADORES
+===================================================== */
+
+.indicadores-tabela {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.indicadores-cabecalho,
+.indicadores-linha {
+  display: grid;
+  grid-template-columns: 2.2fr 0.75fr 1fr 2.4fr 0.55fr;
+  gap: 10px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.indicadores-cabecalho {
+  padding: 0 14px 4px;
+}
+
+.indicadores-linha {
+  border-radius: var(--raio-card);
+  padding: 11px 14px;
+}
+
+.indicadores-cabecalho .indicadores-col {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--cor-preto);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.indicadores-col {
+  min-width: 0;
+}
+
+.indicador-col-nome {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.indicador-col-valor {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.indicador-col-unidade {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.indicador-col-descricao {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.indicador-col-nivel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.indicador-nivel-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.indicador-col-nome,
+.indicador-col-valor,
+.indicador-col-unidade,
+.indicador-col-descricao {
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.indicador-col-nome {
+  font-weight: 800;
+}
+
+.indicador-col-valor {
+  font-weight: 700;
+  text-align: center;
+}
+
+.indicador-col-unidade {
+  font-weight: 700;
+  text-align: center;
+}
+
+.indicador-col-descricao {
+  font-weight: 600;
+  text-align: left;
+}
+
+/* =====================================================
+   10.14. LINK DO INDICADOR NO MUNICÍPIO
+===================================================== */
+
+.indicador-municipio-link {
+  color: inherit !important;
+  text-decoration: none !important;
+  font-weight: inherit;
+}
+
+.indicador-municipio-link:hover,
+.indicador-municipio-link:focus {
+  text-decoration: underline !important;
+}
+
+.indicador-municipio-link,
+.indicador-col-nome a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+/* =====================================================
+   10.15. COLUNA / LISTA DE AÇÕES NO MUNICÍPIO
+   -----------------------------------------------------
+   Mantida por compatibilidade, caso ainda seja usada.
+===================================================== */
+
+.acoes-col {
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: var(--raio-card);
+  padding: 18px 20px;
+}
+
+.acoes-titulo {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.acoes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.acoes-lista li {
+  margin-bottom: 10px;
+  line-height: 1.3;
+  font-size: 16px;
+}
+
+
+/* =====================================================
+   10.16. BADGES AUXILIARES
+===================================================== */
+
+.badge-situacao {
+  background: #E3F4EC;
+  color: #3A8D7A;
+}
+
+.badge-atencao {
+  background: #FFF3E6;
+  color: #F4A261;
+}
+
+
+/* =====================================================
+   10.17. RESPONSIVIDADE DO DIAGNÓSTICO MUNICIPAL
+===================================================== */
+
+@media (max-width: 1100px) {
+  .municipio-panel,
+  .municipio-card-novo,
+  .municipio-card-novo2 {
+    max-width: calc(100% - 32px);
+  }
+
+  .indicadores-cabecalho,
+  .indicadores-linha {
+    grid-template-columns: 2fr 0.75fr 0.9fr 2fr 0.55fr;
+  }
+
+  .indicador-col-descricao {
+    font-size: 12.5px;
+  }
+}
+
+@media (max-width: 900px) {
+  .municipio-panel {
+    margin: 32px auto;
+  }
+
+  .municipio-title {
+    font-size: 38px;
+  }
+
+  .municipio-basico-grid.linha-1,
+  .municipio-basico-grid.linha-2,
+  .municipio-basico-grid.linha-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .municipio-campo-valor {
+    font-size: 18px;
+  }
+
+  .indicadores-cabecalho {
+    display: none;
+  }
+
+  .indicadores-linha {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 20px 22px;
+    border-radius: 28px;
+    align-items: start;
+  }
+
+  .indicador-col-nome,
+  .indicador-col-valor,
+  .indicador-col-unidade,
+  .indicador-col-descricao,
+  .indicador-col-nivel {
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .indicador-col-nome {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .indicador-col-valor,
+  .indicador-col-unidade,
+  .indicador-col-descricao {
+    font-weight: 600;
+  }
+
+  .indicador-col-nivel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+  }
+
+  .indicador-municipio-link,
+  .indicador-col-nome a {
+    text-decoration: underline !important;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  .indicador-col-valor::before {
+    content: "Valor: ";
+    font-weight: 900;
+  }
+
+  .indicador-col-unidade::before {
+    content: "Unidade: ";
+    font-weight: 900;
+  }
+
+  .indicador-col-descricao::before {
+    content: "Descrição curta: ";
+    font-weight: 900;
+  }
+
+  .indicador-col-nivel::before {
+    content: "Nível: ";
+    font-weight: 900;
+  }
+
+  .indicador-col-nivel .indicador-nivel-tag {
+    min-width: 56px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .municipio-panel,
+  .municipio-card-novo,
+  .municipio-card-novo2 {
+    max-width: calc(100% - 24px);
+  }
+
+  .municipio-panel {
+    margin: 24px auto;
+    padding: 20px;
+  }
+
+  .municipio-title {
+    font-size: 32px;
+  }
+
+  .municipio-texto-intro {
+    font-size: 16px;
+    line-height: 1.45;
+    padding: 18px;
+  }
+
+  .btn-carregar,
+  .btn-baixar-diagnostico {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .municipio-download-area {
+    justify-content: center;
+  }
+
+  .municipio-cabecalho,
+  .municipio-legenda-geral,
+  .tema-bloco {
+    padding: 18px;
+  }
+
+  .municipio-campo {
+    min-height: auto;
+  }
+
+  .alerta-popij {
+    flex-direction: column;
+  }
+
+  .tema-titulo {
+    font-size: 21px;
+  }
+
+  .indicadores-linha {
+    padding: 18px 20px;
+    border-radius: 28px;
+    gap: 9px;
+  }
+
+  .indicador-col-nome,
+  .indicador-col-valor,
+  .indicador-col-unidade,
+  .indicador-col-descricao,
+  .indicador-col-nivel {
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .indicador-col-nome {
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .indicador-col-valor,
+  .indicador-col-unidade,
+  .indicador-col-descricao {
+    font-weight: 600;
+  }
+
+  .indicador-municipio-link,
+  .indicador-col-nome a {
+    text-decoration: underline !important;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  .indicador-col-nivel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+  }
+
+  .indicador-nivel-tag,
+  .indicador-col-nivel .indicador-nivel-tag {
+    min-width: 52px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1;
+  }
+}
+
+/* =====================================================
+   11. PÁGINA AÇÕES RECOMENDADAS
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura visual da página de ações
+     recomendadas, incluindo hero, filtros, lista de
+     resultados e página de detalhe da ação.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - Preserva compatibilidade com a versão antiga em card
+       lateral e com a versão consolidada em barra horizontal.
+     - A lógica de busca, filtros e navegação continua no Shiny.
+===================================================== */
+
+
+/* =====================================================
+   11. PÁGINA AÇÕES RECOMENDADAS
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura visual da página de ações
+     recomendadas, incluindo hero, barra de filtros,
+     lista de resultados e página de detalhe da ação.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - Considera que o server renderiza os filtros dentro de:
+       .acoes-selecao-conteudo
+     - A .acoes-selecao-barra funciona apenas como moldura
+       externa da barra de seleção.
+     - A lógica de busca, filtros e navegação continua no Shiny.
+===================================================== */
+/* =====================================================
+   11.1. CONTAINER PRINCIPAL
+===================================================== */
+
+.acoes-page {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  background: var(--cor-fundo-app);
+  padding: 34px 24px 50px;
+  margin: var(--espaco-pagina-topo) auto;
+}
+
+
+/* =====================================================
+   11.2. HERO DA PÁGINA
+===================================================== */
+
+.acoes-hero {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto 26px;
+  background: var(--cor-branco);
+  border: 1px solid rgba(22, 50, 26, 0.10);
+  border-radius: var(--raio-card);
+  box-shadow: 0 6px 22px rgba(20, 40, 30, 0.06);
+  padding: 34px 38px;
+}
+
+.acoes-hero-content {
+  max-width: 900px;
+}
+
+.acoes-kicker {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--cor-verde-titulo);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.acoes-hero-title {
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--cor-verde-escuro);
+  margin: 0 0 14px;
+}
+
+.acoes-hero-text {
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--cor-preto);
+  margin: 0;
+}
+
+
+/* =====================================================
+   11.3. LAYOUT PRINCIPAL
+===================================================== */
+
+.acoes-layout {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+  display: block;
+}
+
+.acoes-conteudo {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+}
+
+
+/* =====================================================
+   11.4. CARD DE FILTROS
+   -----------------------------------------------------
+   Mantido por compatibilidade com versões anteriores.
+   Caso a aba não use mais .acoes-filtros-card, este bloco
+   não interfere na nova barra.
+===================================================== */
+
+.acoes-filtros-card {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto 28px;
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  padding: 24px;
+}
+
+.acoes-filtros-header {
+  margin-bottom: 18px;
+}
+
+.acoes-filtros-header h3 {
+  font-size: 26px;
+  font-weight: 850;
+  color: var(--cor-verde-escuro);
+  margin: 0 0 8px;
+}
+
+.acoes-filtros-header p {
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--cor-preto);
+  margin: 0;
+}
+
+.acoes-filtros-body {
+  width: 100%;
+}
+
+.acoes-filtros-botoes {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+
+/* =====================================================
+   11.5. BARRA HORIZONTAL DE FILTROS
+   -----------------------------------------------------
+   A .acoes-selecao-barra funciona como moldura externa.
+   O grid dos filtros fica em .acoes-selecao-conteudo,
+   que é renderizado pelo Shiny.
+===================================================== */
+
+.acoes-selecao-barra {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto 28px;
+  background: var(--cor-verde-principal);
+  border-radius: var(--raio-card);
+  padding: 14px 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  position: relative;
+  z-index: 1000;
+  overflow: visible;
+}
+
+.acoes-selecao-conteudo {
+  display: grid;
+  grid-template-columns:
+    minmax(115px, 0.85fr)
+    minmax(190px, 1.25fr)
+    minmax(190px, 1.25fr)
+    minmax(115px, 0.85fr)
+    minmax(145px, 0.95fr)
+    minmax(135px, 0.85fr);
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+
+/* =====================================================
+   11.5.1. DROPDOWNS DA BARRA DE FILTROS
+===================================================== */
+
+.acoes-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.acoes-dropdown-btn {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 8px;
+  background: transparent;
+  color: var(--cor-fundo-app);
+  border: none;
+  border-radius: 18px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+  white-space: normal;
+  box-shadow: none;
+}
+
+.acoes-dropdown-btn:hover,
+.acoes-dropdown-btn:focus {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--cor-fundo-app);
+  outline: none;
+}
+
+.acoes-dropdown-content {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 320px;
+  max-height: 360px;
+  overflow-y: auto;
+  background: var(--cor-branco);
+  color: var(--cor-preto);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  padding: 14px;
+  z-index: 99999;
+}
+
+.acoes-dropdown:hover .acoes-dropdown-content,
+.acoes-dropdown:focus-within .acoes-dropdown-content {
+  display: block;
+}
+
+.acoes-dropdown {
+  order: 1;
+}
+
+/* =====================================================
+   11.6. BOTÃO LIMPAR SELEÇÃO
+===================================================== */
+
+.acoes-selecao-conteudo .acoes-limpar-btn {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+
+  grid-column: auto;
+  grid-row: auto;
+  justify-self: stretch;
+
+  background: var(--cor-fundo-app) !important;
+  color: var(--cor-verde-principal) !important;
+  border: none !important;
+  border-radius: 50px !important;
+  padding: 10px 14px !important;
+  margin: 0 !important;
+  min-height: 42px;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: none !important;
+  cursor: pointer;
+  text-align: center;
+}
+
+.acoes-selecao-conteudo .acoes-limpar-btn:hover,
+.acoes-selecao-conteudo .acoes-limpar-btn:focus {
+  background: var(--cor-branco) !important;
+  color: var(--cor-verde-principal) !important;
+  outline: none;
+}
+
+/* posição fixa somente no desktop */
+@media (min-width: 1101px) {
+  .acoes-selecao-conteudo .acoes-limpar-btn {
+    grid-column: 6;
+    grid-row: 1;
+    justify-self: stretch;
+  }
+}
+/* =====================================================
+   11.6.1. CHECKBOXES DENTRO DOS DROPDOWNS
+===================================================== */
+
+.acoes-dropdown-content .shiny-input-container {
+  width: 100%;
+  margin: 0;
+}
+
+.acoes-dropdown-content .form-group {
+  margin-bottom: 0;
+}
+
+.acoes-dropdown-content label.control-label {
+  display: none;
+}
+
+.acoes-dropdown-content .checkbox {
+  margin: 0;
+  padding: 7px 8px;
+  border-radius: 10px;
+}
+
+.acoes-dropdown-content .checkbox:hover {
+  background: var(--cor-fundo-app);
+}
+
+.acoes-dropdown-content .checkbox label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--cor-preto);
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.acoes-dropdown-content input[type="checkbox"] {
+  margin-top: 2px;
+}
+
+.acoes-dropdown-content .checkbox:has(input[type="checkbox"]:checked) {
+  background: #DDF4EA;
+}
+
+
+/* =====================================================
+   11.7. RESPONSIVIDADE DA BARRA DE AÇÕES
+===================================================== */
+
+@media (max-width: 1100px) {
+  .acoes-selecao-conteudo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .acoes-dropdown {
+    order: 1;
+  }
+
+  .acoes-selecao-conteudo .acoes-limpar-btn {
+    grid-column: 1 / -1;
+    grid-row: 6 !important;
+    grid-row: auto !important;
+    width: 100%;
+    justify-self: stretch;
+    text-align: center;
+    margin-top: 4px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .acoes-selecao-barra {
+    padding: 18px;
+    border-radius: var(--raio-card);
+  }
+
+  .acoes-selecao-conteudo {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .acoes-selecao-conteudo .acoes-dropdown {
+    order: 1;
+    width: 100%;
+    position: relative;
+  }
+
+  .acoes-selecao-conteudo .acoes-limpar-btn {
+    order: 99;
+
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+
+    grid-column: auto !important;
+    grid-row: auto !important;
+
+    width: 100%;
+    justify-self: stretch;
+    text-align: center;
+    margin-top: 4px !important;
+  }
+
+  .acoes-dropdown-btn {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    min-height: 48px;
+    padding: 12px 14px;
+    font-size: 16px;
+    text-align: left;
+  }
+
+  .acoes-dropdown-content {
+    position: static;
+    display: none;
+    width: 100%;
+    max-height: 300px;
+    margin-top: 8px;
+    box-shadow: none;
+  }
+
+  .acoes-dropdown:hover .acoes-dropdown-content,
+  .acoes-dropdown:focus-within .acoes-dropdown-content {
+    display: block;
+  }
+}
+
+/* =====================================================
+   11.8. MENSAGEM INICIAL / RESULTADOS
+===================================================== */
+
+.acoes-mensagem-inicial {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  padding: 28px;
+  color: var(--cor-preto);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.acoes-resultados-resumo {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto 18px;
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  padding: 18px 22px;
+  color: var(--cor-preto);
+  font-size: 18px;
+}
+
+.acoes-lista-resultados,
+.acoes-resultados {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+}
+
+
+/* =====================================================
+   11.9. CARDS DE AÇÕES NA LISTA
+   -----------------------------------------------------
+   Classes efetivamente usadas em acoes_cards_ui.R:
+     .acoes-cards-grid
+     .acao-card-novo
+     .acao-card-novo-titulo
+     .acao-card-temas-linhas
+     .acao-card-tema-linha
+     .acao-card-campo
+     .acao-card-campo-titulo
+     .acao-card-campo-valores
+     .acao-card-chip
+===================================================== */
+
+.acoes-cards-grid {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+
+.acao-card-novo {
+  width: 100%;
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-left: 7px solid var(--cor-verde-principal);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  padding: 20px 20px;
+  color: var(--cor-preto);
+  box-sizing: border-box;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.acao-card-novo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(40, 35, 25, 0.10);
+  border-color: #C9C1B5;
+}
+
+.acao-card-novo-titulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  margin: 0 0 14px;
+  color: var(--cor-verde-escuro);
+  font-size: 18px;
+  font-weight: 850;
+  line-height: 1.25;
+  text-decoration: none;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.acao-card-novo-titulo:hover,
+.acao-card-novo-titulo:focus {
+  color: var(--cor-verde-principal);
+  text-decoration: underline;
+}
+
+.acoes-seta-left {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-top: 4px solid currentColor;
+  border-right: 4px solid currentColor;
+  transform: rotate(45deg);
+  margin-left: 6px;
+  flex: 0 0 auto;
+}
+
+.acao-card-temas-linhas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+.acao-card-tema-linha {
+  display: block;
+  width: 72px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--cor-verde-principal);
+}
+
+.acao-card-tema-linha.sem-cor {
+  background: var(--cor-borda-suave);
+}
+
+.acao-card-campo {
+  margin-top: 14px;
+}
+
+.acao-card-campo-titulo {
+  margin-bottom: 8px;
+  color: var(--cor-verde-escuro);
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+.acao-card-campo-valores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.acao-card-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cor-fundo-app);
+  color: var(--cor-preto);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.acoes-sem-resultados {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  padding: 28px;
+  color: var(--cor-preto);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   11.10. PÁGINA DE DETALHE DA AÇÃO
+===================================================== */
+
+.acao-detalhe-page {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+  background: var(--cor-fundo-app);
+}
+
+
+/* =====================================================
+   11.11. BREADCRUMB DA AÇÃO
+===================================================== */
+
+.acao-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 18px;
+  font-size: 15px;
+  color: var(--cor-verde-escuro);
+}
+
+.acao-breadcrumb-link {
+  color: var(--cor-verde-titulo);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.acao-breadcrumb-link:hover,
+.acao-breadcrumb-link:focus {
+  text-decoration: underline;
+}
+
+.acao-breadcrumb-sep {
+  color: var(--cor-preto);
+}
+
+.acao-breadcrumb-current {
+  color: var(--cor-preto);
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   11.12. CARD PRINCIPAL DA AÇÃO
+===================================================== */
+
+.acao-card-principal {
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+
+.acao-card-barra {
+  width: 100%;
+  height: 10px;
+  background: var(--cor-verde-principal);
+}
+
+.acao-card-conteudo {
+  padding: 28px 32px;
+}
+
+.acao-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.acao-titulo {
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--cor-verde-escuro);
+  margin: 0;
+}
+
+.acao-topo-box {
+  width: 100%;
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-left: 8px solid var(--cor-verde-principal);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  padding: 30px 34px;
+  margin-bottom: 22px;
+  color: var(--cor-preto);
+  box-sizing: border-box;
+}
+
+.acao-topo-titulo-box {
+  margin-bottom: 18px;
+}
+
+.acao-topo-titulo {
+  display: block;
+  max-width: 100%;
+  margin: 0;
+  color: var(--cor-verde-escuro);
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 1.14;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  hyphens: none !important;
+}
+
+.acao-topo-importancia {
+  margin-top: 18px;
+  margin-bottom: 24px;
+  padding: 18px 20px;
+  background: var(--cor-fundo-app);
+  border-radius: var(--raio-card);
+  color: var(--cor-preto);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.acao-topo-importancia strong {
+  color: var(--cor-verde-escuro);
+  font-weight: 850;
+}
+
+.acao-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.acao-info-campo {
+  background: var(--cor-fundo-app);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: 14px;
+  padding: 14px 16px;
+  min-width: 0;
+}
+
+.acao-info-rotulo {
+  margin-bottom: 8px;
+  color: var(--cor-verde-titulo);
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+.acao-info-valores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.acao-info-valor {
+  display: inline-flex;
+  align-items: center;
+  background: var(--cor-branco);
+  color: var(--cor-preto);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: 999px;
+  padding: 6px 11px;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+/* Mantém compatibilidade com eventual versão antiga */
+.acao-card-principal {
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+
+.acao-card-barra {
+  width: 100%;
+  height: 10px;
+  background: var(--cor-verde-principal);
+}
+
+.acao-card-conteudo {
+  padding: 28px 32px;
+}
+
+.acao-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.acao-titulo {
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--cor-verde-escuro);
+  margin: 0;
+}
+
+/* =====================================================
+   11.13. TAGS DA AÇÃO
+===================================================== */
+
+.acao-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.acao-tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--cor-fundo-app);
+  color: var(--cor-verde-escuro);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: 50px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   11.14. IMPORTÂNCIA DA AÇÃO
+===================================================== */
+
+.acao-importancia-box {
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: var(--cor-fundo-app);
+  border-radius: var(--raio-card);
+  color: var(--cor-preto);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.acao-importancia-box strong {
+  color: var(--cor-verde-escuro);
+}
+
+
+.acao-info-card {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 14px;
+  align-items: flex-start;
+  background: #F8F4ED;
+  border: 1px solid #D8D1C7;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+
+.acao-info-numero {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #123131;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.acao-info-conteudo {
+  color: #3E3E3E;
+  font-size: 19px;
+  line-height: 1.55;
+}
+
+/* =====================================================
+   11.15. SEÇÕES DA PÁGINA DE DETALHE
+===================================================== */
+
+.acao-section-card {
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  color: var(--cor-preto);
+}
+
+.acao-section-card h2 {
+  font-size: 26px;
+  font-weight: 850;
+  color: var(--cor-verde-escuro);
+  margin: 0 0 14px;
+}
+
+.acao-section-card p {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--cor-preto);
+  margin: 0;
+}
+
+
+/* =====================================================
+   11.16. REFERÊNCIAS BIBLIOGRÁFICAS
+===================================================== */
+
+.acao-referencias-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.acao-ref-card {
+  background: var(--cor-fundo-app);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-card);
+  padding: 18px 20px;
+}
+
+.acao-ref-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.acao-ref-titulo {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--cor-verde-escuro);
+  line-height: 1.35;
+}
+
+.acao-ref-linha {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.acao-ref-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--cor-verde-titulo);
+}
+
+.acao-ref-conteudo {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--cor-preto);
+}
+
+
+/* =====================================================
+   11.17. BOTÃO VOLTAR DA AÇÃO
+===================================================== */
+
+.acao-voltar-area {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.btn-voltar-acoes {
+  background: var(--cor-verde-principal);
+  color: var(--cor-fundo-app) !important;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-voltar-acoes:hover,
+.btn-voltar-acoes:focus {
+  background: var(--cor-verde-escuro);
+  color: var(--cor-fundo-app) !important;
+}
+
+/* =====================================================
+   11.X. CONTROLE DE QUEBRA DE TEXTO EM AÇÕES
+===================================================== */
+
+.acao-card-novo,
+.acao-card-novo *,
+.acao-card-principal,
+.acao-card-conteudo,
+.acao-topo,
+.acao-importancia-box,
+.acao-section-card {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Títulos: quebram entre palavras, não dentro da palavra */
+.acao-titulo,
+.acao-card-titulo,
+.acoes-card-titulo,
+.acao-item-titulo,
+.acao-card-novo-titulo,
+.acao-card-novo-titulo2 {
+  display: block;
+  max-width: 100%;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+
+/* Textos corridos: podem quebrar para caber no bloco */
+.acao-importancia-box,
+.acao-importancia-box strong,
+.acao-importancia-box span,
+.acao-section-card,
+.acao-section-card h2,
+.acao-section-card p {
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  hyphens: none !important;
+}
+
+.acao-card-novo-titulo,
+.acao-card-novo-titulo2 {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+
+  line-height: 1.25;
+}
+
+/*.acao-card-novo-titulo,
+.acao-card-novo-titulo2 {
+  flex: 1 1 auto;
+  min-width: 0;
+}*/
+
+a.acao-card-novo-titulo,
+a.acao-card-novo-titulo2 {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* =====================================================
+   11.18. RESPONSIVIDADE GERAL DA ABA AÇÕES
+===================================================== */
+
+@media (max-width: 1100px) {
+  .acoes-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .acoes-page {
+    margin: 32px auto;
+    padding: 28px 0 42px;
+  }
+
+  .acoes-hero {
+    padding: 30px;
+  }
+
+  .acoes-hero-title {
+    font-size: 36px;
+  }
+
+  .acoes-hero-text {
+    font-size: 18px;
+  }
+
+  .acoes-filtros-botoes {
+    flex-direction: column;
+  }
+
+  .btn-acoes-buscar,
+  .btn-acoes-limpar {
+    width: 100%;
+  }
+
+  .acao-topo {
+    flex-direction: column;
+  }
+
+  .acao-titulo {
+    font-size: 30px;
+  }
+
+  .acao-ref-linha {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  
+  .acao-card-topo,
+.acao-card-novo-topo {
+  grid-template-columns: 1fr;
+}
+
+.acao-card,
+.acoes-card,
+.acao-item-card,
+.acao-card-novo {
+  padding: 22px 20px;
+}
+
+.acao-card-titulo,
+.acoes-card-titulo,
+.acao-item-titulo,
+.acao-card-novo-titulo,
+.acao-card-novo-titulo2 {
+  font-size: 21px;
+}
+  
+}
+
+@media (max-width: 768px) {
+  .acoes-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .acao-card-novo {
+    padding: 22px 20px;
+  }
+
+  .acao-card-novo-titulo {
+    font-size: 21px;
+  }
+
+  .acao-card-campo-titulo {
+    font-size: 14px;
+  }
+
+  .acao-card-chip {
+    font-size: 13px;
+  }
+}
+
+/* =====================================================
+   12. PÁGINA QUEM SOMOS
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura visual da página "Quem somos",
+     incluindo hero institucional, blocos das instituições
+     parceiras, alternância entre logo/texto e botão para
+     a página da equipe do projeto.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - Preserva a alternância visual:
+       logo/texto
+       texto/logo
+       logo/texto
+     - A página da equipe será tratada em seção própria.
+===================================================== */
+
+
+/* =====================================================
+   12.1. CONTAINER PRINCIPAL
+===================================================== */
+
+.quem-page {
+  display: grid;
+  margin: var(--espaco-pagina-topo) auto;
+  background: var(--cor-fundo-app);
+}
+
+
+/* =====================================================
+   12.2. HERO DA PÁGINA
+===================================================== */
+
+.quem-hero {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 30px auto;
+  padding: 40px 40px;
+  border-radius: var(--raio-card);
+  background: var(--cor-branco);
+  color: var(--cor-verde-titulo);
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.quem-hero-inner {
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+}
+
+.quem-hero h1 {
+  margin: 0 0 24px;
+  font-size: 46px;
+  line-height: 1.05;
+  font-weight: 900;
+  color: var(--cor-verde-titulo);
+}
+
+.quem-hero p {
+  max-width: 1150px;
+  margin: 25px 0;
+  font-size: 21px;
+  line-height: 1.55;
+  color: #183153;
+}
+
+
+/* =====================================================
+   12.3. SEÇÃO DAS INSTITUIÇÕES
+===================================================== */
+
+.quem-section {
+  width: 100%;
+  background: var(--cor-fundo-app);
+  padding: 20px 25px 70px;
+  display: grid;
+}
+
+.quem-section-inner {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+
+/* =====================================================
+   12.4. BLOCO DE INSTITUIÇÃO
+===================================================== */
+
+.quem-instituicao-bloco {
+  display: grid;
+  grid-template-columns: minmax(240px, 1.1fr) minmax(320px, 0.9fr);
+  min-height: 200px;
+  border-radius: var(--raio-card);
+  overflow: hidden;
+  margin-bottom: 28px;
+  background: var(--cor-fundo-app);
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+}
+
+.quem-instituicao-invertido {
+  grid-template-columns: minmax(320px, 1.15fr) minmax(240px, 0.85fr);
+}
+
+
+/* =====================================================
+   12.5. ÁREA DE LOGO
+===================================================== */
+
+.quem-logo-box {
+  background: var(--cor-fundo-app);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.quem-logo-img {
+  display: block;
+  object-fit: contain;
+  max-width: 100%;
+  width: auto;
+  height: 240px;
+}
+
+
+/* =====================================================
+   12.6. ÁREA DE TEXTO
+===================================================== */
+
+.quem-texto-box {
+  background: var(--cor-fundo-app);
+  color: var(--cor-preto);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.quem-texto-box p {
+  margin: 0;
+  max-width: 560px;
+  font-size: 1.12rem;
+  line-height: 1.55;
+  color: var(--cor-preto);
+}
+
+
+/* =====================================================
+   12.7. LINKS EXTERNOS
+   -----------------------------------------------------
+   Mantido por compatibilidade, caso algum bloco inclua
+   links institucionais.
+===================================================== */
+
+.quem-link-site {
+  grid-template-columns: 1fr;
+  display: block;
+}
+
+.quem-link-site a {
+  word-break: keep-all;
+  color: var(--cor-verde-titulo);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.quem-link-site a:hover,
+.quem-link-site a:focus {
+  text-decoration: underline;
+}
+
+
+/* =====================================================
+   12.8. CHAMADA PARA EQUIPE DO PROJETO
+===================================================== */
+
+.quem-equipe-cta {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.btn-equipe-projeto {
+  background: var(--cor-verde-principal);
+  color: var(--cor-fundo-app) !important;
+  border-radius: 50px;
+  padding: 18px 34px;
+  font-size: 28px;
+  font-weight: 400;
+  min-width: 160px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-equipe-projeto:hover,
+.btn-equipe-projeto:focus {
+  background: var(--cor-verde-escuro);
+  color: var(--cor-fundo-app) !important;
+}
+
+/* =====================================================
+   12.X. AJUSTE DAS LINHAS DECORATIVAS NO HERO
+===================================================== */
+
+.quem-hero .linhas-decorativas {
+  margin-left: 0;
+  padding-left: 0;
+  justify-content: flex-start;
+}
+
+/* =====================================================
+   12.9. RESPONSIVIDADE DA PÁGINA QUEM SOMOS
+===================================================== */
+
+@media (max-width: 1100px) {
+  .quem-hero,
+  .quem-section-inner {
+    max-width: calc(100% - 32px);
+  }
+
+  .quem-instituicao-bloco,
+  .quem-instituicao-invertido {
+    grid-template-columns: 1fr;
+  }
+
+  .quem-instituicao-invertido .quem-texto-box {
+    order: 2;
+  }
+
+  .quem-instituicao-invertido .quem-logo-box {
+    order: 1;
+  }
+
+  .quem-logo-img {
+    height: 200px;
+  }
+
+  .quem-texto-box p {
+    max-width: 900px;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .quem-page {
+    margin: 32px auto;
+  }
+
+  .quem-hero {
+    padding: 34px 32px;
+  }
+
+  .quem-hero h1 {
+    font-size: 40px;
+  }
+
+  .quem-hero p {
+    font-size: 19px;
+  }
+
+  .quem-logo-box,
+  .quem-texto-box {
+    padding: 34px 24px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .quem-page {
+    margin: 24px auto;
+  }
+
+  .quem-hero,
+  .quem-section-inner {
+    max-width: calc(100% - 24px);
+  }
+
+  .quem-hero {
+    padding: 28px 22px;
+  }
+
+  .quem-hero h1 {
+    font-size: 32px;
+    margin-bottom: 18px;
+  }
+
+  .quem-hero p {
+    font-size: 16px;
+    line-height: 1.45;
+    margin: 18px 0;
+  }
+
+  .quem-section {
+    padding: 18px 0 48px;
+  }
+
+  .quem-instituicao-bloco {
+    margin-bottom: 22px;
+  }
+
+  .quem-logo-box,
+  .quem-texto-box {
+    padding: 28px 20px;
+  }
+
+  .quem-logo-img {
+    height: 150px;
+  }
+
+  .quem-texto-box p {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .btn-equipe-projeto {
+    width: 100%;
+    max-width: 100%;
+    font-size: 22px;
+    padding: 15px 22px;
+    text-align: center;
+  }
+}
+
+/* =====================================================
+   13. PÁGINA EQUIPE DO PROJETO
+   -----------------------------------------------------
+   Finalidade:
+     Definir a estrutura visual da página "Equipe do
+     projeto", incluindo cabeçalho, linhas decorativas,
+     cards por instituição, lista de integrantes e botão
+     de retorno.
+
+   Observações:
+     - Mantém os nomes de classes já existentes.
+     - A estrutura atual usa cards largos, uma instituição
+       por bloco/linha.
+     - Preserva variações de cor por instituição.
+===================================================== */
+
+
+/* =====================================================
+   13.1. CONTAINER PRINCIPAL
+===================================================== */
+
+.equipe-page {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  background: var(--cor-fundo-app);
+  margin: var(--espaco-pagina-topo) auto;
+  font-family: var(--fonte-principal);
+}
+
+
+/* =====================================================
+   13.2. CABEÇALHO DA PÁGINA
+===================================================== */
+
+.equipe-header {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto 28px;
+}
+
+.equipe-header h1 {
+  color: var(--cor-verde-titulo);
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 800;
+  margin: 0 0 12px;
+  line-height: 1.1;
+}
+
+
+/* =====================================================
+   13.3. LINHAS DECORATIVAS
+   -----------------------------------------------------
+   As cores também já foram tratadas nos componentes
+   globais, mas mantemos aqui por segurança.
+===================================================== */
+
+.equipe-linhas {
+  display: flex;
+  gap: 6px;
+}
+
+.equipe-linhas span {
+  display: block;
+  width: 86px;
+  height: 8px;
+}
+
+.equipe_linha-1 {
+  background: var(--cor-linha-vermelha);
+}
+
+.equipe_linha-2 {
+  background: var(--cor-linha-verde);
+}
+
+.equipe_linha-3 {
+  background: var(--cor-linha-azul);
+}
+
+.equipe_linha-4 {
+  background: var(--cor-linha-laranja);
+}
+
+
+/* =====================================================
+   13.4. GRID DA EQUIPE
+   -----------------------------------------------------
+   A versão atual usa uma coluna: uma caixa larga por linha.
+===================================================== */
+
+.equipe-grid {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 20px auto 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+
+/* =====================================================
+   13.5. CARD DA EQUIPE
+===================================================== */
+
+.equipe-card {
+  background: var(--cor-branco);
+  width: 100%;
+  max-width: var(--largura-pagina);
+  border-radius: var(--raio-card);
+  padding: 20px 20px 20px 50px;
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+  margin: 10px 0;
+}
+
+.equipe-card h2 {
+  color: var(--cor-verde-titulo);
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+  max-width: 550px;
+}
+
+.equipe-card h2::after {
+  content: "";
+  display: block;
+  width: 76px;
+  height: 5px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  background: var(--cor-linha-verde);
+}
+
+
+/* =====================================================
+   13.6. VARIAÇÃO DE COR POR INSTITUIÇÃO
+===================================================== */
+
+.equipe-instituicao.mma h2::after {
+  background: var(--cor-linha-vermelha);
+}
+
+.equipe-instituicao.unicef h2::after {
+  background: var(--cor-linha-verde);
+}
+
+.equipe-instituicao.vital h2::after {
+  background: var(--cor-linha-azul);
+}
+
+.equipe-instituicao.indicadores h2::after {
+  background: var(--cor-linha-laranja);
+}
+
+
+/* =====================================================
+   13.7. LISTA DE INTEGRANTES
+===================================================== */
+
+.equipe-lista {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 36px;
+}
+
+.equipe-item {
+  position: relative;
+  padding-left: 20px;
+}
+
+.equipe-item::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  color: var(--cor-verde-texto);
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.equipe-cargo {
+  color: var(--cor-verde-texto);
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.equipe-nome {
+  color: var(--cor-verde-texto);
+  font-size: 18px;
+  line-height: 1.55;
+  font-weight: 400;
+  margin: 10px 10px 10px 0;
+}
+
+
+/* =====================================================
+   13.8. BOTÃO DE RETORNO
+===================================================== */
+
+.equipe-btn-inic {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.btn_equipe_inicio {
+  background: var(--cor-verde-principal);
+  color: var(--cor-fundo-app) !important;
+  border-radius: 50px;
+  padding: 18px 34px;
+  font-size: 28px;
+  font-weight: 400;
+  min-width: 160px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn_equipe_inicio:hover,
+.btn_equipe_inicio:focus {
+  background: var(--cor-verde-escuro);
+  color: var(--cor-fundo-app) !important;
+}
+
+
+/* =====================================================
+   13.9. ESTRUTURAS ANTIGAS / PLACEHOLDER
+   -----------------------------------------------------
+   Mantidas por compatibilidade, caso equipe_projeto_ui()
+   ainda use a versão simplificada com hero e placeholder.
+===================================================== */
+
+.equipe-hero {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 30px auto;
+  padding: 40px;
+  border-radius: var(--raio-card);
+  background: var(--cor-branco);
+  color: var(--cor-verde-titulo);
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+}
+
+.equipe-hero-inner {
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+}
+
+.equipe-hero h1 {
+  margin: 0 0 18px;
+  font-size: 46px;
+  line-height: 1.05;
+  font-weight: 900;
+  color: var(--cor-verde-titulo);
+}
+
+.equipe-hero p {
+  margin: 0;
+  font-size: 21px;
+  line-height: 1.55;
+  color: #183153;
+}
+
+.equipe-section {
+  width: 100%;
+  background: var(--cor-fundo-app);
+  padding: 20px 25px 70px;
+}
+
+.equipe-section-inner {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+}
+
+.equipe-card-placeholder {
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  padding: 28px;
+}
+
+.equipe-card-placeholder h2 {
+  margin: 0 0 12px;
+  color: var(--cor-verde-titulo);
+  font-size: 26px;
+  font-weight: 850;
+}
+
+.equipe-card-placeholder p {
+  margin: 0;
+  color: var(--cor-preto);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   13.10. RESPONSIVIDADE DA PÁGINA EQUIPE
+===================================================== */
+
+@media (max-width: 1100px) {
+  .equipe-page,
+  .equipe-header,
+  .equipe-grid,
+  .equipe-hero,
+  .equipe-section-inner {
+    max-width: calc(100% - 32px);
+  }
+
+  .equipe-card {
+    padding: 26px 28px;
+  }
+
+  .equipe-lista {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 28px;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .equipe-page {
+    margin: 32px auto;
+  }
+
+  .equipe-lista {
+    grid-template-columns: 1fr;
+  }
+
+  .equipe-card h2 {
+    font-size: 20px;
+  }
+
+  .equipe-cargo,
+  .equipe-nome {
+    font-size: 16px;
+  }
+
+  .equipe-hero {
+    padding: 34px 32px;
+  }
+
+  .equipe-hero h1 {
+    font-size: 40px;
+  }
+
+  .equipe-hero p {
+    font-size: 19px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .equipe-page,
+  .equipe-header,
+  .equipe-grid,
+  .equipe-hero,
+  .equipe-section-inner {
+    max-width: calc(100% - 24px);
+  }
+
+  .equipe-page {
+    margin: 24px auto;
+  }
+
+  .equipe-header h1 {
+    font-size: 32px;
+  }
+
+  .equipe-linhas {
+    flex-wrap: wrap;
+  }
+
+  .equipe-linhas span {
+    width: 64px;
+  }
+
+  .equipe-card {
+    padding: 24px 20px;
+    margin: 8px 0;
+  }
+
+  .equipe-card h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .equipe-card h2::after {
+    width: 64px;
+    height: 4px;
+    margin-top: 16px;
+    margin-bottom: 22px;
+  }
+
+  .equipe-lista {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .equipe-item {
+    padding-left: 18px;
+  }
+
+  .equipe-cargo,
+  .equipe-nome {
+    font-size: 15px;
+  }
+
+  .equipe-nome {
+    margin: 8px 0;
+  }
+
+  .btn_equipe_inicio {
+    width: 100%;
+    max-width: 100%;
+    font-size: 22px;
+    padding: 15px 22px;
+    text-align: center;
+  }
+
+  .equipe-hero {
+    padding: 28px 22px;
+  }
+
+  .equipe-hero h1 {
+    font-size: 32px;
+  }
+
+  .equipe-hero p {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .equipe-section {
+    padding: 18px 0 48px;
+  }
+}
