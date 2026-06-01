@@ -259,7 +259,7 @@ div(
 
 ),
 div(
-    class = "equipe-bloco-cafe","A identidade visual deste projeto foram desenvolvidos pela Café.art.br"),
+    class = "equipe-bloco-cafe","A identidade visual deste projeto foi desenvolvida pela Café.art.br"),
 
 
 tags$div(
