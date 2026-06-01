@@ -50,9 +50,13 @@ padronizar_colunas_acoes <- function(df) {
 # Funções auxiliares da nova barra de seleção de ações
 # =========================================================
 
-dropdown_filtro_acoes <- function(id, titulo, escolhas) {
+dropdown_filtro_acoes <- function(id, titulo, escolhas, selecionadas = character(0)) {
 
   escolhas <- limpar_opcoes_filtro_acoes(escolhas)
+
+  selecionadas <- selecionadas[
+    selecionadas %in% escolhas
+  ]
 
   tags$div(
     class = "acoes-dropdown",
@@ -70,7 +74,7 @@ dropdown_filtro_acoes <- function(id, titulo, escolhas) {
         inputId = id,
         label = NULL,
         choices = escolhas,
-        selected = character(0)
+        selected = selecionadas
       )
     )
   )
@@ -131,6 +135,22 @@ server <- function(input, output, session) {
   acao_ativa <- reactiveVal(NULL)
   origem_acao <- reactiveVal(NULL)
   origem_indicador <- reactiveVal(NULL)
+  
+  # Diagnostico Do Municipio
+  municipio_carregado <- reactiveVal(NULL)
+  uf_carregada <- reactiveVal(NULL)
+  nome_municipio_carregado <- reactiveVal(NULL)
+  
+  # Acoes Recomendadas
+  filtros_acoes_salvos <- reactiveVal(list(
+   grupo_tematico = character(0),
+   indicador_de_exposicao_relacionado = character(0),
+   estrategia_de_atuacao_da_acao = character(0),
+   local_da_acao = character(0),
+   tipologia_da_acao = character(0)
+  ))
+  
+  limpando_filtros_acoes <- reactiveVal(FALSE)
 
   # -------------------------------------------------------
   # Navegação principal
@@ -301,25 +321,30 @@ server <- function(input, output, session) {
 
     if (pagina == "indicador_detalhe") {
 
-      req(indicador_ativo())
+  req(indicador_ativo())
 
-      df_indicador <- dados_app$info$metadado[
-        dados_app$info$metadado$Codigo == indicador_ativo(),
-        ,
-        drop = FALSE
-      ]
+  df_indicador <- dados_app$info$metadado[
+    dados_app$info$metadado$Codigo == indicador_ativo(),
+    ,
+    drop = FALSE
+  ]
 
-      if (nrow(df_indicador) == 0) {
-        return(
-          tags$div(
-            class = "pagina-indicador",
-            tags$p("Indicador não encontrado.")
-          )
-        )
-      }
+  if (nrow(df_indicador) == 0) {
+    return(
+      tags$div(
+        class = "pagina-indicador",
+        tags$p("Indicador não encontrado.")
+      )
+    )
+  }
 
-      return(pagina_indicador_ui(df_indicador))
-    }
+  return(
+    pagina_indicador_ui(
+      df = df_indicador,
+      objeto_acoes = objeto_acoes
+    )
+  )
+}
 
     if (pagina == "quem_somos") {
       return(quem_somos_ui())
@@ -337,54 +362,98 @@ server <- function(input, output, session) {
   # Página: Diagnóstico de Municípios
   # =======================================================
 
-  observeEvent(input$uf, {
+observeEvent(input$uf, {
 
-    req(input$uf)
+  req(input$uf)
 
-    municipios_uf <- dados_app$inbase$nome_mun[
-      dados_app$inbase$sigla_uf == input$uf
-    ]
+  municipios_uf <- dados_app$inbase$nome_mun[
+    dados_app$inbase$sigla_uf == input$uf
+  ]
 
-    municipios_uf <- sort(unique(municipios_uf))
-    municipios_uf <- municipios_uf[!is.na(municipios_uf) & municipios_uf != ""]
+  municipios_uf <- sort(unique(municipios_uf))
+  municipios_uf <- municipios_uf[
+    !is.na(municipios_uf) &
+      municipios_uf != ""
+  ]
 
-    updateSelectInput(
-      session = session,
-      inputId = "municipio",
-      choices = municipios_uf,
-      selected = municipios_uf[1]
-    )
-  }, ignoreInit = TRUE)
+  municipio_selecionado <- municipios_uf[1]
+
+  if (!is.null(nome_municipio_carregado()) &&
+      input$uf == uf_carregada() &&
+      nome_municipio_carregado() %in% municipios_uf) {
+    municipio_selecionado <- nome_municipio_carregado()
+  }
+
+  updateSelectInput(
+    session = session,
+    inputId = "municipio",
+    choices = municipios_uf,
+    selected = municipio_selecionado
+  )
+}, ignoreInit = TRUE)
+
+observeEvent(pagina_ativa(), {
+
+  if (pagina_ativa() != "municipio") {
+    return(NULL)
+  }
+
+  if (is.null(uf_carregada()) ||
+      is.null(nome_municipio_carregado())) {
+    return(NULL)
+  }
+
+  updateSelectInput(
+    session = session,
+    inputId = "uf",
+    selected = uf_carregada()
+  )
+
+  municipios_uf <- dados_app$inbase$nome_mun[
+    dados_app$inbase$sigla_uf == uf_carregada()
+  ]
+
+  municipios_uf <- sort(unique(municipios_uf))
+  municipios_uf <- municipios_uf[
+    !is.na(municipios_uf) &
+      municipios_uf != ""
+  ]
+
+  updateSelectInput(
+    session = session,
+    inputId = "municipio",
+    choices = municipios_uf,
+    selected = nome_municipio_carregado()
+  )
+})
+
+observeEvent(input$carregar_municipio, {
+
+  req(input$uf)
+  req(input$municipio)
+
+  obj <- montar_objeto_municipio(
+    dados_app = dados_app,
+    uf = input$uf,
+    municipio = input$municipio
+  )
+
+  municipio_carregado(obj)
+  uf_carregada(input$uf)
+  nome_municipio_carregado(input$municipio)
+})
 
 
-  objeto_municipio <- eventReactive(input$carregar_municipio, {
+output$card_municipio <- renderUI({
 
-    req(input$uf)
-    req(input$municipio)
+  obj <- municipio_carregado()
 
-    montar_objeto_municipio(
-      dados_app = dados_app,
-      uf = input$uf,
-      municipio = input$municipio
-    )
-  })
+  if (is.null(obj)) {
+    return(NULL)
+  }
 
-
-  output$card_municipio <- renderUI({
-
-    obj <- objeto_municipio()
-
-    if (is.null(obj)) {
-      return(
-        tags$div(
-          class = "municipio-card-novo2",
-          tags$p("Não foi possível carregar as informações do município selecionado.")
-        )
-      )
-    }
-
-    municipio_card_ui(obj)
-  })
+  municipio_card_ui(obj)
+})
 
 
   # =======================================================
@@ -503,7 +572,9 @@ server <- function(input, output, session) {
   # -------------------------------------------------------
 
   output$barra_selecao_acoes <- renderUI({
-
+	
+	salvos <- filtros_acoes_salvos()
+	
     dados <- base_acoes()
 
     escolhas_tema <- limpar_opcoes_filtro_acoes(
@@ -528,52 +599,58 @@ server <- function(input, output, session) {
     )
 
     tags$div(
-      class = "acoes-selecao-barra",
+  class = "acoes-selecao-conteudo",
 
-      dropdown_filtro_acoes(
-        id = "filtro_tema",
-        titulo = "Grupo temático",
-        escolhas = escolhas_tema
-      ),
+  dropdown_filtro_acoes(
+    id = "filtro_tema",
+    titulo = "Grupo temático",
+    escolhas = escolhas_tema,
+    selecionadas = salvos$grupo_tematico
+  ),
 
-      dropdown_filtro_acoes(
-        id = "filtro_indicador_relacionado",
-        titulo = "Indicador de exposição \nrelacionado",
-        escolhas = escolhas_indicador
-      ),
+  dropdown_filtro_acoes(
+    id = "filtro_indicador_relacionado",
+    titulo = "Indicador de exposição relacionado",
+    escolhas = escolhas_indicador,
+    selecionadas = salvos$indicador_de_exposicao_relacionado
+  ),
 
-      dropdown_filtro_acoes(
-        id = "filtro_acao",
-        titulo = "Estratégia de atuação \nda ação",
-        escolhas = escolhas_acao
-      ),
+  dropdown_filtro_acoes(
+    id = "filtro_acao",
+    titulo = "Estratégia de atuação da ação",
+    escolhas = escolhas_acao,
+    selecionadas = salvos$estrategia_de_atuacao_da_acao
+  ),
 
-      dropdown_filtro_acoes(
-        id = "filtro_local",
-        titulo = "Local da ação",
-        escolhas = escolhas_local
-      ),
+  dropdown_filtro_acoes(
+    id = "filtro_local",
+    titulo = "Local da ação",
+    escolhas = escolhas_local,
+    selecionadas = salvos$local_da_acao
+  ),
 
-      dropdown_filtro_acoes(
-        id = "filtro_tipologia",
-        titulo = "Tipologia da ação",
-        escolhas = escolhas_tipologia
-      ),
+  dropdown_filtro_acoes(
+    id = "filtro_tipologia",
+    titulo = "Tipologia da ação",
+    escolhas = escolhas_tipologia,
+    selecionadas = salvos$tipologia_da_acao
+  ),
 
-      tags$button(
-        id = "limpar_filtros_acoes",
-        type = "button",
-        class = "acoes-limpar-btn",
-        "Limpar seleção",
-        onclick = "
-          Shiny.setInputValue(
-            'limpar_filtros_acoes_click',
-            Math.random(),
-            {priority: 'event'}
-          );
-        "
-      )
-    )
+  tags$button(
+    id = "limpar_filtros_acoes",
+    type = "button",
+    class = "acoes-limpar-btn",
+    "Limpar seleção",
+    onclick = "
+      Shiny.setInputValue(
+        'limpar_filtros_acoes_click',
+        Math.random(),
+        {priority: 'event'}
+      );
+    "
+  )
+)
+    
   })
 
 
@@ -585,17 +662,37 @@ server <- function(input, output, session) {
   # filtrar_acoes_recomendadas().
   # -------------------------------------------------------
 
-  selecao_acoes <- reactive({
+selecao_acoes <- reactive({
 
-    list(
-      grupo_tematico = input$filtro_tema,
-      indicador_de_exposicao_relacionado = input$filtro_indicador_relacionado,
-      estrategia_de_atuacao_da_acao = input$filtro_acao,
-      local_da_acao = input$filtro_local,
-      tipologia_da_acao = input$filtro_tipologia
-    )
-  })
+  salvos <- filtros_acoes_salvos()
 
+  list(
+    grupo_tematico =
+      if (!is.null(input$filtro_tema)) input$filtro_tema else salvos$grupo_tematico,
+
+    indicador_de_exposicao_relacionado =
+      if (!is.null(input$filtro_indicador_relacionado)) input$filtro_indicador_relacionado else salvos$indicador_de_exposicao_relacionado,
+
+    estrategia_de_atuacao_da_acao =
+      if (!is.null(input$filtro_acao)) input$filtro_acao else salvos$estrategia_de_atuacao_da_acao,
+
+    local_da_acao =
+      if (!is.null(input$filtro_local)) input$filtro_local else salvos$local_da_acao,
+
+    tipologia_da_acao =
+      if (!is.null(input$filtro_tipologia)) input$filtro_tipologia else salvos$tipologia_da_acao
+  )
+})
+
+observeEvent(selecao_acoes(), {
+
+  if (isTRUE(limpando_filtros_acoes())) {
+    return(NULL)
+  }
+
+  filtros_acoes_salvos(selecao_acoes())
+
+}, ignoreInit = TRUE)
 
   # -------------------------------------------------------
   # Limpa os filtros da nova barra
@@ -605,36 +702,52 @@ server <- function(input, output, session) {
 
   observeEvent(input$limpar_filtros_acoes_click, {
 
-    updateCheckboxGroupInput(
-      session = session,
-      inputId = "filtro_tema",
-      selected = character(0)
-    )
+  limpando_filtros_acoes(TRUE)
 
-    updateCheckboxGroupInput(
-      session = session,
-      inputId = "filtro_indicador_relacionado",
-      selected = character(0)
-    )
+  filtros_vazios <- list(
+    grupo_tematico = character(0),
+    indicador_de_exposicao_relacionado = character(0),
+    estrategia_de_atuacao_da_acao = character(0),
+    local_da_acao = character(0),
+    tipologia_da_acao = character(0)
+  )
 
-    updateCheckboxGroupInput(
-      session = session,
-      inputId = "filtro_acao",
-      selected = character(0)
-    )
+  filtros_acoes_salvos(filtros_vazios)
 
-    updateCheckboxGroupInput(
-      session = session,
-      inputId = "filtro_local",
-      selected = character(0)
-    )
+  updateCheckboxGroupInput(
+    session = session,
+    inputId = "filtro_tema",
+    selected = character(0)
+  )
 
-    updateCheckboxGroupInput(
-      session = session,
-      inputId = "filtro_tipologia",
-      selected = character(0)
-    )
-  })
+  updateCheckboxGroupInput(
+    session = session,
+    inputId = "filtro_indicador_relacionado",
+    selected = character(0)
+  )
+
+  updateCheckboxGroupInput(
+    session = session,
+    inputId = "filtro_acao",
+    selected = character(0)
+  )
+
+  updateCheckboxGroupInput(
+    session = session,
+    inputId = "filtro_local",
+    selected = character(0)
+  )
+
+  updateCheckboxGroupInput(
+    session = session,
+    inputId = "filtro_tipologia",
+    selected = character(0)
+  )
+
+  later::later(function() {
+    limpando_filtros_acoes(FALSE)
+  }, delay = 0.1)
+})
 
 
   # -------------------------------------------------------

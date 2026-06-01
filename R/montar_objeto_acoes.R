@@ -33,6 +33,42 @@ print("montar_objeto_acoes.R carregado com sucesso")
 # 1. Funções auxiliares gerais
 # =========================================================
 
+limpar_texto_html <- function(x) {
+  if (is.null(x)) return(x)
+
+  x <- as.character(x)
+
+  # Entidades HTML e espaços especiais
+  x <- gsub("&nbsp;", " ", x, fixed = TRUE)
+  x <- gsub("&#160;", " ", x, fixed = TRUE)
+  x <- gsub("\u00A0", " ", x, fixed = TRUE)
+  x <- gsub("\u202F", " ", x, fixed = TRUE)
+  x <- gsub("\u2007", " ", x, fixed = TRUE)
+
+  # Caracteres invisíveis
+  x <- gsub("\u200B", "", x, fixed = TRUE)
+  x <- gsub("\u200C", "", x, fixed = TRUE)
+  x <- gsub("\u200D", "", x, fixed = TRUE)
+  x <- gsub("\uFEFF", "", x, fixed = TRUE)
+
+  # Hífens invisíveis / hifenização suave
+  x <- gsub("\u00AD", "", x, fixed = TRUE)
+  x <- gsub("&shy;", "", x, fixed = TRUE)
+
+  # Quebras HTML ou textuais que podem ter vindo da base
+  x <- gsub("<br>", " ", x, fixed = TRUE)
+  x <- gsub("<br/>", " ", x, fixed = TRUE)
+  x <- gsub("<br />", " ", x, fixed = TRUE)
+  x <- gsub("\n", " ", x, fixed = TRUE)
+  x <- gsub("\r", " ", x, fixed = TRUE)
+  x <- gsub("\t", " ", x, fixed = TRUE)
+
+  # Normaliza múltiplos espaços
+  x <- gsub("[[:space:]]+", " ", x)
+
+  trimws(x)
+}
+
 limpar_espacos_unicode <- function(x) {
 
   x <- as.character(x)
@@ -718,6 +754,7 @@ montar_o_que_fazer_acoes <- function(o_que_fazer_raw) {
 
   colunas_obrigatorias <- c(
     "id",
+    "ordem",
     "o_que_fazer"
   )
 
@@ -746,9 +783,6 @@ montar_o_que_fazer_acoes <- function(o_que_fazer_raw) {
       o_que_fazer$id != "",
   ]
 
-  o_que_fazer <- o_que_fazer[
-    !duplicated(o_que_fazer$id),
-  ]
 
   rownames(o_que_fazer) <- NULL
 
@@ -760,6 +794,7 @@ montar_dicas_praticas_acoes <- function(dicas_praticas_raw) {
   if (is.null(dicas_praticas_raw)) {
     return(data.frame(
       id = character(0),
+      ordem = character(0),
       dicas_praticas = character(0),
       stringsAsFactors = FALSE
     ))
@@ -767,8 +802,15 @@ montar_dicas_praticas_acoes <- function(dicas_praticas_raw) {
 
   dicas_praticas_raw <- padronizar_colunas_acoes(dicas_praticas_raw)
 
+  # Compatibilidade com nomes possíveis
+  if ("ID" %in% names(dicas_praticas_raw) &&
+      !"id" %in% names(dicas_praticas_raw)) {
+    names(dicas_praticas_raw)[names(dicas_praticas_raw) == "ID"] <- "id"
+  }
+
   colunas_obrigatorias <- c(
     "id",
+    "ordem",
     "dicas_praticas"
   )
 
@@ -798,7 +840,18 @@ montar_dicas_praticas_acoes <- function(dicas_praticas_raw) {
   ]
 
   dicas_praticas <- dicas_praticas[
-    !duplicated(dicas_praticas$id),
+    !is.na(dicas_praticas$dicas_praticas) &
+      dicas_praticas$dicas_praticas != "",
+  ]
+
+  ordem_num <- suppressWarnings(as.numeric(dicas_praticas$ordem))
+
+  dicas_praticas <- dicas_praticas[
+    order(
+      dicas_praticas$id,
+      ordem_num,
+      na.last = TRUE
+    ),
   ]
 
   rownames(dicas_praticas) <- NULL

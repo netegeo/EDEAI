@@ -75,7 +75,7 @@ preparar_cards_acoes <- function(dados_acoes) {
     list(
       id = valor_coluna_card(linha, "id", "ID"),
 
-      nome_ficha = valor_coluna_card(linha, "nome_ficha", "Nome_ficha"),
+      nome_ficha = limpar_texto_html(valor_coluna_card(linha, "nome_ficha", "Nome_ficha")),
 
       cores_tema = obter_cores_tema(
         linha$cores_tema[[1]]

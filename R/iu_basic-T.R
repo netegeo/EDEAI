@@ -48,7 +48,8 @@ ui <- fluidPage(
   ),
   
   tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+    #tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+	tags$link(rel = "stylesheet", type = "text/css", href = "custom2.css"),
     tags$script(src = "js/html2pdf.bundle.min.js")
   ),
   
@@ -95,7 +96,7 @@ tagList(
         class = "hero-card inicio-vertical",
 
         img(
-          src = "icons/SAMI_16052026.svg",
+          src = "icons/SAMI_assinatura_RGB_080526-01.svg",
           class = "inicio-img"
         ),
 
@@ -114,6 +115,17 @@ tagList(
               "hero_municipio",
               "Explore a situação do seu município",
               class = "btn-municipio"
+            )
+          ),
+          div(
+            class = "inicio-actions",
+            tags$a(
+              href = "files/nota_tecnica.pdf",
+              target = "_blank",
+                tags$button(
+                type = "button",
+                class = "btn-municipio",
+                "Acesse a nota técnica dos resultados")
             )
           )
         )
@@ -203,7 +215,7 @@ div(
     div(
       class = "projeto-metrica-card",
       div(class = "projeto-metrica-numero", "53 milhões"),
-      div(class = "projeto-metrica-label", "de crianças e Adolecentes")
+      div(class = "projeto-metrica-label", "de crianças e adolecentes")
     )
   )
 ),
