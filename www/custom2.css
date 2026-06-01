@@ -64,8 +64,8 @@ button,
 :root {
   /* Cores institucionais e de fundo */
   --cor-fundo-app: #F8F4ED;
-  --cor-verde-principal: #123131;
-  --cor-verde-escuro: #113131;
+  --cor-verde-principal: #495C22;
+  --cor-verde-escuro: #495C22;
   --cor-verde-titulo: #1f523c;
   --cor-verde-texto: #0f3131;
 
@@ -767,6 +767,7 @@ textarea {
 .tema-bloco,
 .quem-instituicao-bloco,
 .equipe-card,
+.equipe-bloco-cafe,
 .acao-section-card,
 .acao-card-principal,
 .acao-ref-card {
@@ -4654,6 +4655,7 @@ textarea {
   box-shadow: var(--sombra-card);
   padding: 30px 34px;
   margin-bottom: 22px;
+  margin-top: 34px;
   color: var(--cor-preto);
   box-sizing: border-box;
 }
@@ -5561,6 +5563,18 @@ a.acao-card-novo-titulo2 {
   margin: 10px 0;
 }
 
+.equipe-bloco-cafe{
+  background: var(--cor-fundo-app);
+  width: 100%;
+  max-width: var(--largura-pagina);
+  border-radius: var(--raio-card);
+  padding: 20px 20px 20px 50px;
+  border: 1px solid var(--cor-borda-suave);
+  box-shadow: var(--sombra-card);
+  margin: 10px 0;
+  font-size: 22px;
+}
+
 .equipe-card h2 {
   color: var(--cor-verde-titulo);
   font-size: 22px;
@@ -5762,7 +5776,7 @@ a.acao-card-novo-titulo2 {
     max-width: calc(100% - 32px);
   }
 
-  .equipe-card {
+  .equipe-card .equipe-bloco-cafe{
     padding: 26px 28px;
   }
 
@@ -5830,7 +5844,7 @@ a.acao-card-novo-titulo2 {
     width: 64px;
   }
 
-  .equipe-card {
+  .equipe-card .equipe-bloco-cafe {
     padding: 24px 20px;
     margin: 8px 0;
   }

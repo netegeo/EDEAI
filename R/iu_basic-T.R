@@ -116,6 +116,17 @@ tagList(
               "Explore a situação do seu município",
               class = "btn-municipio"
             )
+          ),
+          div(
+            class = "inicio-actions",
+            tags$a(
+              href = "files/nota_tecnica.pdf",
+              target = "_blank",
+                tags$button(
+                type = "button",
+                class = "btn-municipio",
+                "Acesse a nota técnica dos resultados")
+            )
           )
         )
       )

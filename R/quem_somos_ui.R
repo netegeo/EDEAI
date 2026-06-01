@@ -191,10 +191,8 @@ div(
       membro("Diretor do Departamento de Meio Ambiente Urbano", "Carlos Maurício da Fonseca Guerra"),
       membro("Coordenador-Geral de Cidades Sustentáveis", "Salomar Mafaldo de Amorim Junior"),
       membro("Coordenadora-Geral de Adaptação de Ambientes Urbanos à Mudança do Clima", "Ana Luísa Teixeira de Campos"),
-      membro("Coordenador-Geral de Tecnologia da Informação", "Jonas Jeske"),
-      membro("Coordenador-Geral de Tecnologia da Informação", "Diego Rodrigues Cavalcanti"),
-      membro("Analistas Ambientais", "Célia Regina Miranda Melo"),
-      membro("Analistas Ambientais", "Leonardo Mendonça de Lima")
+      membro("Coordenador-Geral de Tecnologia da Informação",tagList("Jonas Jeske",tags$br(),"Diego Rodrigues Cavalcanti")),
+      membro("Analistas Ambientais", tagList("Célia Regina Miranda Melo",tags$br(),"Leonardo Mendonça de Lima"))
     )
   )),
 div(
@@ -203,16 +201,16 @@ div(
     class = "equipe-instituicao unicef",
     tags$h2("FUNDO DAS NAÇÕES UNIDAS PARA A INFÂNCIA (UNICEF)"),
     div(class = "equipe-lista",
-            membro("Representante do UNICEF no Brasil", "Youssouf Abdel-Jelil"),
+            membro("Representante do UNICEF no Brasil", "Joaquin Gonzalez-Aleman"),
             membro("Representante-Adjunta de Programas", "Layla Saad"),
             membro("Chefe de Comunicação e Parcerias", "Sonia Yeo"),
-            membro("Chefe de Água, Saneamento e Higiene, e de Clima e Meio Ambiente", "Gregory Bulit"),
-            membro("Chefe de Saúde e Nutrição", "Luciana Phebo"),
+            membro("Chefe de Água, Saneamento e Higiene, e de Clima e Meio Ambiente , e Emergências", "Gregory Bulit"),
             membro("Especialista em Clima e Meio Ambiente", "Danilo Moura"),
-            membro("Especialista em Comunicação Digital", "Camilo Leon"),
-            membro("Oficial de Comunicação", "Elisa Meirelles Reis"),
-            membro("Oficial de Monitoramento e Avaliação", "Anderson Macedo"),
-            membro("Oficial de Saúde", "Gerson da Costa Filho")
+            membro("Especialista em Emergências", "Isabele Villwock Bachtold"),
+            membro("Oficial de Água, Saneamento e Higiene", "Rodrigo Resende"),
+            membro("Especialista em Comunicação", "Elisa Meirelles Reis"),
+            membro("Oficial de Comunicação", "Aline Tavares"),
+            membro("Oficial de Monitoramento e Avaliação", "Anderson Macedo")
     )
   )
 )),
@@ -232,7 +230,7 @@ div(
             membro("Diretora Adjunta, Doenças Crônicas Não Transmissíveis", "Luciana Vasconcelos Sardinha"),
             membro("Diretora Adjunta de Comunicação Institucional", "Luiza Borges"),
             membro("Gerente de Recursos Financeiros", "Juliana Mendes"),
-            membro("Gestão do Projeto", "Izabel Ferreira"),
+            membro("Gestão do Projeto", tagList("Izabel Campos Ferreira",tags$br(),"Hannah Arcuschin Machado")),
             membro("Coordenadora de Comunicação", "Beatriz Bethlem"),
             membro("Analista de Comunicação", "Ana Furtado"),
             membro("Design e Diagramação", "Beatriz Ferreira"),
@@ -250,7 +248,7 @@ div(
             membro("Coordenação de pesquisa e desenvolvimento de políticas públicas", "Mariana Gutierres Arteiro da Paz"),
             membro( tagList("Processamento de dados, análise estatística,",
                       tags$br(),"desenvolvimento do dashboard" ),
-                    tagList("Naurinete de Jesus da Costa Barreto,",
+                    tagList("Naurinete de J. da C. Barreto,",
                       tags$br(),"George Ulguim Pedra" )
                   ),
             membro("Coleta e processamento dedDados", "Jocilene Dantas Barros"),
@@ -260,6 +258,9 @@ div(
 )
 
 ),
+div(
+    class = "equipe-bloco-cafe","A identidade visual deste projeto foram desenvolvidos pela Café.art.br"),
+
 
 tags$div(
   class = "equipe-btn-inic",
