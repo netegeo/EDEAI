@@ -189,7 +189,8 @@ tags$a(
     ")),
     div(
     class = "metodologia-box-fim",
-    tags$img(src = "icons/alerta.svg", height = "200px"),
+    div(class = "metodo-icon",
+    tags$img(src = "icons/alerta.svg", height = "200px")),
     tags$p("Há outros elementos relacionados ao ambiente escolar, aos eventos climáticos extremos, à infraestrutura ambiental e urbana e à qualidade do ar, assim como outros temas que impactam a exposição de crianças e adolescentes a riscos ambientais, para os quais não existem dados disponíveis ou cujas informações não estão acessíveis no nível municipal. Embora existam diversos outros temas que impactam o bem-estar de crianças e adolescentes, os 14 indicadores apresentados oferecem uma visão ampla para orientar a atuação de gestores públicos.")
   ))
 }

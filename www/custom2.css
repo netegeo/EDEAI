@@ -1629,7 +1629,7 @@ textarea {
      - .info-icon / .info-title / .info-text
      - .cards-icon / .cards-title / .cards-text
 ===================================================== */
-
+.metodo-icon,
 .info-icon,
 .cards-icon {
   font-size: 42px;
@@ -1638,6 +1638,7 @@ textarea {
   text-align: center;
 }
 
+.metodo-icon img,
 .info-icon img,
 .cards-icon img {
   width: auto;
@@ -1646,6 +1647,16 @@ textarea {
   display: block;
   margin: 0 auto;
 }
+
+.metodo-icon img
+ {
+  width: auto;
+  height: 120px;
+  max-width: 120px;
+  display: block;
+  margin: 0 auto;
+}
+
 
 .info-title,
 .cards-title {
