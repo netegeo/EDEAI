@@ -83,25 +83,13 @@ texto_box <- tags$div(
     span()
     ),
         tags$p(
-          "O Ministério do Meio Ambiente e Mudança do Clima firmou parceria com o UNICEF e a Vital Strategies para a criação desta plataforma, que disponibiliza informações para toda a sociedade, em especial para gestores públicos dos municípios. Esse projeto reúne dados e informações para garantir o direito de crianças e adolescentes a um ambiente limpo, saudável e seguro."
+          "UNICEF e Vital Strategies firmaram parceria para a criação deste painel, que disponibiliza informações para toda a sociedade, em especial para gestores públicos dos municípios. O projeto reúne dados e informações para garantir o direito de crianças e adolescentes a um ambiente limpo, saudável e seguro."
         )
       )
     ),
 
     tags$section(
       class = "quem-section",
-      tags$div(
-        class = "quem-section-inner",
-
-        instituicao_bloco(
-          logo_src = "icons/ReguaDeLogos-MMA2.svg",
-          logo_alt = "Ministério do Meio Ambiente e Mudança do Clima",
-          texto = "O Ministério do Meio Ambiente e Mudança do Clima (MMA) é o órgão federal brasileiro responsável por formular, implementar e coordenar políticas públicas ambientais e climáticas. Sua missão é proteger o meio ambiente, promover o desenvolvimento socioeconômico sustentável, o uso racional dos recursos naturais, a biodiversidade e a transição para uma economia de baixas emissões.",
-          link = "https://www.gov.br/mma/pt-br",
-          invertido = FALSE,
-          width_p = "100%"
-        ),
-
         instituicao_bloco(
           logo_src = "icons/Logo-Brazil-Unicef_orginal.svg",
           logo_alt = "UNICEF",
@@ -138,7 +126,6 @@ texto_box <- tags$div(
         )
       )
     )
-  )
 }
 
 
@@ -180,21 +167,6 @@ equipe_projeto_ui <- function() {
 
 div(
   class = "equipe-grid",
-
-div(
-  class = "equipe-card",
-
-  div(
-    class = "equipe-instituicao mma",
-    tags$h2("MINISTÉRIO DO MEIO AMBIENTE E MUDANÇA DO CLIMA"),
-    div(class = "equipe-lista",
-      membro("Diretor do Departamento de Meio Ambiente Urbano", "Carlos Maurício da Fonseca Guerra"),
-      membro("Coordenador-Geral de Cidades Sustentáveis", "Salomar Mafaldo de Amorim Junior"),
-      membro("Coordenadora-Geral de Adaptação de Ambientes Urbanos à Mudança do Clima", "Ana Luísa Teixeira de Campos"),
-      membro("Coordenador-Geral de Tecnologia da Informação",tagList("Jonas Jeske",tags$br(),"Diego Rodrigues Cavalcanti")),
-      membro("Analistas Ambientais", tagList("Célia Regina Miranda Melo",tags$br(),"Leonardo Mendonça de Lima"))
-    )
-  )),
 div(
   class = "equipe-card",
   div(

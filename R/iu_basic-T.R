@@ -120,7 +120,7 @@ tagList(
           div(
             class = "inicio-actions",
             tags$a(
-              href = "files/nota_tecnica.pdf",
+              href = "files/NotaTecnica-PainelCriancasMeioAmbiente.pdf",
               target = "_blank",
                 tags$button(
                 type = "button",

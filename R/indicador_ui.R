@@ -131,7 +131,7 @@ div(
   class = "metodo-botoes",
 
 tags$a(
-  href = "files/Relatorio_Metodologico_Projeto.pdf",
+  href = "files/Relatoriometod-PainelCriancasMeioAmbiente.pdf",
   target = "_blank",
 
   tags$button(
@@ -141,7 +141,7 @@ tags$a(
   )
 ),
 tags$a(
-  href = "files/Compilado_Planila_Dashboad_V1.xlsx",
+  href = "files/Metadados-PainelCriancasMeioAmbiente.xlsx",
   target = "_blank",
   tags$button(
     id = "baixar_metadados",
