@@ -223,7 +223,7 @@ div(
                     tagList("Naurinete de J. da C. Barreto,",
                       tags$br(),"George Ulguim Pedra" )
                   ),
-            membro("Coleta e processamento dedDados", "Jocilene Dantas Barros"),
+            membro("Coleta e processamento de Dados", "Jocilene Dantas Barros"),
             membro("Consultoria técnica", "Cássia Maria Gama Lemos")
     )
   )
