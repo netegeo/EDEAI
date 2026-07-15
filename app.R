@@ -75,3 +75,14 @@ source("R/server_basic2.R")
 options(browser = "firefox")
 
 shinyApp(ui, server)
+
+
+# document.querySelectorAll('.acoes-dropdown-btn').forEach(button => {
+#   button.addEventListener('mouseenter', () => {
+#     // Verifica se o menu já não está aberto para evitar cliques duplos
+#     const content = button.nextElementSibling;
+#     if (content && window.getComputedStyle(content).display === 'none') {
+#       button.click();
+#     }
+#   });
+# });
