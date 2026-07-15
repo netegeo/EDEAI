@@ -97,6 +97,7 @@ button,
 
   /* Bordas e sombras */
   --raio-card: 30px;
+  --raio-card-short: 25px;  
   --sombra-card: 0 3px 12px #afcfb4;
   --sombra-suave: 0 4px 14px rgba(24, 49, 83, 0.06);
 
@@ -4130,7 +4131,7 @@ textarea {
   max-width: var(--largura-pagina);
   margin: 0 auto 28px;
   background: var(--cor-verde-principal);
-  border-radius: var(--raio-card);
+  border-radius: var(--raio-card-short);
   padding: 14px 18px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   position: relative;
@@ -4211,6 +4212,18 @@ textarea {
 .acoes-dropdown {
   order: 1;
 }
+
+/* Ponte de segurança para o hover */
+.acoes-dropdown::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    z-index: 999;
+}
+
 
 /* =====================================================
    11.6. BOTÃO LIMPAR SELEÇÃO
@@ -4331,7 +4344,7 @@ textarea {
 @media (max-width: 768px) {
   .acoes-selecao-barra {
     padding: 18px;
-    border-radius: var(--raio-card);
+    border-radius: var(--raio-card-short);
   }
 
   .acoes-selecao-conteudo {
@@ -4415,7 +4428,7 @@ textarea {
   margin: 0 auto 18px;
   background: var(--cor-branco);
   border: 1px solid var(--cor-borda-suave);
-  border-radius: var(--raio-card);
+  border-radius: var(--raio-card-short);
   box-shadow: var(--sombra-card);
   padding: 18px 22px;
   color: var(--cor-preto);
@@ -4564,7 +4577,7 @@ textarea {
   margin: 0 auto;
   background: var(--cor-branco);
   border: 1px solid var(--cor-borda-suave);
-  border-radius: var(--raio-card);
+  border-radius: var(--raio-card-short);
   box-shadow: var(--sombra-card);
   padding: 28px;
   color: var(--cor-preto);
