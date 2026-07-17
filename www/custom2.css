@@ -184,33 +184,6 @@ textarea {
   margin: var(--espaco-pagina-topo) auto;
 }
 
-/* =====================================================
-   00.6. PADRÃO GLOBAL DE CARDS / BLOCOS BRANCOS
-   -----------------------------------------------------
-   Atenção:
-     Regras específicas de cada classe ainda podem sobrescrever
-     estes padrões nas seções próprias.
-===================================================== */
-
-/*.info-card,
-.projeto-card,
-.projeto-hero,
-.metodo-hero,
-.indicador-section,
-.indicador-hero,
-.indicador-coluna,
-.indicador-bloco,
-.municipio-legenda-geral,
-.municipio-cabecalho,
-.tema-bloco,
-.quem-hero,
-.quem-instituicao-bloco,
-.equipe-card,
-.acoes-hero {
-  border-radius: var(--raio-card);
-  border: 1px solid var(--cor-borda-suave);
-  box-shadow: var(--sombra-card);
-}*/
 
 /* =====================================================
    00.7. LINHAS DECORATIVAS GLOBAIS
@@ -553,12 +526,12 @@ textarea {
 
 .municipio-export-wrapper,
 .pagina-indicador-export-wrapper {
-  width: 100%;
+  width: 180mm;
 }
 
 #diagnostico_municipio_pdf,
 #indicador_pdf {
-  width: 100%;
+  width: 180mm;
 }
 
 
@@ -1223,12 +1196,21 @@ textarea {
 /* =====================================================
    05.1. BLOCO PRINCIPAL DO RODAPÉ
 ===================================================== */
+.footer, 
+.footer-content, 
+.footer-right {
+    height: auto !important;
+    min-height: unset;
+}
+
 
 .footer {
   background: var(--cor-rodape);
-  padding: 10px 0 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-top: 1px solid var(--cor-borda-rodape);
   width: 100%;
+  height: auto;
 }
 
 
@@ -1239,11 +1221,12 @@ textarea {
 .footer-content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   gap: 32px;
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
+  height: auto !important;
 }
 
 
@@ -1319,77 +1302,34 @@ textarea {
 }
 
 
-/* =====================================================
-   05.6. LOGO/TÍTULOS ANTIGOS OU COMPLEMENTARES
-   -----------------------------------------------------
-   Mantidos por compatibilidade, caso ainda existam em
-   alguma versão da interface.
-===================================================== */
-
-.footer-logo {
-  width: 900px;
-  max-width: 100%;
-  height: auto;
-  padding: 60px 20px;
+.footer-logos{
+    /* Define a altura para ser igual à do texto ao lado */
+    height: 100vh !important; 
+    width: auto; /* Mantém a proporção da imagem */
+    max-height: none;
+    display: block;
+}
+/* 1. Limita a largura. Isso fará a altura diminuir automaticamente */
+img.footer-rega-logos {
+    width: auto !important; /* Ajuste este valor (ex: 200px, 300px) até ficar no tamanho ideal */
+    height: 18vh !important;
+    max-width: 100% !important;
+    display: block !important;
+    margin-left: auto; /* Alinha à direita se o pai for flex */
 }
 
-.footer-title {
-  font-size: 20px;
-  font-weight: 800;
-  color: #3E7FA5;
-  line-height: 1.2;
-  margin-left: 10px;
-  margin-top: 40px;
+/* 2. Força o container a aceitar o novo tamanho menor */
+.footer-right.footer-logos {
+    flex: 0 1 auto !important; /* Impede que o container ocupe todo o espaço */
+    width: auto !important;
+    height: auto !important;
 }
 
-.footer-subtitle {
-  font-size: 14px;
-  font-weight: 700;
+/* 3. Ajusta o container principal */
+.footer-content {
+    align-items: center !important; /* Centraliza a imagem menor com o texto ao lado */
+    height: auto !important;
 }
-
-
-/* =====================================================
-   05.7. COLUNAS ANTIGAS OU COMPLEMENTARES
-   -----------------------------------------------------
-   Mantidas por compatibilidade com possíveis versões
-   anteriores do rodapé.
-===================================================== */
-
-.footer-column {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.footer-col-title {
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #1F2D3D;
-}
-
-.footer-column a {
-  font-size: 14px;
-  color: #1F2D3D;
-  text-decoration: none;
-}
-
-.footer-column a:hover,
-.footer-column a:focus {
-  text-decoration: underline;
-}
-
-.footer-link {
-  color: inherit;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.footer-link:hover,
-.footer-link:focus {
-  text-decoration: underline;
-}
-
 
 /* =====================================================
    05.8. BASE / COPYRIGHT
@@ -3343,6 +3283,7 @@ textarea {
   box-sizing: border-box;
   background: var(--cor-fundo-app);
   padding: 12px;
+  margin: auto;
 }
 
 

@@ -330,18 +330,6 @@ municipio_card_ui <- function(obj) {
 		} else {
 			"background:#FFFFFF;border:1px solid rgba(24,49,83,0.12);"
 		}
-		
-		#estilo_tema <- if (!is.null(tu$cor_bg_tema) &&
-        #           !is.na(tu$cor_bg_tema) &&
-        #           trimws(tu$cor_bg_tema) != "") {
-		#	paste0(
-		#		"background:#FFFFFF;",
-		#		"border:1px solid rgba(24,49,83,0.12);",
-		#		"border-top:8px solid ", tu$cor_bg_tema, ";"
-		#	)		
-		#} else {
-		#	"background:#FFFFFF;border:1px solid rgba(24,49,83,0.12);"
-		#}
 
         tags$div(
           class = "tema-bloco",
@@ -522,5 +510,365 @@ municipio_card_ui <- function(obj) {
       .save();
   });
 ")))
+
+# tags$script(
+#   HTML(
+#     paste0("
+# document
+#   .getElementById('baixar_diagnostico_pdf')
+#   .addEventListener('click', async function() {
+
+#     const elemento = document.getElementById(
+#       'diagnostico_municipio_pdf'
+#     );
+
+#     if (!elemento) {
+#       alert(
+#         'Não foi possível localizar o conteúdo do diagnóstico.'
+#       );
+#       return;
+#     }
+
+#     /*
+#      * Carrega uma imagem e a converte
+#      * para PNG em Base64.
+#      */
+#     function carregarImagemBase64(caminho) {
+
+#       return new Promise(function(resolve, reject) {
+
+#         const imagem = new Image();
+
+#         imagem.onload = function() {
+
+#           const larguraOriginal =
+#             imagem.naturalWidth || imagem.width;
+
+#           const alturaOriginal =
+#             imagem.naturalHeight || imagem.height;
+
+#           const canvas =
+#             document.createElement('canvas');
+
+#           canvas.width = larguraOriginal;
+#           canvas.height = alturaOriginal;
+
+#           const contexto =
+#             canvas.getContext('2d');
+
+#           contexto.drawImage(
+#             imagem,
+#             0,
+#             0,
+#             larguraOriginal,
+#             alturaOriginal
+#           );
+
+#           resolve({
+#             base64: canvas.toDataURL('image/png'),
+#             largura: larguraOriginal,
+#             altura: alturaOriginal
+#           });
+#         };
+
+#         imagem.onerror = function() {
+#           reject(
+#             new Error(
+#               'Não foi possível carregar a imagem: ' +
+#               caminho
+#             )
+#           );
+#         };
+
+#         imagem.src = caminho;
+#       });
+#     }
+
+#     const botao =
+#       document.getElementById(
+#         'baixar_diagnostico_pdf'
+#       );
+
+#     try {
+
+#       if (botao) {
+#         botao.disabled = true;
+#       }
+
+#       /*
+#        * Imagem do cabeçalho.
+#        * Arquivo localizado em:
+#        * www/icons/SAMI_16052026.png
+#        */
+#       const cabecalho =
+#         await carregarImagemBase64(
+#           'icons/SAMI_16052026.png'
+#         );
+
+#       /*
+#        * Imagem do rodapé.
+#        * Arquivo localizado em:
+#        * www/icons/ReguaDeLogos.png
+#        */
+#       const logoRodape =
+#         await carregarImagemBase64(
+#           'icons/ReguaDeLogos.png'
+#         );
+
+#       const opcoes = {
+
+#         /*
+#          * Margens em milímetros:
+#          *
+#          * superior: 48 mm
+#          * esquerda: 12 mm
+#          * inferior: 30 mm
+#          * direita: 12 mm
+#          *
+#          * A margem superior reserva espaço
+#          * para o cabeçalho de 31 mm.
+#          */
+#         margin: [30, 1, 30, 30],
+
+#         filename: '", nome_arquivo_pdf, "',
+
+#         image: {
+#           type: 'jpeg',
+#           quality: 0.75
+#         },
+
+#         html2canvas: {
+#           scale: 1.2,
+#           useCORS: true,
+#           allowTaint: false,
+#           backgroundColor: '#F8F4ED',
+#           scrollX: 0,
+#           scrollY: 0,
+#           windowWidth: elemento.scrollWidth
+#         },
+
+#         jsPDF: {
+#           unit: 'mm',
+#           format: 'a4',
+#           orientation: 'portrait'
+#         },
+
+#         pagebreak: {
+#           mode: ['css', 'legacy'],
+#           avoid: [
+#             '.card',
+#             '.indicador',
+#             '.grafico',
+#             '.tabela'
+#           ]
+#         }
+#       };
+
+#       await html2pdf()
+#         .set(opcoes)
+#         .from(elemento)
+#         .toPdf()
+#         .get('pdf')
+#         .then(function(pdf) {
+
+#           const totalPaginas =
+#             pdf.internal.getNumberOfPages();
+
+#           const larguraPagina =
+#             pdf.internal.pageSize.getWidth();
+
+#           const alturaPagina =
+#             pdf.internal.pageSize.getHeight();
+
+#           const margemLateral = 5;
+
+#           /*
+#            * ---------------------------------
+#            * CONFIGURAÇÃO DO CABEÇALHO
+#            * ---------------------------------
+#            */
+
+#           const larguraCabecalho = 90;
+#           const alturaCabecalho = 25;
+
+#           const posicaoCabecalhoX =
+#             (larguraPagina - larguraCabecalho) / 2;
+
+#           const posicaoCabecalhoY = 4;
+
+#           /*
+#            * Linha abaixo do cabeçalho.
+#            */
+#           const linhaCabecalhoY =
+#             posicaoCabecalhoY +
+#             alturaCabecalho +
+#             4;
+
+#           /*
+#            * ---------------------------------
+#            * CONFIGURAÇÃO DO RODAPÉ
+#            * ---------------------------------
+#            */
+
+#           const larguraMaximaRodape = 150;
+#           const alturaMaximaRodape = 15;
+
+#           const proporcaoRodape =
+#             logoRodape.largura /
+#             logoRodape.altura;
+
+#           let larguraRodape =
+#             larguraMaximaRodape;
+
+#           let alturaRodape =
+#             larguraRodape /
+#             proporcaoRodape;
+
+#           /*
+#            * Impede que o rodapé ultrapasse
+#            * a altura máxima, preservando
+#            * sua proporção.
+#            */
+#           if (
+#             alturaRodape >
+#             alturaMaximaRodape
+#           ) {
+
+#             alturaRodape =
+#               alturaMaximaRodape;
+
+#             larguraRodape =
+#               alturaRodape *
+#               proporcaoRodape;
+#           }
+
+#           const posicaoRodapeX =
+#             (larguraPagina - larguraRodape) / 2;
+
+#           const posicaoRodapeY =
+#             alturaPagina -
+#             alturaRodape -
+#             7;
+
+#           const linhaRodapeY =
+#             posicaoRodapeY - 3;
+
+#           /*
+#            * ---------------------------------
+#            * INSERÇÃO EM TODAS AS PÁGINAS
+#            * ---------------------------------
+#            */
+
+#           for (
+#             let pagina = 1;
+#             pagina <= totalPaginas;
+#             pagina++
+#           ) {
+
+#             pdf.setPage(pagina);
+
+#             /*
+#              * Cabeçalho com tamanho exato:
+#              * 129 mm × 31 mm.
+#              */
+#             pdf.addImage(
+#               cabecalho.base64,
+#               'PNG',
+#               posicaoCabecalhoX,
+#               posicaoCabecalhoY,
+#               larguraCabecalho,
+#               alturaCabecalho
+#             );
+
+#             /*
+#              * Linha abaixo do cabeçalho.
+#              */
+#             pdf.setDrawColor(
+#               180,
+#               180,
+#               180
+#             );
+
+#             pdf.setLineWidth(0.25);
+
+#             pdf.line(
+#               margemLateral,
+#               linhaCabecalhoY,
+#               larguraPagina -
+#                 margemLateral,
+#               linhaCabecalhoY
+#             );
+
+#             /*
+#              * Linha acima do rodapé.
+#              */
+#             pdf.line(
+#               margemLateral,
+#               linhaRodapeY,
+#               larguraPagina -
+#                 margemLateral,
+#               linhaRodapeY
+#             );
+
+#             /*
+#              * Régua de logos no rodapé.
+#              */
+#             pdf.addImage(
+#               logoRodape.base64,
+#               'PNG',
+#               posicaoRodapeX,
+#               posicaoRodapeY,
+#               larguraRodape,
+#               alturaRodape
+#             );
+
+#             /*
+#              * Numeração das páginas.
+#              */
+#             pdf.setFontSize(7);
+
+#             pdf.setTextColor(
+#               80,
+#               80,
+#               80
+#             );
+
+#             pdf.text(
+#               'Página ' +
+#                 pagina +
+#                 ' de ' +
+#                 totalPaginas,
+#               larguraPagina -
+#                 margemLateral,
+#               alturaPagina - 4,
+#               {
+#                 align: 'right'
+#               }
+#             );
+#           }
+#         })
+#         .save();
+
+#     } catch (erro) {
+
+#       console.error(
+#         'Erro ao gerar o PDF:',
+#         erro
+#       );
+
+#       alert(
+#         'Não foi possível gerar o PDF.'
+#       );
+
+#     } finally {
+
+#       if (botao) {
+#         botao.disabled = false;
+#       }
+#     }
+#   });
+# ")
+#   )
+# )
   )
 }

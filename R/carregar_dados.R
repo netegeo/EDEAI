@@ -50,10 +50,10 @@ limpar_base_municipal <- function(df) {
 #   dados_app$porte_pop
 # ---------------------------------------------------------
 
-info_raw <- readRDS("data/informacoes_20260609.rds")
+info_raw <- readRDS("data/informacoes_20260715.rds")
 
 # Objeto responsavel por trazer as informações de ações públicas recomendadas
-acao_objetos <- readRDS("data/objeto_acao_20260531.rds")
+acao_objetos <- readRDS("data/objeto_acao_20260715.rds")
 
 # Objeto responsavel por carregar as informações dos cards de apresentação da pagina inicial 
 card_inicio <- readRDS("data/cards_inicio_20260524.rds")
