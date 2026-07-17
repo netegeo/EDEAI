@@ -86,6 +86,46 @@ limpar_espacos_unicode <- function(x) {
   trimws(x)
 }
 
+maiuscula_inicial_com_contagem <- function(x) {
+
+  if (is.null(x) || length(x) == 0) {
+    return(list(
+      texto = x,
+      alterado = logical(0),
+      n_alteracoes = 0L
+    ))
+  }
+
+  x <- as.character(x)
+
+  # Identifica textos válidos
+  idx_validos <- !is.na(x) & trimws(x) != ""
+
+  # Obtém o primeiro caractere
+  primeira_letra <- substr(x, 1, 1)
+
+  # Identifica somente os casos em que a conversão
+  # efetivamente modificará o primeiro caractere
+  idx_alterar <- idx_validos &
+    primeira_letra != toupper(primeira_letra)
+
+  # Converte somente os registros necessários
+  x[idx_alterar] <- paste0(
+    toupper(substr(x[idx_alterar], 1, 1)),
+    substr(
+      x[idx_alterar],
+      2,
+      nchar(x[idx_alterar])
+    )
+  )
+
+  list(
+    texto = x,
+    alterado = idx_alterar,
+    n_alteracoes = sum(idx_alterar, na.rm = TRUE)
+  )
+}
+
 normalizar_chave_filtro <- function(x) {
 
   x <- limpar_espacos_unicode(x)
@@ -859,7 +899,7 @@ montar_dicas_praticas_acoes <- function(dicas_praticas_raw) {
   dicas_praticas
 }
 
-montar_base_tecnica_acoes <- function(base_tecnica_raw) {
+montar_base_tecnica_acoes <- function(base_tecnica_raw,arquivo_controle = "data/controle_maiusculas_base_tecnica.csv") {
 
   if (is.null(base_tecnica_raw)) {
     return(data.frame(
@@ -871,6 +911,56 @@ montar_base_tecnica_acoes <- function(base_tecnica_raw) {
       stringsAsFactors = FALSE
     ))
   }
+  
+  # -------------------------------------------------------
+  # Retorno para base inexistente
+  # -------------------------------------------------------
+
+  if (is.null(base_tecnica_raw)) {
+
+    controle_maiusculas <- data.frame(
+      campo = c(
+        "o_que_trata",
+        "relacao",
+        "total"
+      ),
+      n_registros_avaliados = c(0L, 0L, 0L),
+      n_alteracoes = c(0L, 0L, 0L),
+      stringsAsFactors = FALSE
+    )
+
+    diretorio_controle <- dirname(arquivo_controle)
+
+    if (!dir.exists(diretorio_controle)) {
+      dir.create(
+        diretorio_controle,
+        recursive = TRUE,
+        showWarnings = FALSE
+      )
+    }
+
+    write.csv2(
+      controle_maiusculas,
+      file = arquivo_controle,
+      row.names = FALSE,
+      fileEncoding = "UTF-8"
+    )
+
+    return(
+      data.frame(
+        id = character(0),
+        id_referencia = character(0),
+        titulo = character(0),
+        o_que_trata = character(0),
+        relacao = character(0),
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+
+  # -------------------------------------------------------
+  # Padronização das colunas
+  # -------------------------------------------------------
 
   base_tecnica_raw <- padronizar_colunas_acoes(base_tecnica_raw)
 
@@ -896,19 +986,117 @@ montar_base_tecnica_acoes <- function(base_tecnica_raw) {
     )
   }
 
+  # -------------------------------------------------------
+  # Seleção e limpeza dos campos
+  # -------------------------------------------------------
+
   base_tecnica <- base_tecnica_raw[, colunas_obrigatorias]
 
   base_tecnica[] <- lapply(base_tecnica, function(x) {
     limpar_espacos_unicode(as.character(x))
   })
 
+  # -------------------------------------------------------
+  # Remove registros sem ID antes da contabilização
+  # -------------------------------------------------------
+
   base_tecnica <- base_tecnica[
     !is.na(base_tecnica$id) &
       base_tecnica$id != "",
+    ,
+    drop = FALSE
   ]
 
+  # -------------------------------------------------------
+  # Verificação e correção das letras iniciais
+  # -------------------------------------------------------
+
+  resultado_o_que_trata <- maiuscula_inicial_com_contagem(
+    base_tecnica$o_que_trata
+  )
+
+  resultado_relacao <- maiuscula_inicial_com_contagem(
+    base_tecnica$relacao
+  )
+
+  base_tecnica$o_que_trata <-
+    resultado_o_que_trata$texto
+
+  base_tecnica$relacao <-
+    resultado_relacao$texto
+
+  # -------------------------------------------------------
+  # Montagem do relatório de controle
+  # -------------------------------------------------------
+
+  n_validos_o_que_trata <- sum(
+    !is.na(base_tecnica$o_que_trata) &
+      trimws(base_tecnica$o_que_trata) != ""
+  )
+
+  n_validos_relacao <- sum(
+    !is.na(base_tecnica$relacao) &
+      trimws(base_tecnica$relacao) != ""
+  )
+
+  controle_maiusculas <- data.frame(
+    campo = c(
+      "o_que_trata",
+      "relacao",
+      "total"
+    ),
+
+    n_registros_avaliados = c(
+      n_validos_o_que_trata,
+      n_validos_relacao,
+      n_validos_o_que_trata +
+        n_validos_relacao
+    ),
+
+    n_alteracoes = c(
+      resultado_o_que_trata$n_alteracoes,
+      resultado_relacao$n_alteracoes,
+      resultado_o_que_trata$n_alteracoes +
+        resultado_relacao$n_alteracoes
+    ),
+
+    stringsAsFactors = FALSE
+  )
+
+  # -------------------------------------------------------
+  # Gravação do CSV
+  # -------------------------------------------------------
+
+  diretorio_controle <- dirname(
+    arquivo_controle
+  )
+
+  if (!dir.exists(diretorio_controle)) {
+    dir.create(
+      diretorio_controle,
+      recursive = TRUE,
+      showWarnings = FALSE
+    )
+  }
+
+  write.csv2(
+    controle_maiusculas,
+    file = arquivo_controle,
+    row.names = FALSE,
+    fileEncoding = "UTF-8"
+  )
+
+  # -------------------------------------------------------
+  # Ordenação final
+  # -------------------------------------------------------
+
   base_tecnica <- base_tecnica[
-    order(base_tecnica$id, base_tecnica$id_referencia),
+    order(
+      base_tecnica$id,
+      base_tecnica$id_referencia
+    ),
+    ,
+    drop = FALSE
   ]
 
   rownames(base_tecnica) <- NULL
