@@ -476,48 +476,6 @@ municipio_card_ui <- function(obj) {
     # =====================================================
     # SCRIPT PARA GERAR PDF SEM QUEBRA DE PÁGINA
     # =====================================================
-
-#     tags$script(HTML(paste0("
-#   document.getElementById('baixar_diagnostico_pdf').addEventListener('click', function() {
-#     const elemento = document.getElementById('diagnostico_municipio_pdf');
-
-#     if (!elemento) {
-#       alert('Não foi possível localizar o conteúdo do diagnóstico.');
-#       return;
-#     }
-
-#     const largura = elemento.scrollWidth;
-#     const altura = elemento.scrollHeight;
-
-#     const opcoes = {
-#       margin: 0,
-#       filename: '", nome_arquivo_pdf, "',
-#       image: {
-#         type: 'jpeg',
-#         quality: 0.98
-#       },
-#       html2canvas: {
-#         scale: 2,
-#         useCORS: true,
-#         backgroundColor: '#F8F4ED',
-#         scrollY: 0
-#       },
-#       jsPDF: {
-#         unit: 'px',
-#         format: [largura, altura],
-#         orientation: 'portrait'
-#       },
-#       pagebreak: {
-#         mode: []
-#       }
-#     };
-
-#     html2pdf()
-#       .set(opcoes)
-#       .from(elemento)
-#       .save();
-#   });
-# ")))
 tags$script(
   HTML(
     paste0("
@@ -575,6 +533,42 @@ function carregarImagemBase64(caminho) {
 }
 
 
+function aguardarImagens(elemento) {
+
+  const imagens =
+    Array.from(
+      elemento.querySelectorAll('img')
+    );
+
+  return Promise.all(
+    imagens.map(function(imagem) {
+
+      if (
+        imagem.complete &&
+        imagem.naturalWidth > 0
+      ) {
+        return Promise.resolve();
+      }
+
+      return new Promise(function(resolve) {
+
+        imagem.onload = resolve;
+
+        imagem.onerror = function() {
+
+          console.warn(
+            'Uma imagem interna não foi carregada:',
+            imagem.src
+          );
+
+          resolve();
+        };
+      });
+    })
+  );
+}
+
+
 document
   .getElementById('baixar_diagnostico_pdf')
   .addEventListener(
@@ -597,6 +591,26 @@ document
 
       try {
 
+        /*
+         * Aguarda o carregamento das fontes.
+         */
+        if (
+          document.fonts &&
+          document.fonts.ready
+        ) {
+          await document.fonts.ready;
+        }
+
+        /*
+         * Aguarda as imagens existentes
+         * dentro do conteúdo do diagnóstico.
+         */
+        await aguardarImagens(elemento);
+
+        /*
+         * Carrega as imagens adicionadas
+         * diretamente ao rodapé do PDF.
+         */
         const logoRodape =
           await carregarImagemBase64(
             'icons/SAMI_16052026.png'
@@ -607,27 +621,55 @@ document
             'icons/ReguaDeLogos.png'
           );
 
+        /*
+         * Aguarda um ciclo de renderização
+         * antes de medir o conteúdo.
+         */
+        await new Promise(function(resolve) {
+
+          requestAnimationFrame(function() {
+
+            requestAnimationFrame(resolve);
+
+          });
+
+        });
+
+        /*
+         * Math.ceil evita que valores
+         * fracionários sejam arredondados
+         * para baixo.
+         */
         const largura =
-          elemento.scrollWidth;
+          Math.ceil(
+            elemento.scrollWidth
+          );
 
         const alturaConteudo =
-          elemento.scrollHeight;
+          Math.ceil(
+            elemento.scrollHeight
+          );
 
         /*
          * Espaços reservados para
          * cabeçalho e rodapé.
          */
         const margemSuperior = 0;
+
         const margemInferior = 90;
 
-        const alturaPdf =
-          alturaConteudo +
-          margemSuperior +
-          margemInferior;
+        /*
+         * Pequena folga para diferenças
+         * de renderização entre ambientes.
+         */
+const alturaPdf =
+  alturaConteudo +
+  margemSuperior +
+  margemInferior +
+  2;
 
         /*
-         * Mantém a proporção original
-         * da imagem.
+         * Proporção da imagem SAMI.
          */
         const proporcaoLogo =
           logoRodape.largura /
@@ -640,9 +682,49 @@ document
           proporcaoLogo;
 
         /*
-         * Impede que a logo ultrapasse
-         * a altura da faixa do rodapé.
+         * Proporção da régua de logos.
          */
+        const proporcaoRegua =
+          logoRegua.largura /
+          logoRegua.altura;
+
+        let larguraRegua = 275;
+
+        let alturaRegua =
+          larguraRegua /
+          proporcaoRegua;
+
+        /*
+         * Limita a altura das imagens para
+         * que elas permaneçam dentro do rodapé.
+         */
+        const alturaMaximaImagem = 55;
+
+        if (
+          alturaLogo >
+          alturaMaximaImagem
+        ) {
+
+          alturaLogo =
+            alturaMaximaImagem;
+
+          larguraLogo =
+            alturaLogo *
+            proporcaoLogo;
+        }
+
+        if (
+          alturaRegua >
+          alturaMaximaImagem
+        ) {
+
+          alturaRegua =
+            alturaMaximaImagem;
+
+          larguraRegua =
+            alturaRegua *
+            proporcaoRegua;
+        }
 
         const opcoes = {
 
@@ -664,8 +746,13 @@ document
           html2canvas: {
             scale: 2,
             useCORS: true,
+            allowTaint: false,
             backgroundColor: '#F8F4ED',
-            scrollY: 0
+            scrollX: 0,
+            scrollY: 0,
+            width: largura,
+            windowWidth: largura,
+            logging: false
           },
 
           jsPDF: {
@@ -690,6 +777,20 @@ document
           .get('pdf')
           .then(function(pdf) {
 
+            const totalPaginas =
+  pdf.internal.getNumberOfPages();
+
+if (totalPaginas > 1) {
+
+  for (
+    let pagina = totalPaginas;
+    pagina > 1;
+    pagina--
+  ) {
+    pdf.deletePage(pagina);
+  }
+}
+
             const larguraPagina =
               pdf.internal.pageSize.getWidth();
 
@@ -703,6 +804,7 @@ document
              */
 
             const alturaRodape = 90;
+
             const inicioRodape =
               alturaPagina -
               alturaRodape;
@@ -722,8 +824,7 @@ document
             );
 
             /*
-             * Logo posicionada à esquerda
-             * e centralizada verticalmente.
+             * Logo SAMI à esquerda.
              */
             const posicaoLogoX = 25;
 
@@ -744,7 +845,31 @@ document
             );
 
             /*
-             * Texto do rodapé.
+             * Régua de logos à direita.
+             */
+            const posicaoReguaX =
+              larguraPagina -
+              larguraRegua -
+              25;
+
+            const posicaoReguaY =
+              inicioRodape +
+              (
+                alturaRodape -
+                alturaRegua
+              ) / 2;
+
+            pdf.addImage(
+              logoRegua.base64,
+              'PNG',
+              posicaoReguaX,
+              posicaoReguaY,
+              larguraRegua,
+              alturaRegua
+            );
+
+            /*
+             * Texto central do rodapé.
              */
             pdf.setFont(
               'helvetica',
@@ -769,15 +894,6 @@ document
                 baseline: 'middle'
               }
             );
-
-          pdf.addImage(
-            logoRegua.base64,
-            'PNG',
-            larguraPagina - larguraLogo - 15,
-            alturaPagina - 75,
-            larguraLogo,
-            alturaLogo
-          );
           })
           .save()
           .catch(function(erro) {
@@ -795,12 +911,12 @@ document
       } catch (erro) {
 
         console.error(
-          'Erro ao carregar a imagem:',
+          'Erro ao preparar o PDF:',
           erro
         );
 
         alert(
-          'Não foi possível carregar a imagem do rodapé.'
+          'Não foi possível preparar as imagens ou o conteúdo do PDF.'
         );
       }
     }
@@ -808,6 +924,7 @@ document
 ")
   )
 )
+
 
 )
 }
