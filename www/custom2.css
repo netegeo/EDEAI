@@ -1312,7 +1312,7 @@ textarea {
 /* 1. Limita a largura. Isso fará a altura diminuir automaticamente */
 img.footer-rega-logos {
     width: auto !important; /* Ajuste este valor (ex: 200px, 300px) até ficar no tamanho ideal */
-    height: 18vh !important;
+    height: 13vh !important;
     max-width: 100% !important;
     display: block !important;
     margin-left: auto; /* Alinha à direita se o pai for flex */
