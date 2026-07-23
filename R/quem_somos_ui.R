@@ -176,7 +176,7 @@ div(
             membro("Representante do UNICEF no Brasil", "Joaquin Gonzalez-Aleman"),
             membro("Representante-Adjunta de Programas", "Layla Saad"),
             membro("Chefe de Comunicação e Parcerias", "Sonia Yeo"),
-            membro("Chefe de Água, Saneamento e Higiene, e de Clima e Meio Ambiente , e Emergências", "Gregory Bulit"),
+            membro("Chefe de Água, Saneamento e Higiene, e de Clima e Meio Ambiente , e de Emergências", "Gregory Bulit"),
             membro("Especialista em Clima e Meio Ambiente", "Danilo Moura"),
             membro("Especialista em Emergências", "Isabele Villwock Bachtold"),
             membro("Oficial de Água, Saneamento e Higiene", "Rodrigo Resende"),
@@ -199,7 +199,7 @@ div(
     tags$h2("VITAL STRATEGIES"),
     div(class = "equipe-lista",
             membro("Diretor-Executivo", "Pedro de Paula"),
-            membro("Diretora Adjunta, Doenças Crônicas Não Transmissíveis", "Luciana Vasconcelos Sardinha"),
+            membro("Diretora Adjunta de Doenças Crônicas Não Transmissíveis", "Luciana Vasconcelos Sardinha"),
             membro("Diretora Adjunta de Comunicação Institucional", "Luiza Borges"),
             membro("Gerente de Recursos Financeiros", "Juliana Mendes"),
             membro("Gestão do Projeto", tagList("Izabel Campos Ferreira",tags$br(),"Hannah Arcuschin Machado")),
@@ -223,7 +223,7 @@ div(
                     tagList("Naurinete de J. da C. Barreto,",
                       tags$br(),"George Ulguim Pedra" )
                   ),
-            membro("Coleta e processamento de Dados", "Jocilene Dantas Barros"),
+            membro("Coleta e processamento de dados", "Jocilene Dantas Barros"),
             membro("Consultoria técnica", "Cássia Maria Gama Lemos")
     )
   )
