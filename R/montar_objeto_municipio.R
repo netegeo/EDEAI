@@ -62,7 +62,8 @@ montar_objeto_municipio <- function(dados_app, uf, municipio) {
   ]
   
   # Apenas para teste - Assim que aparecer o dado unicef trocar
-  base_mun$selo_unicef<-selo_unicef$Valor[selo_unicef$sigla_uf == uf & selo_unicef$nome_mun == municipio]  
+  valor_selo_unicef <- selo_unicef$Valor[selo_unicef$sigla_uf == uf & selo_unicef$nome_mun == municipio]
+  base_mun$selo_unicef <- if (length(valor_selo_unicef) > 0) valor_selo_unicef[1] else NA
   
   class_mun <- dados_classificados[
     dados_classificados$sigla_uf == uf & dados_classificados$nome_mun == municipio,
