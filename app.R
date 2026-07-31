@@ -13,8 +13,9 @@
 #   - Este arquivo atua como ponto de entrada do app
 #   - A lógica principal não está aqui, mas nos scripts
 #     carregados por source()
-# =========================================================
-
+# 
+#=========================================================
+# Ultima Atualização 30/07/2026
 # -------------------------------------
 # Importação dos scripts principais do app
 # -------------------------------------
