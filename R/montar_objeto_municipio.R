@@ -61,10 +61,6 @@ montar_objeto_municipio <- function(dados_app, uf, municipio) {
     dados_brutos$sigla_uf == uf & dados_brutos$nome_mun == municipio,
   ]
   
-  # Apenas para teste - Assim que aparecer o dado unicef trocar
-  valor_selo_unicef <- selo_unicef$Valor[selo_unicef$sigla_uf == uf & selo_unicef$nome_mun == municipio]
-  base_mun$selo_unicef <- if (length(valor_selo_unicef) > 0) valor_selo_unicef[1] else NA
-  
   class_mun <- dados_classificados[
     dados_classificados$sigla_uf == uf & dados_classificados$nome_mun == municipio,
   ]
@@ -73,6 +69,10 @@ montar_objeto_municipio <- function(dados_app, uf, municipio) {
   if (NROW(base_mun) == 0 || NROW(bruto_mun) == 0 || NROW(class_mun) == 0) {
     return(NULL)
   }
+
+  # Apenas para teste - Assim que aparecer o dado unicef trocar
+  valor_selo_unicef <- selo_unicef$Valor[selo_unicef$sigla_uf == uf & selo_unicef$nome_mun == municipio]
+  base_mun$selo_unicef <- if (length(valor_selo_unicef) > 0) valor_selo_unicef[1] else NA
 
   # -------------------------------------------------------
   # 3. Monta o bloco de informações básicas
