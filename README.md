@@ -101,7 +101,7 @@ Os créditos abaixo seguem a ficha técnica incluída em `R/quem_somos_ui.R`:
 | Processamento de dados, análise estatística e desenvolvimento do dashboard | Naurinete de J. da C. Barreto e George Ulguim Pedra |
 | Coleta e processamento de dados | Jocilene Dantas Barros |
 | Consultoria técnica | Cássia Maria Gama Lemos |
-| Identidade visual | Café.art.br |
+
 
 A ficha técnica da aplicação contém os demais créditos institucionais. A manutenção desta cópia não implica autoria exclusiva do projeto, dos dados, dos documentos ou da identidade visual.
 
